@@ -132,11 +132,11 @@ const chartConfig = {
   },
   desktop: {
     label: "Desktop",
-    color: "var(--primary)",
+    color: "var(--chart-1)",
   },
   mobile: {
     label: "Mobile",
-    color: "var(--primary)",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig
 
@@ -167,10 +167,10 @@ export function ChartAreaInteractive() {
   return (
     <Card className="@container/card">
       <CardHeader>
-        <CardTitle>Total Visitors</CardTitle>
+        <CardTitle>Placeholder data of some sort</CardTitle>
         <CardDescription>
           <span className="hidden @[540px]/card:block">
-            Total for the last 3 months
+            Explode
           </span>
           <span className="@[540px]/card:hidden">Last 3 months</span>
         </CardDescription>

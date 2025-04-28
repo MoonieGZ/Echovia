@@ -25,6 +25,8 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
+import React from "react"
+
 export function NavDocuments({
   items,
 }: {
