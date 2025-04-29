@@ -2,7 +2,8 @@ import type { Metadata } from "next"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Geist } from "next/font/google"
-import React from "react"
+import type React from "react"
+import { Suspense } from "react"
 import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
@@ -18,21 +19,16 @@ const geist = Geist({
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geist.className} antialiased`}
-      >
+      <body className={`${geist.className} antialiased`}>
         <Analytics />
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+            {children}
+          </Suspense>
         </ThemeProvider>
       </body>
     </html>
