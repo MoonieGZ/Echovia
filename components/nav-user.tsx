@@ -4,6 +4,9 @@ import {
   IconDotsVertical,
   IconLogout,
 } from "@tabler/icons-react"
+import { Moon, Sun, Globe, Monitor } from "lucide-react"
+import { useTheme } from "next-themes"
+import { useLanguage } from "@/lib/language-provider"
 
 import {
   Avatar,
@@ -15,6 +18,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from "@/components/ui/dropdown-menu"
 import {
   SidebarMenu,
@@ -24,6 +31,17 @@ import {
 } from "@/components/ui/sidebar"
 
 import React from "react"
+
+const THEMES = [
+  { value: "light", label: "theme.light", icon: Sun },
+  { value: "dark", label: "theme.dark", icon: Moon },
+  { value: "system", label: "theme.system", icon: Monitor },
+] as const
+
+const LANGUAGES = [
+  { value: "en" as const, label: "language.en" },
+  { value: "fr" as const, label: "language.fr" },
+] as const
 
 export function NavUser({
   user,
@@ -35,6 +53,8 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const { theme, setTheme } = useTheme()
+  const { language, setLanguage, t } = useLanguage()
 
   return (
     <SidebarMenu>
@@ -64,9 +84,46 @@ export function NavUser({
             align="end"
             sideOffset={4}
           >
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <Sun className="mr-2 h-4 w-4" />
+                {t("theme.title")}
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                {THEMES.map(({ value, label, icon: Icon }) => (
+                  <DropdownMenuItem
+                    key={value}
+                    onClick={() => setTheme(value)}
+                    className={theme === value ? "bg-muted" : ""}
+                  >
+                    <Icon className="mr-2 h-4 w-4" />
+                    {t(label)}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator />
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <Globe className="mr-2 h-4 w-4" />
+                {t("language.title")}
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                {LANGUAGES.map(({ value, label }) => (
+                  <DropdownMenuItem
+                    key={value}
+                    onClick={() => setLanguage(value)}
+                    className={language === value ? "bg-muted" : ""}
+                  >
+                    {t(label)}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DropdownMenuSeparator />
             <DropdownMenuItem variant="destructive">
               <IconLogout />
-              Log out
+              {t("auth.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

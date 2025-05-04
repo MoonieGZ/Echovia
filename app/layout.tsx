@@ -5,6 +5,8 @@ import { Geist } from "next/font/google"
 import type React from "react"
 import { Suspense } from "react"
 import { Analytics } from "@vercel/analytics/react"
+import { GenshinDataProvider } from "@/lib/genshin-data-provider"
+import { LanguageProvider } from "@/lib/language-provider"
 
 export const metadata: Metadata = {
   title: "Echovia",
@@ -25,10 +27,14 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geist.className} antialiased`}>
         <Analytics />
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
-            {children}
-          </Suspense>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+          <LanguageProvider>
+            <GenshinDataProvider>
+              <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+                {children}
+              </Suspense>
+            </GenshinDataProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

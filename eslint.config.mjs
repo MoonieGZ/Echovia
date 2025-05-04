@@ -6,6 +6,9 @@ import { defineConfig } from 'eslint/config'
 
 export default defineConfig([
   {
+    ignores: ["tsconfig.json"],
+  },
+  {
     'settings': {
       'react': {
         'version': 'detect'
@@ -22,4 +25,10 @@ export default defineConfig([
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {
+    files: ["**/*.tsx"],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
 ])

@@ -1,0 +1,138 @@
+{
+  "app": {
+    "title": "Echovia",
+    "loading": "Loading data..."
+  },
+  "header": {
+    "back": "Back",
+    "settings": "Settings",
+    "github": "GitHub Repository",
+    "reset": "Reset"
+  },
+  "footer": {
+    "version": "Ver:",
+    "copyright": "Moons © 2025"
+  },
+  "main": {
+    "roll": {
+      "characters": "Roll Characters",
+      "bosses": "Roll Bosses",
+      "both": "Roll Both"
+    },
+    "characters": "Characters",
+    "bosses": "Bosses",
+    "legend": "Legend",
+    "noRules": "No active rules",
+    "activeRules": "Active rules:"
+  },
+  "results": {
+    "title": "Randomization Results",
+    "selectAll": "Select All",
+    "unselectAll": "Unselect All",
+    "close": "Close",
+    "accept": "Accept",
+    "noCharactersSelected": "No characters selected",
+    "selectAtLeastOne": "Please select at least one character to accept.",
+    "charactersAccepted": "Characters accepted",
+    "charactersExcluded": "character(s) have been excluded from future rolls."
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Customize which characters and bosses can be selected in the randomizer",
+    "tabs": {
+      "characters": "Characters",
+      "bosses": "Bosses",
+      "excluded": "Excluded",
+      "rules": "Rules"
+    },
+    "filter": {
+      "filter": "Filter",
+      "bosses": "Filter bosses",
+      "characters": "Filter characters"
+    },
+    "search": {
+      "search": "Search",
+      "bosses": "Search bosses",
+      "characters": "Search characters"
+    },
+    "enableAll": "Enable All",
+    "disableAll": "Disable All",
+    "disableLegends": "Disable Legends",
+    "coopModeWarning": "Co-op Mode is enabled: Non-co-op bosses are automatically disabled.",
+    "coopDisabled": "Co-op N/A",
+    "resetConfirm": {
+      "title": "Reset All Settings?",
+      "description": "This will reset all settings to their default values. This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Reset"
+    }
+  },
+  "rules": {
+    "coopMode": {
+      "title": "Co-op Mode",
+      "description": "Controls whether multiple Travelers with different elements can be selected in a single roll",
+      "enabled": "Enabled: Multiple Travelers with different elements can be selected",
+      "disabled": "Disabled: Only one Traveler can be selected per roll"
+    },
+    "fiveStarLimit": {
+      "title": "5-Star Character Limit",
+      "description": "Controls the maximum number of 5-star characters that can be selected in a single roll",
+      "enabled": "Enabled: Limit the number of 5-star characters per roll",
+      "disabled": "Disabled: No limit on 5-star characters",
+      "maximum": "Maximum 5-star characters:"
+    },
+    "notEnoughBosses": {
+      "title": "Not enough bosses available",
+      "description": "Please enable at least {count} bosses in settings."
+    },
+    "notEnoughCharacters": {
+      "title": "Not enough characters available",
+      "description": "Could not select enough characters after applying all rules. Consider adjusting your settings."
+    },
+    "coopConfirm": {
+      "title": "Disable Non-Co-op Bosses?",
+      "description": "Enabling Co-op mode will disable the following bosses:",
+      "note": "These bosses will be automatically disabled in your settings.",
+      "question": "Do you want to continue?",
+      "cancel": "Cancel",
+      "confirm": "Continue"
+    }
+  },
+  "excluded": {
+    "title": "Excluded Characters",
+    "enableExclusion": "Enable character exclusion",
+    "resetAll": "Reset All",
+    "noCharacters": "No characters have been excluded yet. When you accept characters from the randomizer, they will appear here.",
+    "clickToReEnable": "Click to re-enable"
+  },
+  "accepted": {
+    "title": "Picked Characters",
+    "manage": "Manage"
+  },
+  "pool": {
+    "availableCharacters": "Available Characters",
+    "availableBosses": "Available Bosses"
+  },
+  "language": {
+    "title": "Language",
+    "en": "English",
+    "es": "Spanish",
+    "fr": "French",
+    "de": "German",
+    "ja": "Japanese",
+    "zh": "Chinese"
+  },
+  "wip": {
+    "title": "Under Construction",
+    "description": "This page is currently under construction. Please check back soon for updates."
+  },
+  "theme": {
+    "title": "Theme",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "auth": {
+    "logout": "Log out"
+  }
+}

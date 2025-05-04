@@ -1,0 +1,608 @@
+[
+  {
+    "name": "Chasca",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Chasca_Icon.webp"
+  },
+  {
+    "name": "Faruzan",
+    "rarity": 4,
+    "element": "Anemo",
+    "icon": "Faruzan_Icon.webp"
+  },
+  {
+    "name": "Jean",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Jean_Icon.webp"
+  },
+  {
+    "name": "Kaedehara Kazuha",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Kaedehara_Kazuha_Icon.webp"
+  },
+  {
+    "name": "Lan Yan",
+    "rarity": 4,
+    "element": "Anemo",
+    "icon": "Lan_Yan_Icon.webp"
+  },
+  {
+    "name": "Lynette",
+    "rarity": 4,
+    "element": "Anemo",
+    "icon": "Lynette_Icon.webp"
+  },
+  {
+    "name": "Sayu",
+    "rarity": 4,
+    "element": "Anemo",
+    "icon": "Sayu_Icon.webp"
+  },
+  {
+    "name": "Shikanoin Heizou",
+    "rarity": 4,
+    "element": "Anemo",
+    "icon": "Shikanoin_Heizou_Icon.webp"
+  },
+  {
+    "name": "Sucrose",
+    "rarity": 4,
+    "element": "Anemo",
+    "icon": "Sucrose_Icon.webp"
+  },
+  {
+    "name": "Traveler (Anemo)",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Traveler_Icon.webp"
+  },
+  {
+    "name": "Venti",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Venti_Icon.webp"
+  },
+  {
+    "name": "Wanderer",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Wanderer_Icon.webp"
+  },
+  {
+    "name": "Xianyun",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Xianyun_Icon.webp"
+  },
+  {
+    "name": "Xiao",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Xiao_Icon.webp"
+  },
+  {
+    "name": "Yumemizuki Mizuki",
+    "rarity": 5,
+    "element": "Anemo",
+    "icon": "Yumemizuki_Mizuki_Icon.webp"
+  },
+  {
+    "name": "Aloy",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Aloy_Icon.webp"
+  },
+  {
+    "name": "Charlotte",
+    "rarity": 4,
+    "element": "Cryo",
+    "icon": "Charlotte_Icon.webp"
+  },
+  {
+    "name": "Chongyun",
+    "rarity": 4,
+    "element": "Cryo",
+    "icon": "Chongyun_Icon.webp"
+  },
+  {
+    "name": "Citlali",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Citlali_Icon.webp"
+  },
+  {
+    "name": "Diona",
+    "rarity": 4,
+    "element": "Cryo",
+    "icon": "Diona_Icon.webp"
+  },
+  {
+    "name": "Eula",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Eula_Icon.webp"
+  },
+  {
+    "name": "Freminet",
+    "rarity": 4,
+    "element": "Cryo",
+    "icon": "Freminet_Icon.webp"
+  },
+  {
+    "name": "Ganyu",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Ganyu_Icon.webp"
+  },
+  {
+    "name": "Kaeya",
+    "rarity": 4,
+    "element": "Cryo",
+    "icon": "Kaeya_Icon.webp"
+  },
+  {
+    "name": "Kamisato Ayaka",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Kamisato_Ayaka_Icon.webp"
+  },
+  {
+    "name": "Layla",
+    "rarity": 4,
+    "element": "Cryo",
+    "icon": "Layla_Icon.webp"
+  },
+  {
+    "name": "Mika",
+    "rarity": 4,
+    "element": "Cryo",
+    "icon": "Mika_Icon.webp"
+  },
+  {
+    "name": "Qiqi",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Qiqi_Icon.webp"
+  },
+  {
+    "name": "Rosaria",
+    "rarity": 4,
+    "element": "Cryo",
+    "icon": "Rosaria_Icon.webp"
+  },
+  {
+    "name": "Shenhe",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Shenhe_Icon.webp"
+  },
+  {
+    "name": "Wriothesley",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Wriothesley_Icon.webp"
+  },
+  {
+    "name": "Alhaitham",
+    "rarity": 5,
+    "element": "Dendro",
+    "icon": "Alhaitham_Icon.webp"
+  },
+  {
+    "name": "Baizhu",
+    "rarity": 5,
+    "element": "Dendro",
+    "icon": "Baizhu_Icon.webp"
+  },
+  {
+    "name": "Collei",
+    "rarity": 4,
+    "element": "Dendro",
+    "icon": "Collei_Icon.webp"
+  },
+  {
+    "name": "Emilie",
+    "rarity": 5,
+    "element": "Dendro",
+    "icon": "Emilie_Icon.webp"
+  },
+  {
+    "name": "Kaveh",
+    "rarity": 4,
+    "element": "Dendro",
+    "icon": "Kaveh_Icon.webp"
+  },
+  {
+    "name": "Kinich",
+    "rarity": 5,
+    "element": "Dendro",
+    "icon": "Kinich_Icon.webp"
+  },
+  {
+    "name": "Kirara",
+    "rarity": 4,
+    "element": "Dendro",
+    "icon": "Kirara_Icon.webp"
+  },
+  {
+    "name": "Nahida",
+    "rarity": 5,
+    "element": "Dendro",
+    "icon": "Nahida_Icon.webp"
+  },
+  {
+    "name": "Tighnari",
+    "rarity": 5,
+    "element": "Dendro",
+    "icon": "Tighnari_Icon.webp"
+  },
+  {
+    "name": "Traveler (Dendro)",
+    "rarity": 5,
+    "element": "Dendro",
+    "icon": "Traveler_Icon.webp"
+  },
+  {
+    "name": "Yaoyao",
+    "rarity": 4,
+    "element": "Dendro",
+    "icon": "Yaoyao_Icon.webp"
+  },
+  {
+    "name": "Beidou",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Beidou_Icon.webp"
+  },
+  {
+    "name": "Clorinde",
+    "rarity": 5,
+    "element": "Electro",
+    "icon": "Clorinde_Icon.webp"
+  },
+  {
+    "name": "Cyno",
+    "rarity": 5,
+    "element": "Electro",
+    "icon": "Cyno_Icon.webp"
+  },
+  {
+    "name": "Dori",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Dori_Icon.webp"
+  },
+  {
+    "name": "Fischl",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Fischl_Icon.webp"
+  },
+  {
+    "name": "Iansan",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Iansan_Icon.webp"
+  },
+  {
+    "name": "Keqing",
+    "rarity": 5,
+    "element": "Electro",
+    "icon": "Keqing_Icon.webp"
+  },
+  {
+    "name": "Kujou Sara",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Kujou_Sara_Icon.webp"
+  },
+  {
+    "name": "Kuki Shinobu",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Kuki_Shinobu_Icon.webp"
+  },
+  {
+    "name": "Lisa",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Lisa_Icon.webp"
+  },
+  {
+    "name": "Ororon",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Ororon_Icon.webp"
+  },
+  {
+    "name": "Raiden Shogun",
+    "rarity": 5,
+    "element": "Electro",
+    "icon": "Raiden_Shogun_Icon.webp"
+  },
+  {
+    "name": "Razor",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Razor_Icon.webp"
+  },
+  {
+    "name": "Sethos",
+    "rarity": 4,
+    "element": "Electro",
+    "icon": "Sethos_Icon.webp"
+  },
+  {
+    "name": "Traveler (Electro)",
+    "rarity": 5,
+    "element": "Electro",
+    "icon": "Traveler_Icon.webp"
+  },
+  {
+    "name": "Varesa",
+    "rarity": 5,
+    "element": "Electro",
+    "icon": "Varesa_Icon.webp"
+  },
+  {
+    "name": "Yae Miko",
+    "rarity": 5,
+    "element": "Electro",
+    "icon": "Yae_Miko_Icon.webp"
+  },
+  {
+    "name": "Albedo",
+    "rarity": 5,
+    "element": "Geo",
+    "icon": "Albedo_Icon.webp"
+  },
+  {
+    "name": "Arataki Itto",
+    "rarity": 5,
+    "element": "Geo",
+    "icon": "Arataki_Itto_Icon.webp"
+  },
+  {
+    "name": "Chiori",
+    "rarity": 5,
+    "element": "Geo",
+    "icon": "Chiori_Icon.webp"
+  },
+  {
+    "name": "Gorou",
+    "rarity": 4,
+    "element": "Geo",
+    "icon": "Gorou_Icon.webp"
+  },
+  {
+    "name": "Kachina",
+    "rarity": 4,
+    "element": "Geo",
+    "icon": "Kachina_Icon.webp"
+  },
+  {
+    "name": "Navia",
+    "rarity": 5,
+    "element": "Geo",
+    "icon": "Navia_Icon.webp"
+  },
+  {
+    "name": "Ningguang",
+    "rarity": 4,
+    "element": "Geo",
+    "icon": "Ningguang_Icon.webp"
+  },
+  {
+    "name": "Noelle",
+    "rarity": 4,
+    "element": "Geo",
+    "icon": "Noelle_Icon.webp"
+  },
+  {
+    "name": "Traveler (Geo)",
+    "rarity": 5,
+    "element": "Geo",
+    "icon": "Traveler_Icon.webp"
+  },
+  {
+    "name": "Xilonen",
+    "rarity": 5,
+    "element": "Geo",
+    "icon": "Xilonen_Icon.webp"
+  },
+  {
+    "name": "Yun Jin",
+    "rarity": 4,
+    "element": "Geo",
+    "icon": "Yun_Jin_Icon.webp"
+  },
+  {
+    "name": "Zhongli",
+    "rarity": 5,
+    "element": "Geo",
+    "icon": "Zhongli_Icon.webp"
+  },
+  {
+    "name": "Barbara",
+    "rarity": 4,
+    "element": "Hydro",
+    "icon": "Barbara_Icon.webp"
+  },
+  {
+    "name": "Candace",
+    "rarity": 4,
+    "element": "Hydro",
+    "icon": "Candace_Icon.webp"
+  },
+  {
+    "name": "Furina",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Furina_Icon.webp"
+  },
+  {
+    "name": "Kamisato Ayato",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Kamisato_Ayato_Icon.webp"
+  },
+  {
+    "name": "Mona",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Mona_Icon.webp"
+  },
+  {
+    "name": "Mualani",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Mualani_Icon.webp"
+  },
+  {
+    "name": "Neuvillette",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Neuvillette_Icon.webp"
+  },
+  {
+    "name": "Nilou",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Nilou_Icon.webp"
+  },
+  {
+    "name": "Sangonomiya Kokomi",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Sangonomiya_Kokomi_Icon.webp"
+  },
+  {
+    "name": "Sigewinne",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Sigewinne_Icon.webp"
+  },
+  {
+    "name": "Traveler (Hydro)",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Traveler_Icon.webp"
+  },
+  {
+    "name": "Xingqiu",
+    "rarity": 4,
+    "element": "Hydro",
+    "icon": "Xingqiu_Icon.webp"
+  },
+  {
+    "name": "Yelan",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Yelan_Icon.webp"
+  },
+  {
+    "name": "Amber",
+    "rarity": 4,
+    "element": "Pyro",
+    "icon": "Amber_Icon.webp"
+  },
+  {
+    "name": "Arlecchino",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Arlecchino_Icon.webp"
+  },
+  {
+    "name": "Bennett",
+    "rarity": 4,
+    "element": "Pyro",
+    "icon": "Bennett_Icon.webp"
+  },
+  {
+    "name": "Chevreuse",
+    "rarity": 4,
+    "element": "Pyro",
+    "icon": "Chevreuse_Icon.webp"
+  },
+  {
+    "name": "Dehya",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Dehya_Icon.webp"
+  },
+  {
+    "name": "Diluc",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Diluc_Icon.webp"
+  },
+  {
+    "name": "Gaming",
+    "rarity": 4,
+    "element": "Pyro",
+    "icon": "Gaming_Icon.webp"
+  },
+  {
+    "name": "Hu Tao",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Hu_Tao_Icon.webp"
+  },
+  {
+    "name": "Klee",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Klee_Icon.webp"
+  },
+  {
+    "name": "Lyney",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Lyney_Icon.webp"
+  },
+  {
+    "name": "Mavuika",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Mavuika_Icon.webp"
+  },
+  {
+    "name": "Thoma",
+    "rarity": 4,
+    "element": "Pyro",
+    "icon": "Thoma_Icon.webp"
+  },
+  {
+    "name": "Traveler (Pyro)",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Traveler_Icon.webp"
+  },
+  {
+    "name": "Xiangling",
+    "rarity": 4,
+    "element": "Pyro",
+    "icon": "Xiangling_Icon.webp"
+  },
+  {
+    "name": "Xinyan",
+    "rarity": 4,
+    "element": "Pyro",
+    "icon": "Xinyan_Icon.webp"
+  },
+  {
+    "name": "Yanfei",
+    "rarity": 4,
+    "element": "Pyro",
+    "icon": "Yanfei_Icon.webp"
+  },
+  {
+    "name": "Yoimiya",
+    "rarity": 5,
+    "element": "Pyro",
+    "icon": "Yoimiya_Icon.webp"
+  }
+]

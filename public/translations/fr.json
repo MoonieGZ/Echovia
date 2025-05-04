@@ -1,0 +1,124 @@
+{
+  "app": {
+    "title": "Randomiseur Genshin Impact",
+    "loading": "Chargement des données..."
+  },
+  "header": {
+    "back": "Retour",
+    "settings": "Paramètres",
+    "github": "Dépôt GitHub",
+    "reset": "Réinitialiser"
+  },
+  "footer": {
+    "version": "Ver:",
+    "copyright": "Moons © 2025"
+  },
+  "main": {
+    "roll": {
+      "characters": "Tirer les personnages",
+      "bosses": "Tirer les boss",
+      "both": "Tirer les deux"
+    },
+    "characters": "Personnages",
+    "bosses": "Boss",
+    "legend": "Légende",
+    "noRules": "Aucune règle active",
+    "activeRules": "Règles actives:"
+  },
+  "results": {
+    "title": "Résultats de la randomisation",
+    "selectAll": "Tout sélectionner",
+    "unselectAll": "Tout désélectionner",
+    "close": "Fermer",
+    "accept": "Accepter",
+    "noCharactersSelected": "Aucun personnage sélectionné",
+    "selectAtLeastOne": "Veuillez sélectionner au moins un personnage pour accepter.",
+    "charactersAccepted": "Personnages acceptés",
+    "charactersExcluded": "personnage(s) ont été exclus des prochains tirages."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "subtitle": "Personnalisez quels personnages et boss peuvent être sélectionnés dans le randomiseur",
+    "tabs": {
+      "characters": "Personnages",
+      "bosses": "Boss",
+      "excluded": "Exclus",
+      "rules": "Règles"
+    },
+    "filter": {
+      "filter": "Filtrer",
+      "bosses": "Filtrer les boss",
+      "characters": "Filtrer les personnages"
+    },
+    "search": {
+      "search": "Rechercher",
+      "bosses": "Rechercher des boss",
+      "characters": "Rechercher des personnages"
+    },
+    "enableAll": "Tout activer",
+    "disableAll": "Tout désactiver",
+    "disableLegends": "Désactiver les légendes",
+    "coopModeWarning": "Mode coop activé : Les boss non-coop sont automatiquement désactivés.",
+    "coopDisabled": "Coop N/D",
+    "resetConfirm": {
+      "title": "Réinitialiser tous les paramètres?",
+      "description": "Cela réinitialisera tous les paramètres à leurs valeurs par défaut. Cette action est irréversible.",
+      "cancel": "Annuler",
+      "confirm": "Réinitialiser"
+    }
+  },
+  "rules": {
+    "coopMode": {
+      "title": "Mode coop",
+      "description": "Contrôle si plusieurs Voyageurs avec des éléments différents peuvent être sélectionnés lors d'un même tirage",
+      "enabled": "Activé: Plusieurs Voyageurs avec des éléments différents peuvent être sélectionnés",
+      "disabled": "Désactivé: Un seul Voyageur peut être sélectionné par tirage"
+    },
+    "fiveStarLimit": {
+      "title": "Limite de personnages 5 étoiles",
+      "description": "Contrôle le nombre maximum de personnages 5 étoiles pouvant être sélectionnés lors d'un tirage",
+      "enabled": "Activé: Limite le nombre de personnages 5 étoiles par tirage",
+      "disabled": "Désactivé: Pas de limite pour les personnages 5 étoiles",
+      "maximum": "Nombre maximum de personnages 5 étoiles:"
+    },
+    "notEnoughBosses": {
+      "title": "Pas assez de boss disponibles",
+      "description": "Veuillez activer au moins {count} boss dans les paramètres."
+    },
+    "notEnoughCharacters": {
+      "title": "Pas assez de personnages",
+      "description": "N'a pu sélectionner assez de personnages après avoir appliqué toutes les règles. Veuillez ajuster vos paramètres."
+    },
+    "coopConfirm": {
+      "title": "Désactiver les boss non-coop?",
+      "description": "L'activation du mode coop désactivera les boss suivants:",
+      "note": "Ces boss seront automatiquement désactivés dans vos paramètres.",
+      "question": "Voulez-vous continuer?",
+      "cancel": "Annuler",
+      "confirm": "Continuer"
+    }
+  },
+  "excluded": {
+    "title": "Personnages exclus",
+    "enableExclusion": "Activer l'exclusion des personnages",
+    "resetAll": "Tout réinitialiser",
+    "noCharacters": "Aucun personnage n'a encore été exclu. Lorsque vous acceptez des personnages depuis le randomiseur, ils apparaîtront ici.",
+    "clickToReEnable": "Cliquez pour réactiver"
+  },
+  "accepted": {
+    "title": "Personnages sélectionnés",
+    "manage": "Gérer"
+  },
+  "pool": {
+    "availableCharacters": "Personnages disponibles",
+    "availableBosses": "Boss disponibles"
+  },
+  "language": {
+    "en": "Anglais",
+    "es": "Espagnol",
+    "fr": "Français",
+    "de": "Allemand",
+    "ja": "Japonais",
+    "zh": "Chinois"
+  }
+}

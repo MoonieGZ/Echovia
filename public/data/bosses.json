@@ -1,0 +1,611 @@
+[
+  {
+    "name": "Andrius",
+    "icon": "Andrius_Icon.webp",
+    "location": "Mondstadt",
+    "link": "https://genshin-impact.fandom.com/wiki/Andrius",
+    "coop": true
+  },
+  {
+    "name": "Anemo Hypostasis",
+    "icon": "Anemo_Hypostasis_Icon.webp",
+    "location": "Mondstadt",
+    "link": "https://genshin-impact.fandom.com/wiki/Anemo_Hypostasis",
+    "coop": true
+  },
+  {
+    "name": "Cryo Hypostasis",
+    "icon": "Cryo_Hypostasis_Icon.webp",
+    "location": "Mondstadt",
+    "link": "https://genshin-impact.fandom.com/wiki/Cryo_Hypostasis",
+    "coop": true
+  },
+  {
+    "name": "Cryo Regisvine",
+    "icon": "Cryo_Regisvine_Icon.webp",
+    "location": "Mondstadt",
+    "link": "https://genshin-impact.fandom.com/wiki/Cryo_Regisvine",
+    "coop": true
+  },
+  {
+    "name": "Electro Hypostasis",
+    "icon": "Electro_Hypostasis_Icon.webp",
+    "location": "Mondstadt",
+    "link": "https://genshin-impact.fandom.com/wiki/Electro_Hypostasis",
+    "coop": true
+  },
+  {
+    "name": "Stormterror Dvalin",
+    "icon": "Stormterror_Icon.webp",
+    "location": "Mondstadt",
+    "link": "https://genshin-impact.fandom.com/wiki/Stormterror_Dvalin",
+    "coop": false
+  },
+  {
+    "name": "Azhdaha",
+    "icon": "Azhdaha_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/Azhdaha_(Weekly_Boss)",
+    "coop": true
+  },
+  {
+    "name": "Childe",
+    "icon": "Childe_P3_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/Childe",
+    "coop": true
+  },
+  {
+    "name": "Geo Hypostasis",
+    "icon": "Geo_Hypostasis_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/Geo_Hypostasis",
+    "coop": true
+  },
+  {
+    "name": "Oceanid",
+    "icon": "Oceanid_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/Oceanid",
+    "coop": true
+  },
+  {
+    "name": "Primo Geovishap",
+    "icon": "Primo_Geovishap_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/Primo_Geovishap",
+    "coop": true
+  },
+  {
+    "name": "Pyro Regisvine",
+    "icon": "Pyro_Regisvine_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/Pyro_Regisvine",
+    "coop": true
+  },
+  {
+    "name": "Ruin Serpent",
+    "icon": "Ruin_Serpent_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/Ruin_Serpent",
+    "coop": true
+  },
+  {
+    "name": "Solitary Suanni",
+    "icon": "Solitary_Suanni_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/Solitary_Suanni",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Ruler of the Chizhang Mountains",
+    "icon": "Geovishap_Icon.webp",
+    "location": "Liyue",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Rulers_of_the_Chizhang_Mountains_Location.png",
+    "coop": true
+  },
+  {
+    "name": "Bathysmal Vishap Herd",
+    "icon": "Bathysmal_Vishap_Herd_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/Bathysmal_Vishap_Herd",
+    "coop": true
+  },
+  {
+    "name": "Golden Wolflord",
+    "icon": "Golden_Wolflord_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/Golden_Wolflord",
+    "coop": true
+  },
+  {
+    "name": "Hydro Hypostasis",
+    "icon": "Hydro_Hypostasis_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/Hydro_Hypostasis",
+    "coop": true
+  },
+  {
+    "name": "La Signora",
+    "icon": "La_Signora_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/La_Signora",
+    "coop": true
+  },
+  {
+    "name": "Magatsu Mitake Narukami no Mikoto",
+    "icon": "Magatsu_Mitake_Narukami_no_Mikoto_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/Magatsu_Mitake_Narukami_no_Mikoto",
+    "coop": true
+  },
+  {
+    "name": "Maguu Kenki",
+    "icon": "Maguu_Kenki_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/Maguu_Kenki",
+    "coop": true
+  },
+  {
+    "name": "Perpetual Mechanical Array",
+    "icon": "Perpetual_Mechanical_Array_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/Perpetual_Mechanical_Array",
+    "coop": true
+  },
+  {
+    "name": "Pyro Hypostasis",
+    "icon": "Pyro_Hypostasis_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/Pyro_Hypostasis",
+    "coop": true
+  },
+  {
+    "name": "Thunder Manifestation",
+    "icon": "Thunder_Manifestation_Icon.webp",
+    "location": "Inazuma",
+    "link": "https://genshin-impact.fandom.com/wiki/Thunder_Manifestation",
+    "coop": true
+  },
+  {
+    "name": "Aeonblight Drake",
+    "icon": "Aeonblight_Drake_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Aeonblight_Drake",
+    "coop": true
+  },
+  {
+    "name": "Algorithm of Semi-Intransient Matrix of Overseer Network",
+    "icon": "Algorithm_of_Semi-Intransient_Matrix_of_Overseer_Network_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Algorithm_of_Semi-Intransient_Matrix_of_Overseer_Network",
+    "coop": true
+  },
+  {
+    "name": "All-Devouring Narwhal",
+    "icon": "All-Devouring_Narwhal_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/All-Devouring_Narwhal",
+    "coop": true
+  },
+  {
+    "name": "Dendro Hypostasis",
+    "icon": "Dendro_Hypostasis_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Dendro_Hypostasis",
+    "coop": true
+  },
+  {
+    "name": "Electro Regisvine",
+    "icon": "Electro_Regisvine_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Electro_Regisvine",
+    "coop": true
+  },
+  {
+    "name": "Everlasting Lord of Arcane Wisdom",
+    "icon": "Everlasting_Lord_of_Arcane_Wisdom_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Everlasting_Lord_of_Arcane_Wisdom",
+    "coop": true
+  },
+  {
+    "name": "Guardian of Apep's Oasis",
+    "icon": "Guardian_of_Apeps_Oasis_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Guardian_of_Apep%27s_Oasis",
+    "coop": true
+  },
+  {
+    "name": "Iniquitous Baptist",
+    "icon": "Iniquitous_Baptist_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Iniquitous_Baptist",
+    "coop": true
+  },
+  {
+    "name": "Jadeplume Terrorshroom",
+    "icon": "Jadeplume_Terrorshroom_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Jadeplume_Terrorshroom",
+    "coop": true
+  },
+  {
+    "name": "Setekh Wenut",
+    "icon": "Setekh_Wenut_Icon.webp",
+    "location": "Sumeru",
+    "link": "https://genshin-impact.fandom.com/wiki/Setekh_Wenut",
+    "coop": true
+  },
+  {
+    "name": "Emperor of Fire and Iron",
+    "icon": "Emperor_of_Fire_and_Iron_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/Emperor_of_Fire_and_Iron",
+    "coop": true
+  },
+  {
+    "name": "Hydro Tulpa",
+    "icon": "Hydro_Tulpa_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/Hydro_Tulpa",
+    "coop": true
+  },
+  {
+    "name": "Icewind Suite (Coppelius)",
+    "icon": "Icewind_Suite_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/Icewind_Suite",
+    "coop": true
+  },
+  {
+    "name": "Icewind Suite (Coppellia)",
+    "icon": "Icewind_Suite_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/Icewind_Suite",
+    "coop": true
+  },
+  {
+    "name": "Millennial Pearl Seahorse",
+    "icon": "Millennial_Pearl_Seahorse_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/Millennial_Pearl_Seahorse",
+    "coop": true
+  },
+  {
+    "name": "Prototype Cal. Breguet",
+    "icon": "Prototype_Cal._Breguet_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/Prototype_Cal._Breguet",
+    "coop": true
+  },
+  {
+    "name": "Statue of Marble and Brass",
+    "icon": "Statue_of_Marble_and_Brass_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/Statue_of_Marble_and_Brass",
+    "coop": true
+  },
+  {
+    "name": "The Knave",
+    "icon": "The_Knave_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/The_Knave",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Automated Supercomputing Field Generator",
+    "icon": "Arithmetic_Enhancer_Mek_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Automated_Supercomputing_Field_Generator_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Chassanion",
+    "icon": "Hat_Jellyfish_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Chassanion_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Cineas",
+    "icon": "Primordial_Bathysmal_Vishap_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Cineas_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Deianeira of Snezhevna",
+    "icon": "Wind_Operative_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Deianeira_of_Snezhevna_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Dobharcu, Lord of the Hidden",
+    "icon": "Blubberbeast_Local_Legend_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Dobharcu,_Lord_of_the_Hidden_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Fading Veteran",
+    "icon": "Blubberbeast_Local_Legend_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Fading_Veteran_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Iron Viscount",
+    "icon": "Sternshield_Crab_Local_Legend_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Iron_Viscount_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Liam",
+    "icon": "Liam_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Liam_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Luachra the Brilliant",
+    "icon": "Cherubic_Sea_Hare_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Luachra_the_Brilliant_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Mageblade Corrouge",
+    "icon": "Hat_Jellyfish_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Mageblade_Corrouge_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Ninianne of the Lake",
+    "icon": "Tainted_Water-Splitting_Phantasm_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Ninianne_of_the_Lake_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Ocean Circuit Judge",
+    "icon": "Sternshield_Crab_Local_Legend_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Ocean_Circuit_Judge_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Rocky Avildsen",
+    "icon": "Rocky_Avildsen_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Rocky_Avildsen_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Swords of the Gorge",
+    "icon": "Hunters_Ray_Local_Legend_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Swords_of_the_Gorge_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - The Fairy Knight Twins",
+    "icon": "Hunters_Ray_Local_Legend_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_The_Fairy_Knight_Twins_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Vivianne of the Lake",
+    "icon": "Tainted_Water-Spouting_Phantasm_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Vivianne_of_the_Lake_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Yseut",
+    "icon": "Frost_Operative_Icon.webp",
+    "location": "Fontaine",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Yseut_Location.png",
+    "coop": true
+  },
+  {
+    "name": "Holawaqa Ngoubou",
+    "icon": "Holawaqa_Ngoubou_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/Holawaqa_Ngoubou",
+    "coop": true
+  },
+  {
+    "name": "Kongamato",
+    "icon": "Kongamato_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/Kongamato",
+    "coop": true
+  },
+  {
+    "name": "Lava Dragon Statue",
+    "icon": "Lava_Dragon_Statue_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/Lava_Dragon_Statue",
+    "coop": true
+  },
+  {
+    "name": "Lord of Eroded Primal Fire",
+    "icon": "Lord_of_Eroded_Primal_Fire_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/Lord_of_Eroded_Primal_Fire",
+    "coop": true
+  },
+  {
+    "name": "Secret Source Automaton Configuration Device",
+    "icon": "Secret_Source_Automaton_Configuration_Device_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/Secret_Source_Automaton_Configuration_Device",
+    "coop": true
+  },
+  {
+    "name": "Tenebrous Papilla",
+    "icon": "Tenebrous_Papilla_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/Tenebrous_Papilla",
+    "coop": true
+  },
+  {
+    "name": "Wayward Hermetic Spiritspeaker",
+    "icon": "Wayward_Hermetic_Spiritspeaker_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/Wayward_Hermetic_Spiritspeaker",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Atlatl's Blessing",
+    "icon": "Rock-Cavernous_Wayob_Manifestation_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Atlatl%27s_Blessing_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Balachko",
+    "icon": "Fatui_Pyro_Agent_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Balachko_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Battlegoat & Ironclaw",
+    "icon": "Battlegoat_Ironclaw_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:%22Battlegoat%22_and_%22Ironclaw%22.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Bronzelock",
+    "icon": "Ruin_Drake_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Bronzelock_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Chimalli's Shade",
+    "icon": "Flow-Inverted_Wayob_Manifestation_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Chimalli%27s_Shade_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Cihuacoatl of Chimeric Bone",
+    "icon": "Yumkasaurus_Warrior_Flowing_Skyfire_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Cihuacoatl_of_Chimeric_Bone_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Cocijo",
+    "icon": "Cocijo_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Cocijo_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - He Never Dies",
+    "icon": "He_Never_Dies_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_He_Never_Dies_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Ichcahuipilli's Aegis",
+    "icon": "Foliar-Swift_Wayob_Manifestation_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Ichcahuipilli%27s_Aegis_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Infinitesimal",
+    "icon": "Eroding_Avatar_of_Lava_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:%22Infinitesimal%22_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Ironbeard",
+    "icon": "Qucusaurus_Warrior_Heartstar_Hammer_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Ironbeard_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Polychrome Tri-Stars",
+    "icon": "Fatui_Pyroslinger_Bracer_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Polychrome_Tri-Stars_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Potapo's Solidarity",
+    "icon": "Biting-Cold_Wayob_Manifestation_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Potapo%27s_Solidarity_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Reji",
+    "icon": "Tatankasaurus_Warrior_Spiritlight_Chaser_Icon.webp",
+    "location": "Natlan",
+    "link": "https://img.game8.co/4139191/4fb0d2e4ff894e7ecff5d89b7466caf7.png/show",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Rilai",
+    "icon": "Iktomisaurus_Warrior_Cryocrystal_Cannon_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Rilai_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Sappho Amidst the Waves",
+    "icon": "Koholasaurus_Warrior_Waveshuttler_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Sappho_Amidst_The_Waves_Location.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Spirit of the Fallen Dawnstar",
+    "icon": "Iktomisaurus_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Spirit_of_the_Fallen_Dawnstar_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - The Peak",
+    "icon": "The_Peak_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:The_Peak.png",
+    "coop": true
+  },
+  {
+    "name": "⭐ - Tlatzacuilotl",
+    "icon": "Tepetlisaurus_Warrior_Rockbreaker_Blade_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Tlatzacuilotl_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Tupayo's Aid",
+    "icon": "Burning-Aflame_Wayob_Manifestation_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/File:Achievement_Tupayo%27s_Aid_Location.png",
+    "coop": false
+  },
+  {
+    "name": "⭐ - Tupu's Lushness",
+    "icon": "Thundering_Wayob_Manifestation_Icon.webp",
+    "location": "Natlan",
+    "link": "https://img.game8.co/4139387/9f7ae55e0d913b673078ad1a1fbc9dfb.png/show",
+    "coop": false
+  }
+]

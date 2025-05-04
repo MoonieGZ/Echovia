@@ -7,6 +7,7 @@ import {
   Settings2,
   SquareTerminal,
 } from "lucide-react"
+import { usePathname } from "next/navigation"
 
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
@@ -22,99 +23,101 @@ import {
 } from "@/components/ui/sidebar"
 import { GiCardRandom } from "react-icons/gi"
 
-// This is sample data.
-const data = {
-  user: {
-    name: "Moons",
-    email: "me@mnsy.dev",
-    avatar: "/globe.svg",
-  },
-  navMain: [
-    {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      isActive: true,
-      items: [
-        {
-          title: "Genshin Impact",
-          url: "#",
-        },
-        {
-          title: "Honkai: Star Rail",
-          url: "#",
-        },
-        {
-          title: "Wuthering Waves",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Friends",
-      url: "#",
-      icon: ContactRound,
-      items: [
-        {
-          title: "List",
-          url: "#",
-        },
-        {
-          title: "Requests",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Guides",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Characters",
-          url: "#",
-        },
-        {
-          title: "Bosses",
-          url: "#",
-        },
-        {
-          title: "Rules",
-          url: "#",
-        },
-      ],
-    },
-  ],
-}
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname()
+
+  const data = {
+    user: {
+      name: "Moons",
+      email: "me@mnsy.dev",
+      avatar: "/globe.svg",
+    },
+    navMain: [
+      {
+        title: "Playground",
+        url: "#",
+        icon: SquareTerminal,
+        isActive: true,
+        items: [
+          {
+            title: "Genshin Impact",
+            url: "#",
+          },
+          {
+            title: "Honkai: Star Rail",
+            url: "/wip",
+          },
+          {
+            title: "Wuthering Waves",
+            url: "/wip",
+          },
+        ],
+      },
+      {
+        title: "Friends",
+        url: "/wip",
+        icon: ContactRound,
+        items: [
+          {
+            title: "List",
+            url: "/wip",
+          },
+          {
+            title: "Requests",
+            url: "/wip",
+          },
+        ],
+      },
+      {
+        title: "Guides",
+        url: "/wip",
+        icon: BookOpen,
+        items: [
+          {
+            title: "Introduction",
+            url: "/wip",
+          },
+          {
+            title: "Get Started",
+            url: "/wip",
+          },
+          {
+            title: "Tutorials",
+            url: "/wip",
+          },
+          {
+            title: "Changelog",
+            url: "/wip",
+          },
+        ],
+      },
+      {
+        title: "Settings",
+        url: "/settings",
+        icon: Settings2,
+        isActive: pathname?.startsWith("/settings"),
+        items: [
+          {
+            title: "General",
+            url: "/settings",
+          },
+          {
+            title: "Characters",
+            url: "/settings#characters-section",
+          },
+          {
+            title: "Bosses",
+            url: "/settings#bosses-section",
+          },
+          {
+            title: "Rules",
+            url: "/settings#rules-section",
+          },
+        ],
+      },
+    ],
+  }
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -124,7 +127,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
+              <a href="/">
                 <GiCardRandom className="!size-8" />
                 <span className="text-base font-semibold">Echovia</span>
               </a>
