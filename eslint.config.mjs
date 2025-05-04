@@ -1,27 +1,34 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import tseslint from 'typescript-eslint'
-import pluginReact from 'eslint-plugin-react'
-import { defineConfig } from 'eslint/config'
+import js from "@eslint/js";
+import globals from "globals";
+import tseslint from "typescript-eslint";
+import pluginReact from "eslint-plugin-react";
+import nextPlugin from "@next/eslint-plugin-next";
+import { defineConfig } from "eslint/config";
 
 export default defineConfig([
   {
     ignores: ["tsconfig.json"],
   },
   {
-    'settings': {
-      'react': {
-        'version': 'detect'
-      }
-    }
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
   },
-  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'], plugins: { js }, extends: ['js/recommended'] },
-  { files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'], languageOptions: { globals: globals.browser } },
+  {
+    files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
+    plugins: { js },
+    extends: ["js/recommended"],
+  },
+  {
+    files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
+    languageOptions: { globals: globals.browser },
+  },
   {
     rules: {
-      'indent': ['error', 2],
-      'semi': ['error', 'never'],
-    }
+      indent: ["error", 2],
+    },
   },
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
@@ -31,4 +38,15 @@ export default defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
     },
   },
-])
+  {
+    files: ["**/*.{js,jsx,ts,tsx}"],
+    plugins: {
+      "@next/next": nextPlugin,
+    },
+    rules: {
+      ...nextPlugin.configs.recommended.rules,
+      "@next/next/no-html-link-for-pages": "error",
+      "@next/next/no-img-element": "warn",
+    },
+  },
+]);
