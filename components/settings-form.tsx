@@ -222,7 +222,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                     {type === "characters" ? (
                       <>
                         <Image
-                          src={`/elements/${group.toLowerCase()}.webp`}
+                          src={`/elements/${group}.webp`}
                           alt={group}
                           width={24}
                           height={24}
