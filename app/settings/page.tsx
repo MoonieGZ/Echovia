@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sidebar"
 import React from "react"
 import { useLanguage } from "@/lib/language-provider"
+import RulesSection from "@/components/rules-section"
 
 export default function SettingsPage() {
   const { t } = useLanguage()
@@ -32,6 +33,7 @@ export default function SettingsPage() {
                 <div className="space-y-8">
                   <SettingsForm type="characters" />
                   <SettingsForm type="bosses" />
+                  <RulesSection />
                 </div>
               </div>
             </div>

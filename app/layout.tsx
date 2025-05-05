@@ -7,7 +7,7 @@ import { Suspense } from "react"
 import { Analytics } from "@vercel/analytics/react"
 import { GenshinDataProvider } from "@/lib/genshin-data-provider"
 import { LanguageProvider } from "@/lib/language-provider"
-
+import { Toaster } from "@/components/ui/sonner"
 export const metadata: Metadata = {
   title: "Echovia",
   description: "Minigames for anime games.",
@@ -33,6 +33,7 @@ export default function RootLayout({
               <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
                 {children}
               </Suspense>
+              <Toaster />
             </GenshinDataProvider>
           </LanguageProvider>
         </ThemeProvider>

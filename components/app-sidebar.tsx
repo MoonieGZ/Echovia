@@ -99,10 +99,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         isActive: pathname?.startsWith("/settings"),
         items: [
           {
-            title: "General",
-            url: "/settings",
-          },
-          {
             title: "Characters",
             url: "/settings#characters-section",
           },

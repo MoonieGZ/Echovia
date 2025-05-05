@@ -267,20 +267,46 @@ export function GenshinDataProvider({ children }: { children: React.ReactNode })
 
   // Get non-coop bosses
   const getNonCoopBosses = () => {
-    return bosses.filter((boss) => !boss.coop)
+    return bosses.filter((boss) => !boss.coop && settings.bosses.enabled[boss.name])
   }
 
   // Toggle coop mode
   const toggleCoopMode = (enabled: boolean) => {
-    const updatedSettings = {
-      ...settings,
-      rules: {
-        ...settings.rules,
-        coopMode: enabled,
-      },
+    // If enabling co-op mode, disable all non-co-op bosses
+    if (enabled) {
+      const updatedEnabledBosses = { ...settings.bosses.enabled }
+
+      bosses.forEach((boss) => {
+        if (!boss.coop) {
+          updatedEnabledBosses[boss.name] = false
+        }
+      })
+
+      const updatedSettings = {
+        ...settings,
+        rules: {
+          ...settings.rules,
+          coopMode: enabled,
+        },
+        bosses: {
+          ...settings.bosses,
+          enabled: updatedEnabledBosses,
+        },
+      }
+      setSettings(updatedSettings)
+      saveSettings(updatedSettings)
+    } else {
+      // Just toggle the co-op mode without affecting bosses
+      const updatedSettings = {
+        ...settings,
+        rules: {
+          ...settings.rules,
+          coopMode: enabled,
+        },
+      }
+      setSettings(updatedSettings)
+      saveSettings(updatedSettings)
     }
-    setSettings(updatedSettings)
-    saveSettings(updatedSettings)
   }
 
   // Toggle limit five stars

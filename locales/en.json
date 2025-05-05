@@ -21,9 +21,7 @@
     },
     "characters": "Characters",
     "bosses": "Bosses",
-    "legend": "Legend",
-    "noRules": "No active rules",
-    "activeRules": "Active rules:"
+    "legend": "Legend"
   },
   "results": {
     "title": "Randomization Results",
@@ -55,6 +53,12 @@
       "bosses": "Search bosses",
       "characters": "Search characters"
     },
+    "import": {
+      "title": "Import Characters",
+      "success": "Imported {x} characters successfully",
+      "error": "Error importing characters",
+      "invalidFormat": "Invalid file format"
+    },
     "enableAll": "Enable All",
     "disableAll": "Disable All",
     "disableLegends": "Disable Legends",
@@ -68,6 +72,9 @@
     }
   },
   "rules": {
+    "title": "Rules",
+    "activeRules": "Active rules:",
+    "noActiveRules": "No active rules",
     "coopMode": {
       "title": "Co-op Mode",
       "description": "Controls whether multiple Travelers with different elements can be selected in a single roll",

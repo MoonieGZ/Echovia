@@ -10,7 +10,8 @@ import { useState } from "react"
 import Image from "next/image"
 import { useLanguage } from "@/lib/language-provider"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Search, ExternalLink } from "lucide-react"
+import { Search, ExternalLink, Upload } from "lucide-react"
+import { toast } from "sonner"
 import React from "react"
 
 export default function SettingsForm({ type }: { type: "characters" | "bosses" }) {
@@ -127,9 +128,68 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
     <Card id={type === "characters" ? "characters-section" : "bosses-section"}>
       <CardHeader>
         <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <span className="text-lg font-medium">{type === "characters" ? t("settings.tabs.characters") : t("settings.tabs.bosses")}</span>
+          <span className="text-3xl font-medium">{type === "characters" ? t("settings.tabs.characters") : t("settings.tabs.bosses")}</span>
           <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center space-x-2">
+              {type === "characters" && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    const fileInput = document.createElement('input')
+                    fileInput.type = 'file'
+                    fileInput.accept = '.json'
+                    fileInput.onchange = async (e) => {
+                      const file = (e.target as HTMLInputElement).files?.[0]
+                      if (!file) return
+
+                      const importProcess = async () => {
+                        const text = await file.text()
+                        const data = JSON.parse(text)
+                        
+                        if (!data.characters || !Array.isArray(data.characters)) {
+                          throw new Error(t("settings.import.invalidFormat"))
+                        }
+
+                        // Disable all characters first
+                        const updatedEnabled = { ...enabledMap }
+                        items.forEach((item: any) => {
+                          updatedEnabled[item.name] = false
+                        })
+
+                        // Enable only characters from the import file
+                        data.characters.forEach((char: any) => {
+                          const charName = char.key.replace(/([A-Z])/g, ' $1').trim()
+                          if (Object.prototype.hasOwnProperty.call(updatedEnabled, charName)) {
+                            updatedEnabled[charName] = true
+                          }
+                        })
+
+                        updateSettings({
+                          characters: {
+                            ...settings.characters,
+                            enabled: updatedEnabled,
+                          },
+                        })
+
+                        await new Promise(resolve => setTimeout(resolve, 500))
+                        
+                        return data
+                      }
+
+                      toast.promise(importProcess, {
+                        loading: t("settings.import.loading"),
+                        success: (data) => t("settings.import.success").replace("{x}", data.characters.length.toString()),
+                        error: (err) => err.message || t("settings.import.error"),
+                      })
+                    }
+                    fileInput.click()
+                  }}
+                >
+                  <Upload className="h-4 w-4 mr-2" />
+                  {t("settings.import.title")}
+                </Button>
+              )}
               <Button
                 variant="outline"
                 size="sm"
@@ -200,7 +260,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                 {t("settings.disableLegends")}
               </Button>
             )}
-            <div className="relative flex-1 min-w-[200px]">
+            <div className="relative">
               <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder={t("settings.search.search")}
@@ -257,64 +317,63 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                   {filteredGroups[group].map((item: any) => (
                     <div
                       key={item.name}
-                      className={`flex items-center space-x-2 p-2 rounded-lg border cursor-pointer ${
-                        enabledMap[item.name] ? "border" : "border-muted"
-                      }`}
-                      onClick={(e) => {
-                        // Prevent toggling if clicking the switch
-                        if (!(e.target as HTMLElement).closest('.switch-container')) {
-                          updateEnabled(item.name, !enabledMap[item.name])
-                        }
-                      }}
+                      className="flex items-center justify-between p-2 rounded-lg border hover:bg-muted"
                     >
-                      <Image
-                        src={
-                          type === "bosses"
-                            ? `/bosses/${item.location}/${item.icon}?height=32&width=32`
-                            : `/characters/${item.element}/${item.icon}?height=32&width=32`
-                        }
-                        alt={item.name}
-                        width={32}
-                        height={32}
-                        className={`rounded-sm ${!enabledMap[item.name] ? "grayscale opacity-50" : ""}`}
-                      />
-                      <div className="flex-1 min-w-0 flex flex-col justify-center">
-                        <div className="flex items-center gap-1">
-                          <p 
-                            className={`text-sm font-medium truncate ${!enabledMap[item.name] ? "text-muted-foreground" : ""}`}
-                            title={item.name}
-                          >
-                            {item.name.replace("⭐ - ", "")}
-                          </p>
-                          {type === "bosses" && item.link && (
-                            <a
-                              href={item.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-muted-foreground hover:text-foreground transition-colors"
-                              title={t("settings.openWiki")}
-                              onClick={(e) => e.stopPropagation()}
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src={
+                            type === "bosses"
+                              ? `/bosses/${item.location}/${item.icon}?height=32&width=32`
+                              : `/characters/${item.element}/${item.icon}?height=32&width=32`
+                          }
+                          alt={item.name}
+                          width={32}
+                          height={32}
+                          className="rounded-full"
+                        />
+                        <div className="flex flex-col">
+                          <div className="flex items-center gap-1">
+                            <p 
+                              className={`text-sm font-medium truncate ${!enabledMap[item.name] ? "text-muted-foreground" : ""}`}
+                              title={item.name}
                             >
-                              <ExternalLink className="h-3 w-3" />
-                            </a>
+                              {item.name.replace("⭐ - ", "")}
+                            </p>
+                            {type === "bosses" && item.link && (
+                              <a
+                                href={item.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-muted-foreground hover:text-foreground transition-colors"
+                                title={t("settings.openWiki")}
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <ExternalLink className="h-3 w-3" />
+                              </a>
+                            )}
+                          </div>
+                          {type === "characters" ? (
+                            <p className="text-xs text-muted-foreground">
+                              {item.rarity}★
+                            </p>
+                          ) : (
+                            <p className="text-xs text-muted-foreground">
+                              {item.name.startsWith("⭐ - ") && t("main.legend")}
+                              {item.name.startsWith("⭐ - ") && !(item as any).coop && " • "}
+                              {!(item as any).coop && t("settings.coopDisabled")}
+                            </p>
                           )}
                         </div>
-                        {type === "characters" ? (
-                          <p className="text-xs text-muted-foreground">
-                            {item.rarity}★
-                          </p>
-                        ) : (
-                          <p className="text-xs text-muted-foreground">
-                            {item.name.startsWith("⭐ - ") && t("main.legend")}
-                            {item.name.startsWith("⭐ - ") && !(item as any).coop && " • "}
-                            {!(item as any).coop && t("settings.coopDisabled")}
-                          </p>
-                        )}
                       </div>
                       <div className="switch-container flex items-center" onClick={(e) => e.stopPropagation()}>
                         <Switch
                           checked={enabledMap[item.name]}
-                          onCheckedChange={(checked: boolean) => updateEnabled(item.name, checked)}
+                          onCheckedChange={(checked: boolean) => {
+                            if (!(type === "bosses" && settings.rules.coopMode && !(item as any).coop)) {
+                              updateEnabled(item.name, checked)
+                            }
+                          }}
+                          disabled={type === "bosses" && settings.rules.coopMode && !(item as any).coop}
                         />
                       </div>
                     </div>
@@ -327,4 +386,4 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
       </CardContent>
     </Card>
   )
-} 
+}

@@ -38,11 +38,19 @@ export function NavMain({
   const isCollapsed = state === "collapsed"
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
-    if (url.startsWith('#')) {
-      e.preventDefault()
-      const element = document.querySelector(url)
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
+    // Check if the URL contains a hash
+    const hashIndex = url.indexOf('#')
+    if (hashIndex !== -1) {
+      const path = url.substring(0, hashIndex)
+      const hash = url.substring(hashIndex)
+      
+      // If we're on the same page, prevent default and scroll
+      if (path === window.location.pathname) {
+        e.preventDefault()
+        const element = document.querySelector(hash)
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
       }
     }
   }
