@@ -28,6 +28,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Install tsx
+        run: pnpm add -D tsx
+
       - name: Run Translation Validator
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
