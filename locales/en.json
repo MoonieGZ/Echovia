@@ -33,7 +33,8 @@
     "availableCharacters": "Available characters",
     "availableBosses": "Available bosses",
     "characterCount": "Character count",
-    "bossCount": "Boss count"
+    "bossCount": "Boss count",
+    "randomizer": "Randomizer"
   },
   "results": {
     "title": "Randomization Results",
@@ -85,7 +86,7 @@
   },
   "rules": {
     "title": "Rules",
-    "activeRules": "Active rules:",
+    "activeRules": "Active rules",
     "noActiveRules": "No active rules",
     "coopMode": {
       "title": "Co-op Mode",

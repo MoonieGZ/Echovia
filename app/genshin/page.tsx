@@ -434,12 +434,13 @@ export default function GenshinPage() {
                   </Card>
                   <Card className="@container/card">
                     <CardHeader>
-                      <CardTitle>{t("main.activeRules")}</CardTitle>
+                      <CardTitle>{t("rules.activeRules")}</CardTitle>
                     </CardHeader>
                     <div className="p-4 flex flex-wrap gap-2">
+                      {/* TODO: move to own translations */}
                       {settings.rules.coopMode && <span className="badge">Co-op Mode: Enabled</span>}
                       {settings.rules.limitFiveStars && <span className="badge">5★ Limit: Max {settings.rules.maxFiveStars}</span>}
-                      {!settings.rules.coopMode && !settings.rules.limitFiveStars && <span className="text-muted-foreground">{t("main.noRules")}</span>}
+                      {!settings.rules.coopMode && !settings.rules.limitFiveStars && <span className="text-muted-foreground">{t("rules.noActiveRules")}</span>}
                     </div>
                   </Card>
                   {settings.enableExclusion && settings.characters.excluded.length > 0 && (
