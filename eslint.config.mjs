@@ -33,7 +33,7 @@ export default defineConfig([
   tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   {
-    files: ["**/*.tsx"],
+    files: ["**/*.tsx", "**/*.ts"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
     },

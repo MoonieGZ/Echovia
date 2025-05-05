@@ -42,9 +42,8 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const loadTranslations = async () => {
       try {
-        const response = await fetch(`/translations/${language}.json`)
-        const data = await response.json()
-        setTranslations(data)
+        const data = await import(`@/locales/${language}.json`)
+        setTranslations(data.default)
         setIsLoading(false)
       } catch (error) {
         console.error("Failed to load translations:", error)
