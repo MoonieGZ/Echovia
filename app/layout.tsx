@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/react"
 import { GenshinDataProvider } from "@/lib/genshin-data-provider"
 import { LanguageProvider } from "@/lib/language-provider"
 import { Toaster } from "@/components/ui/sonner"
+
 export const metadata: Metadata = {
   title: "Echovia",
   description: "Minigames for anime games.",

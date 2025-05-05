@@ -1,9 +1,9 @@
-import js from "@eslint/js";
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import pluginReact from "eslint-plugin-react";
-import nextPlugin from "@next/eslint-plugin-next";
-import { defineConfig } from "eslint/config";
+import js from "@eslint/js"
+import globals from "globals"
+import tseslint from "typescript-eslint"
+import pluginReact from "eslint-plugin-react"
+import nextPlugin from "@next/eslint-plugin-next"
+import { defineConfig } from "eslint/config"
 
 export default defineConfig([
   {
@@ -28,6 +28,9 @@ export default defineConfig([
   {
     rules: {
       indent: ["error", 2],
+      semi: ["error", "never"],
+      "no-unexpected-multiline": "error",
+      "semi-style": ["error", "first"],
     },
   },
   tseslint.configs.recommended,
@@ -49,4 +52,4 @@ export default defineConfig([
       "@next/next/no-img-element": "warn",
     },
   },
-]);
+])

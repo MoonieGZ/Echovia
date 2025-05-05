@@ -13,15 +13,20 @@
     "version": "Ver:",
     "copyright": "Moons © 2025"
   },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "characters": "Characters",
+    "bosses": "Bosses",
+    "legend": "Legend",
+    "import": "Import"
+  },
   "main": {
     "roll": {
       "characters": "Roll Characters",
       "bosses": "Roll Bosses",
       "both": "Roll Both"
-    },
-    "characters": "Characters",
-    "bosses": "Bosses",
-    "legend": "Legend"
+    }
   },
   "results": {
     "title": "Randomization Results",
@@ -37,12 +42,9 @@
   "settings": {
     "title": "Settings",
     "subtitle": "Customize which characters and bosses can be selected in the randomizer",
-    "tabs": {
-      "characters": "Characters",
-      "bosses": "Bosses",
-      "excluded": "Excluded",
-      "rules": "Rules"
-    },
+    "excluded": "Excluded",
+    "rules": "Rules",
+    "openWiki": "Open Wiki for this boss",
     "filter": {
       "filter": "Filter",
       "bosses": "Filter bosses",
@@ -57,7 +59,10 @@
       "title": "Import Characters",
       "success": "Imported {x} characters successfully",
       "error": "Error importing characters",
-      "invalidFormat": "Invalid file format"
+      "invalidFormat": "Invalid file format",
+      "minLevel": "Minimum Level",
+      "level": "Level",
+      "description": "You can use Genshin Kamera to export your characters.\nHere you can select the minimum level of the characters you want to import."
     },
     "enableAll": "Enable All",
     "disableAll": "Disable All",

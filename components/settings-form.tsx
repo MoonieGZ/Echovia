@@ -13,6 +13,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Search, ExternalLink, Upload } from "lucide-react"
 import { toast } from "sonner"
 import React from "react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function SettingsForm({ type }: { type: "characters" | "bosses" }) {
   const {
@@ -27,6 +41,9 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
   } = useGenshinData()
   const [filter, setFilter] = useState("")
   const { t } = useLanguage()
+  const [showLevelDialog, setShowLevelDialog] = useState(false)
+  const [selectedLevel, setSelectedLevel] = useState("20")
+  const [importData, setImportData] = useState<any>(null)
 
   const items = type === "characters" ? characters : bosses
   const updateEnabled = type === "characters" ? updateCharacterEnabled : updateBossEnabled
@@ -125,10 +142,10 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
   }
 
   return (
-    <Card id={type === "characters" ? "characters-section" : "bosses-section"}>
+    <Card id={type === "characters" ? "characters-section" : "bosses-section"} className="scroll-mt-14">
       <CardHeader>
         <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <span className="text-3xl font-medium">{type === "characters" ? t("settings.tabs.characters") : t("settings.tabs.bosses")}</span>
+          <span className="text-3xl font-medium">{type === "characters" ? t("common.characters") : t("common.bosses")}</span>
           <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center space-x-2">
               {type === "characters" && (
@@ -143,7 +160,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                       const file = (e.target as HTMLInputElement).files?.[0]
                       if (!file) return
 
-                      const importProcess = async () => {
+                      try {
                         const text = await file.text()
                         const data = JSON.parse(text)
                         
@@ -151,37 +168,12 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                           throw new Error(t("settings.import.invalidFormat"))
                         }
 
-                        // Disable all characters first
-                        const updatedEnabled = { ...enabledMap }
-                        items.forEach((item: any) => {
-                          updatedEnabled[item.name] = false
-                        })
-
-                        // Enable only characters from the import file
-                        data.characters.forEach((char: any) => {
-                          const charName = char.key.replace(/([A-Z])/g, ' $1').trim()
-                          if (Object.prototype.hasOwnProperty.call(updatedEnabled, charName)) {
-                            updatedEnabled[charName] = true
-                          }
-                        })
-
-                        updateSettings({
-                          characters: {
-                            ...settings.characters,
-                            enabled: updatedEnabled,
-                          },
-                        })
-
-                        await new Promise(resolve => setTimeout(resolve, 500))
-                        
-                        return data
+                        setImportData(data)
+                        setShowLevelDialog(true)
+                      } catch (error) {
+                        console.error(error)
+                        toast.error(t("settings.import.error"))
                       }
-
-                      toast.promise(importProcess, {
-                        loading: t("settings.import.loading"),
-                        success: (data) => t("settings.import.success").replace("{x}", data.characters.length.toString()),
-                        error: (err) => err.message || t("settings.import.error"),
-                      })
                     }
                     fileInput.click()
                   }}
@@ -317,9 +309,14 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                   {filteredGroups[group].map((item: any) => (
                     <div
                       key={item.name}
-                      className="flex items-center justify-between p-2 rounded-lg border hover:bg-muted"
+                      className="flex items-center justify-between p-2 rounded-lg border hover:bg-muted cursor-pointer"
+                      onClick={() => {
+                        if (!(type === "bosses" && settings.rules.coopMode && !(item as any).coop)) {
+                          updateEnabled(item.name, !enabledMap[item.name])
+                        }
+                      }}
                     >
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 min-w-0 flex-1">
                         <Image
                           src={
                             type === "bosses"
@@ -329,9 +326,9 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                           alt={item.name}
                           width={32}
                           height={32}
-                          className="rounded-full"
+                          className="rounded-full flex-shrink-0"
                         />
-                        <div className="flex flex-col">
+                        <div className="flex flex-col min-w-0 flex-1">
                           <div className="flex items-center gap-1">
                             <p 
                               className={`text-sm font-medium truncate ${!enabledMap[item.name] ? "text-muted-foreground" : ""}`}
@@ -344,7 +341,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                                 href={item.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-muted-foreground hover:text-foreground transition-colors"
+                                className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0 ml-auto mr-2"
                                 title={t("settings.openWiki")}
                                 onClick={(e) => e.stopPropagation()}
                               >
@@ -358,7 +355,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                             </p>
                           ) : (
                             <p className="text-xs text-muted-foreground">
-                              {item.name.startsWith("⭐ - ") && t("main.legend")}
+                              {item.name.startsWith("⭐ - ") && t("common.legend")}
                               {item.name.startsWith("⭐ - ") && !(item as any).coop && " • "}
                               {!(item as any).coop && t("settings.coopDisabled")}
                             </p>
@@ -383,6 +380,94 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
             ))}
           </div>
         </ScrollArea>
+        <Dialog open={showLevelDialog} onOpenChange={setShowLevelDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("settings.import.title")}</DialogTitle>
+              <p className="text-sm text-muted-foreground whitespace-pre-line">
+                {t("settings.import.description")}
+              </p>
+            </DialogHeader>
+            <div className="flex items-center justify-between py-4">
+              <Label htmlFor="level-select">{t("settings.import.minLevel")}:</Label>
+              <Select value={selectedLevel} onValueChange={setSelectedLevel}>
+                <SelectTrigger id="level-select" className="w-[180px]">
+                  <SelectValue placeholder="Select level" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[20, 30, 40, 50, 60, 70, 80, 90].map((level) => (
+                    <SelectItem key={level} value={level.toString()}>
+                      {t("settings.import.level")} {level}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowLevelDialog(false)
+                  setImportData(null)
+                }}
+              >
+                {t("common.cancel")}
+              </Button>
+              <Button
+                onClick={() => {
+                  const importProcess = async () => {
+                    if (!importData) return
+
+                    // Disable all characters first
+                    const updatedEnabled = { ...enabledMap }
+                    items.forEach((item: any) => {
+                      updatedEnabled[item.name] = false
+                    })
+
+                    // Enable only characters from the import file that meet the level requirement
+                    const minLevel = parseInt(selectedLevel)
+                    const filteredCharacters = importData.characters.filter(
+                      (char: any) => char.level >= minLevel
+                    )
+
+                    filteredCharacters.forEach((char: any) => {
+                      const charName = char.key.replace(/([A-Z])/g, ' $1').trim()
+                      if (Object.prototype.hasOwnProperty.call(updatedEnabled, charName)) {
+                        updatedEnabled[charName] = true
+                      }
+                    })
+
+                    updateSettings({
+                      characters: {
+                        ...settings.characters,
+                        enabled: updatedEnabled,
+                      },
+                    })
+
+                    // Add a fake delay
+                    await new Promise(resolve => setTimeout(resolve, 500))
+                    
+                    return { characters: filteredCharacters }
+                  }
+
+                  toast.promise(importProcess, {
+                    loading: t("settings.import.loading"),
+                    success: (data) => {
+                      if (!data?.characters) return t("settings.import.error")
+                      return t("settings.import.success").replace("{x}", data.characters.length.toString())
+                    },
+                    error: (err) => err.message || t("settings.import.error"),
+                  })
+
+                  setShowLevelDialog(false)
+                  setImportData(null)
+                }}
+              >
+                {t("common.import")}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </CardContent>
     </Card>
   )

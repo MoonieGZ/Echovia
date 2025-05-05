@@ -12,7 +12,7 @@ export default function RulesSection() {
     <Card id="rules-section">
       <CardHeader>
         <CardTitle>
-          <span className="text-3xl font-medium">{t("settings.tabs.rules")}</span>
+          <span className="text-3xl font-medium">{t("rules.title")}</span>
         </CardTitle>
       </CardHeader>
       <CardContent>
