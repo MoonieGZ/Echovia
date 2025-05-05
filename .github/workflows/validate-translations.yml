@@ -11,6 +11,9 @@ on:
 jobs:
   check-translations:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: read
 
     steps:
       - uses: actions/checkout@v4.2.2
