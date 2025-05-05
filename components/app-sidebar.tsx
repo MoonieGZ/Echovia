@@ -42,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         items: [
           {
             title: "Genshin Impact",
-            url: "#",
+            url: "/genshin",
           },
           {
             title: "Honkai: Star Rail",

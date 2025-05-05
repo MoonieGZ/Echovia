@@ -28,6 +28,13 @@
       "both": "Roll Both"
     }
   },
+  "genshin": {
+    "title": "Genshin Impact Randomizer",
+    "availableCharacters": "Available characters",
+    "availableBosses": "Available bosses",
+    "characterCount": "Character count",
+    "bossCount": "Boss count"
+  },
   "results": {
     "title": "Randomization Results",
     "selectAll": "Select All",

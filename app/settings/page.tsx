@@ -10,6 +10,7 @@ import {
 import React from "react"
 import { useLanguage } from "@/lib/language-provider"
 import RulesSection from "@/components/rules-section"
+import ExcludedCharacters from "@/components/excluded-characters"
 
 export default function SettingsPage() {
   const { t } = useLanguage()
@@ -32,6 +33,7 @@ export default function SettingsPage() {
               <div className="px-4 lg:px-6">
                 <div className="space-y-8">
                   <SettingsForm type="characters" />
+                  <ExcludedCharacters />
                   <SettingsForm type="bosses" />
                   <RulesSection />
                 </div>
