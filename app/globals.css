@@ -99,6 +99,7 @@
   --radius: 0.625rem;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
+  --element-background: oklch(0.039 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.141 0.005 285.823);
   --primary: oklch(0.21 0.006 285.885);
@@ -135,6 +136,7 @@
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
   --card-foreground: oklch(0.985 0 0);
+  --element-background: oklch(0.039 0 0);
   --popover: oklch(0.21 0.006 285.885);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.92 0.004 286.32);
@@ -191,6 +193,13 @@
   }
 }
 
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .character-card,
+  .boss-card {
+    transform: translateZ(0);
+  }
+}
+
 .animate-appear {
   animation: fadeIn 0.3s ease-out, shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
@@ -230,6 +239,29 @@
   border-color: rgba(217, 119, 6, 0.3);
 }
 
+.card {
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 2px 8px rgba(0, 0, 0, 0.05), 0 0 1px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15), 0 3px 12px rgba(0, 0, 0, 0.08), 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.dark .card {
+  background-color: rgba(30, 30, 35, 0.85);
+  border: 1px solid rgba(50, 50, 60, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2), 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+.dark .card:hover {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4), 0 3px 12px rgba(0, 0, 0, 0.3), 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
 .character-image-container {
   position: relative;
   width: 100%;
@@ -254,11 +286,6 @@
 .character-card:hover .character-image-container img,
 .boss-card:hover .boss-image-container img {
   transform: scale(1.05);
-}
-
-.element-badge {
-  border: 2px solid var(--background);
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
 }
 
 .character-info-overlay {
@@ -341,7 +368,7 @@
 .character-card:hover,
 .boss-card:hover {
   transform: translateY(-2px) translateZ(0);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15), 0 0 0 4px rgba(255,255,255,0.5);
 }
 
 .card {
@@ -391,7 +418,6 @@
   border-radius: 50%;
   overflow: hidden;
   background-color: rgba(0, 0, 0, 0.3);
-  box-shadow: 0 0 0 2px var(--background), 0 0 0 3px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -404,57 +430,9 @@
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
 }
 
-.checkbox-container {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-}
-
-.checkbox-select {
-  width: 20px !important;
-  height: 20px !important;
-  min-width: 20px !important;
-  min-height: 20px !important;
-  border-radius: 4px !important;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8), 0 0 0 3px rgba(0, 0, 0, 0.2) !important;
-  position: relative !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  background-color: var(--primary) !important;
-  border-color: var(--primary) !important;
-  border: 1px solid rgba(0, 0, 0, 0.3) !important;
-  transition: background-color 0.2s ease, border-color 0.2s ease !important;
-}
-
-.character-card .checkbox-select,
 .character-card .element-icon-container,
 .boss-card .element-icon-container {
   z-index: 30;
-}
-
-.checkbox-select:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-.checkbox-select[data-state="checked"] {
-  background-color: rgba(255, 255, 255, 1) !important;
-  border-color: rgba(0, 0, 0, 0.5) !important;
-}
-
-.checkbox-select[data-state="checked"]::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 12px;
-  height: 12px;
-  background-color: var(--primary-foreground);
-  border-radius: 2px;
 }
 
 .character-card .p-0,
@@ -467,19 +445,6 @@
   padding: 0 !important;
 }
 
-.checkbox-container::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.checkbox-container:hover::before {
-  opacity: 1;
-}
 
 .legend-badge {
   background-color: rgba(251, 191, 36, 0.8);
