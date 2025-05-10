@@ -1,22 +1,23 @@
 "use client"
 
-import { Settings, useGenshinData } from "@/lib/genshin-data-provider"
-import { SectionCards, CardDescription } from "@/components/section-cards"
+import { useGenshinData } from "@/lib/genshin-data-provider"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/lib/language-provider"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { Minus, Plus } from "lucide-react"
+import { Minus, Plus, ChevronDown, ChevronUp, X } from "lucide-react"
 import React, { useEffect, useState } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn, fisherYatesShuffle } from "@/lib/utils"
 import { toast } from "sonner"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Dialog, DialogContent, DialogTitle, DialogHeader } from "@/components/ui/dialog"
 
 type RandomResult = {
     characters: Array<{
@@ -38,15 +39,28 @@ type RandomResult = {
 }
 
 export default function GenshinPage() {
-  const { characters, bosses, settings, excludeCharacter } = useGenshinData()
+  const { characters, bosses, settings, excludeCharacter, updateSettings, includeCharacter } = useGenshinData()
   const [result, setResult] = useState<RandomResult | null>(null)
   const [open, setOpen] = useState(false)
   const [randomizeType, setRandomizeType] = useState<"characters" | "bosses" | "combined">("characters")
   const { t } = useLanguage()
   const [isAnimating, setIsAnimating] = useState(false)
+  const [isRulesOpen, setIsRulesOpen] = useState(false)
+  const [isExcludedOpen, setIsExcludedOpen] = useState(false)
+
+  const availableBosses = bosses.filter((boss) => settings.bosses.enabled[boss.name]).length
+  const availableCharacters = characters.filter((char) => settings.characters.enabled[char.name] && (!settings.enableExclusion || !settings.characters.excluded.includes(char.name))).length
+  const excludedCharacters = characters.filter((char) => settings.characters.excluded.includes(char.name))
 
   // Check if all characters are currently selected
   const areAllCharactersSelected = result?.characters.every((char) => char.selected) || false
+
+  // Auto-collapse excluded characters section when empty
+  useEffect(() => {
+    if (excludedCharacters.length === 0) {
+      setIsExcludedOpen(false)
+    }
+  }, [excludedCharacters.length])
 
   // Function to animate items appearing one by one
   const animateResults = (newResult: RandomResult) => {
@@ -270,11 +284,41 @@ export default function GenshinPage() {
     }
   }, [open])
 
-  const availableBosses = bosses.filter((boss) => settings.bosses.enabled[boss.name]).length
-  const availableCharacters = characters.filter((char) => settings.characters.enabled[char.name] && (!settings.enableExclusion || !settings.characters.excluded.includes(char.name))).length
-
-  const updateSettings = (newSettings: Partial<Settings>) => {
-    updateSettings(newSettings)
+  function StatsCard({
+    title,
+    value,
+    readOnly = false,
+    onIncrease,
+    onDecrease,
+  }: {
+    title: string
+    value: number
+    readOnly?: boolean
+    onIncrease?: () => void
+    onDecrease?: () => void
+  }) {
+    return (
+      <Card>
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-2xl font-semibold">{value}</p>
+              <p className="text-xs text-muted-foreground">{title}</p>
+            </div>
+            {!readOnly && (
+              <div className="flex flex-col gap-1">
+                <Button variant="outline" size="icon" className="h-6 w-6" onClick={onIncrease}>
+                  <Plus className="h-3 w-3" />
+                </Button>
+                <Button variant="outline" size="icon" className="h-6 w-6" onClick={onDecrease}>
+                  <Minus className="h-3 w-3" />
+                </Button>
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+    )
   }
 
   return (
@@ -293,168 +337,289 @@ export default function GenshinPage() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <div className="px-4 lg:px-6">
-                <div className="space-y-8">
-                  <SectionCards>
-                    <Card data-slot="card" className="@container/card">
-                      <CardHeader className="flex flex-row items-center justify-between">
-                        <div>
-                          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-                            {availableCharacters}
-                          </CardTitle>
-                          <CardDescription>{t("genshin.availableCharacters")}</CardDescription>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          {/* TODO: fix the invisible button hack */}
-                          <Button variant="outline" size="icon" className="opacity-0 pointer-events-none">
-                            <Plus className="h-4 w-4" />
+                <div className="flex flex-col gap-4">
+                  {/* Stats Cards */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <StatsCard title={t("genshin.availableCharacters")} value={availableCharacters} readOnly />
+                    <StatsCard title={t("genshin.availableBosses")} value={availableBosses} readOnly />
+                    <StatsCard
+                      title={t("genshin.characterCount")}
+                      value={settings.characters.count ?? 1}
+                      onIncrease={() => {
+                        const value = Math.min(availableCharacters, (settings.characters.count ?? 1) + 1)
+                        updateSettings({
+                          ...settings,
+                          characters: {
+                            ...settings.characters,
+                            count: value,
+                          },
+                        })
+                      }}
+                      onDecrease={() => {
+                        const value = Math.max(1, (settings.characters.count ?? 1) - 1)
+                        updateSettings({
+                          ...settings,
+                          characters: {
+                            ...settings.characters,
+                            count: value,
+                          },
+                        })
+                      }}
+                    />
+                    <StatsCard
+                      title={t("genshin.bossCount")}
+                      value={settings.bosses.count ?? 1}
+                      onIncrease={() => {
+                        const value = Math.min(availableBosses, (settings.bosses.count ?? 1) + 1)
+                        updateSettings({
+                          ...settings,
+                          bosses: {
+                            ...settings.bosses,
+                            count: value,
+                          },
+                        })
+                      }}
+                      onDecrease={() => {
+                        const value = Math.max(1, (settings.bosses.count ?? 1) - 1)
+                        updateSettings({
+                          ...settings,
+                          bosses: {
+                            ...settings.bosses,
+                            count: value,
+                          },
+                        })
+                      }}
+                    />
+                  </div>
+
+                  {/* Rules Summary */}
+                  <Collapsible open={isRulesOpen} onOpenChange={setIsRulesOpen} className="w-full">
+                    <div className="flex items-center justify-between">
+                      <h3 className="text-lg font-medium">{t("rules.activeRules")}</h3>
+                      <CollapsibleTrigger asChild>
+                        <Button variant="ghost" size="sm" className="p-0 h-8 w-8">
+                          {isRulesOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                        </Button>
+                      </CollapsibleTrigger>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {settings.rules.coopMode && (
+                        <Badge variant="secondary" className="flex items-center gap-1">
+                          <span className="h-2 w-2 rounded-full bg-green-500" />
+                          {t("rules.coopMode.enabled")}
+                        </Badge>
+                      )}
+                      {settings.rules.limitFiveStars && (
+                        <Badge variant="secondary" className="flex items-center gap-1">
+                          <span className="h-2 w-2 rounded-full bg-blue-500" />
+                          {t("rules.fiveStarLimit.enabled")} ({settings.rules.maxFiveStars})
+                        </Badge>
+                      )}
+                      {!settings.rules.coopMode && !settings.rules.limitFiveStars && (
+                        <span className="text-sm text-muted-foreground">{t("rules.noActiveRules")}</span>
+                      )}
+                    </div>
+
+                    <CollapsibleContent className="mt-4">
+                      <Card>
+                        <CardContent className="pt-4">
+                          <div className="space-y-4">
+                            <div className="flex items-center justify-between rounded-lg border p-3">
+                              <div>
+                                <p className="font-medium">{t("rules.coopMode.title")}</p>
+                                <p className="text-sm text-muted-foreground">{t("rules.coopMode.description")}</p>
+                              </div>
+                              <Button
+                                variant={settings.rules.coopMode ? "default" : "outline"}
+                                size="sm"
+                                onClick={() =>
+                                  updateSettings({
+                                    ...settings,
+                                    rules: {
+                                      ...settings.rules,
+                                      coopMode: !settings.rules.coopMode,
+                                    },
+                                  })
+                                }
+                              >
+                                {settings.rules.coopMode ? t("rules.enabled") : t("rules.disabled")}
+                              </Button>
+                            </div>
+
+                            <div className="flex items-center justify-between rounded-lg border p-3">
+                              <div>
+                                <p className="font-medium">{t("rules.fiveStarLimit.title")}</p>
+                                <p className="text-sm text-muted-foreground">{t("rules.fiveStarLimit.description")}</p>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                {settings.rules.limitFiveStars && (
+                                  <div className="flex items-center gap-2">
+                                    <Button
+                                      variant="outline"
+                                      size="icon"
+                                      className="h-8 w-8"
+                                      onClick={() =>
+                                        updateSettings({
+                                          ...settings,
+                                          rules: {
+                                            ...settings.rules,
+                                            maxFiveStars: Math.max(0, settings.rules.maxFiveStars - 1),
+                                          },
+                                        })
+                                      }
+                                    >
+                                      <Minus className="h-3 w-3" />
+                                    </Button>
+                                    <span className="w-6 text-center">{settings.rules.maxFiveStars}</span>
+                                    <Button
+                                      variant="outline"
+                                      size="icon"
+                                      className="h-8 w-8"
+                                      onClick={() =>
+                                        updateSettings({
+                                          ...settings,
+                                          rules: {
+                                            ...settings.rules,
+                                            maxFiveStars: settings.rules.maxFiveStars + 1,
+                                          },
+                                        })
+                                      }
+                                    >
+                                      <Plus className="h-3 w-3" />
+                                    </Button>
+                                  </div>
+                                )}
+                                <Button
+                                  variant={settings.rules.limitFiveStars ? "default" : "outline"}
+                                  size="sm"
+                                  onClick={() =>
+                                    updateSettings({
+                                      ...settings,
+                                      rules: {
+                                        ...settings.rules,
+                                        limitFiveStars: !settings.rules.limitFiveStars,
+                                      },
+                                    })
+                                  }
+                                >
+                                  {settings.rules.limitFiveStars ? t("rules.enabled") : t("rules.disabled")}
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </CollapsibleContent>
+                  </Collapsible>
+
+                  {/* Excluded Characters */}
+                  {settings.enableExclusion && (
+                    <Collapsible open={isExcludedOpen} onOpenChange={setIsExcludedOpen} className="w-full">
+                      <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-medium">
+                          {t("excluded.title")} ({excludedCharacters.length})
+                        </h3>
+                        <CollapsibleTrigger asChild>
+                          <Button variant="ghost" size="sm" className="p-0 h-8 w-8">
+                            {isExcludedOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
                           </Button>
-                          <Button variant="outline" size="icon" className="opacity-0 pointer-events-none">
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </CardHeader>
-                    </Card>
-                    <Card data-slot="card" className="@container/card">
-                      <CardHeader className="flex flex-row items-center justify-between">
-                        <div>
-                          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-                            {availableBosses}
-                          </CardTitle>
-                          <CardDescription>{t("genshin.availableBosses")}</CardDescription>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          {/* TODO: fix the invisible button hack */}
-                          <Button variant="outline" size="icon" className="opacity-0 pointer-events-none">
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                          <Button variant="outline" size="icon" className="opacity-0 pointer-events-none">
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </CardHeader>
-                    </Card>
-                    <Card data-slot="card" className="@container/card">
-                      <CardHeader className="flex flex-row items-center justify-between">
-                        <div>
-                          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-                            {settings.characters.count ?? 1}
-                          </CardTitle>
-                          <CardDescription>{t("genshin.characterCount")}</CardDescription>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => {
-                              const value = Math.min(availableCharacters, (settings.characters.count ?? 1) + 1)
-                              updateSettings({
-                                ...settings,
-                                characters: {
-                                  ...settings.characters,
-                                  count: value,
-                                },
-                              })
-                            }}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => {
-                              const value = Math.max(1, (settings.characters.count ?? 1) - 1)
-                              updateSettings({
-                                ...settings,
-                                characters: {
-                                  ...settings.characters,
-                                  count: value,
-                                },
-                              })
-                            }}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </CardHeader>
-                    </Card>
-                    <Card data-slot="card" className="@container/card">
-                      <CardHeader className="flex flex-row items-center justify-between">
-                        <div>
-                          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-                            {settings.bosses.count ?? 1}
-                          </CardTitle>
-                          <CardDescription>{t("genshin.bossCount")}</CardDescription>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => {
-                              const value = Math.min(availableBosses, (settings.bosses.count ?? 1) + 1)
-                              updateSettings({
-                                ...settings,
-                                bosses: {
-                                  ...settings.bosses,
-                                  count: value,
-                                },
-                              })
-                            }}
-                          >
-                            <Plus className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => {
-                              const value = Math.max(1, (settings.bosses.count ?? 1) - 1)
-                              updateSettings({
-                                ...settings,
-                                bosses: {
-                                  ...settings.bosses,
-                                  count: value,
-                                },
-                              })
-                            }}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </CardHeader>
-                    </Card>
-                  </SectionCards>
-                  <Card className="@container/card">
+                        </CollapsibleTrigger>
+                      </div>
+
+                      <CollapsibleContent className="mt-4">
+                        <Card>
+                          <CardContent className="pt-4">
+                            <ScrollArea className="h-[100px] pr-4">
+                              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+                                {excludedCharacters.map((character) => (
+                                  <TooltipProvider key={character.name}>
+                                    <Tooltip>
+                                      <TooltipTrigger asChild>
+                                        <div
+                                          className={cn(
+                                            "relative group cursor-pointer rounded-md overflow-hidden",
+                                            "border border-border hover:border-primary transition-colors",
+                                            "h-12 flex items-center gap-2 px-2",
+                                          )}
+                                          onClick={() => includeCharacter(character.name)}
+                                        >
+                                          <div className="relative h-8 w-8 rounded-full overflow-hidden flex-shrink-0">
+                                            <div
+                                              className={cn(
+                                                "absolute inset-0",
+                                                character.rarity === 5 ? "rarity-5-gradient" : "rarity-4-gradient",
+                                              )}
+                                            ></div>
+                                            <Image
+                                              src={`/characters/${character.element}/${character.icon}?height=32&width=32&text=${encodeURIComponent(character.name)}`}
+                                              alt={character.name}
+                                              width={32}
+                                              height={32}
+                                              className="object-cover relative z-10"
+                                            />
+                                          </div>
+                                          <span className="truncate text-sm">{character.name}</span>
+                                          <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 absolute right-1 transition-opacity"
+                                            onClick={(e) => {
+                                              e.stopPropagation()
+                                              includeCharacter(character.name)
+                                            }}
+                                          >
+                                            <X className="h-3 w-3" />
+                                          </Button>
+                                        </div>
+                                      </TooltipTrigger>
+                                      <TooltipContent>
+                                        <p>{t("excluded.clickToReEnable")}</p>
+                                      </TooltipContent>
+                                    </Tooltip>
+                                  </TooltipProvider>
+                                ))}
+                              </div>
+                            </ScrollArea>
+
+                            <div className="flex justify-end mt-4">
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => {
+                                  settings.characters.excluded.forEach((name) => {
+                                    includeCharacter(name)
+                                  })
+                                }}
+                              >
+                                {t("excluded.resetAll")}
+                              </Button>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </CollapsibleContent>
+                    </Collapsible>
+                  )}
+
+                  {/* Randomize Buttons */}
+                  <Card>
                     <CardHeader>
                       <CardTitle>{t("genshin.randomizer")}</CardTitle>
                     </CardHeader>
-                    <div className="flex flex-col md:flex-row gap-4 p-4">
-                      <Button className="flex-1" onClick={() => handleRandomize("characters")}>{t("main.roll.characters")}</Button>
-                      <Button className="flex-1" onClick={() => handleRandomize("bosses")}>{t("main.roll.bosses")}</Button>
-                      <Button className="flex-1" onClick={() => handleRandomize("combined")}>{t("main.roll.both")}</Button>
-                    </div>
-                  </Card>
-                  <Card className="@container/card">
-                    <CardHeader>
-                      <CardTitle>{t("rules.activeRules")}</CardTitle>
-                    </CardHeader>
-                    <div className="p-4 flex flex-wrap gap-2">
-                      {/* TODO: move to own translations */}
-                      {settings.rules.coopMode && <span className="badge">Co-op Mode: Enabled</span>}
-                      {settings.rules.limitFiveStars && <span className="badge">5★ Limit: Max {settings.rules.maxFiveStars}</span>}
-                      {!settings.rules.coopMode && !settings.rules.limitFiveStars && <span className="text-muted-foreground">{t("rules.noActiveRules")}</span>}
-                    </div>
-                  </Card>
-                  {settings.enableExclusion && settings.characters.excluded.length > 0 && (
-                    <Card className="@container/card">
-                      <CardHeader>
-                        <CardTitle>{t("accepted.title")} ({settings.characters.excluded.length})</CardTitle>
-                      </CardHeader>
-                      <div className="p-4 flex flex-wrap gap-2">
-                        {characters.filter((char) => settings.characters.excluded.includes(char.name)).map((char) => (
-                          <span key={char.name} className="badge">{char.name}</span>
-                        ))}
+                    <CardContent>
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <Button className="flex-1" onClick={() => handleRandomize("characters")}>
+                          {t("main.roll.characters")}
+                        </Button>
+                        <Button className="flex-1" onClick={() => handleRandomize("bosses")}>
+                          {t("main.roll.bosses")}
+                        </Button>
+                        <Button className="flex-1" onClick={() => handleRandomize("combined")}>
+                          {t("main.roll.both")}
+                        </Button>
                       </div>
-                    </Card>
-                  )}
+                    </CardContent>
+                  </Card>
                   <Dialog open={open} onOpenChange={setOpen}>
                     <DialogContent className="max-w-3xl dialog-content">
                       <DialogHeader>
