@@ -70,7 +70,10 @@
       "invalidFormat": "Invalid file format",
       "minLevel": "Minimum Level",
       "level": "Level",
-      "description": "You can use Genshin Kamera to export your characters.\nHere you can select the minimum level of the characters you want to import."
+      "description": "You can use Genshin Kamera to export your characters.\nHere you can select the minimum level of the characters you want to import.",
+      "preview": "{x} characters will be imported with current settings.",
+      "jsonLoaded": "JSON file loaded",
+      "clickToUpload": "Click to upload JSON file"
     },
     "enableAll": "Enable All",
     "disableAll": "Disable All",
@@ -155,5 +158,11 @@
   },
   "auth": {
     "logout": "Log out"
+  },
+  "changelog": {
+    "title": "Changelog",
+    "changes": "Changes",
+    "fixes": "Bug Fixes",
+    "knownIssues": "Known Issues"
   }
 }

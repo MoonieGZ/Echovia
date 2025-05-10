@@ -141,6 +141,38 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
     return enabledCount > 0 && enabledCount < items.length
   }
 
+  const handleFileUpload = async (file: File) => {
+    try {
+      const text = await file.text()
+      const data = JSON.parse(text)
+      
+      if (!data.characters || !Array.isArray(data.characters)) {
+        throw new Error(t("settings.import.invalidFormat"))
+      }
+
+      setImportData(data)
+    } catch (error) {
+      console.error(error)
+      toast.error(t("settings.import.error"))
+    }
+  }
+
+  // Calculate how many characters will be imported with current settings
+  const getFilteredCharacterCount = () => {
+    if (!importData?.characters) return 0
+    const minLevel = parseInt(selectedLevel)
+    const filteredCharacters = importData.characters.filter((char: any) => char.level >= minLevel)
+    
+    // Check if any Traveler is in the filtered characters
+    const hasTraveler = filteredCharacters.some((char: any) => char.key === "Traveler")
+    
+    // Count all Traveler elements if Traveler is found
+    const travelerCount = hasTraveler ? items.filter((item: any) => item.name.startsWith("Traveler (")).length : 0
+    
+    // Return the count of filtered characters plus Traveler elements if applicable
+    return filteredCharacters.length + (hasTraveler ? travelerCount - 1 : 0) // Subtract 1 to account for the base Traveler
+  }
+
   return (
     <Card id={type === "characters" ? "characters-section" : "bosses-section"} className="scroll-mt-14">
       <CardHeader>
@@ -152,31 +184,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => {
-                    const fileInput = document.createElement('input')
-                    fileInput.type = 'file'
-                    fileInput.accept = '.json'
-                    fileInput.onchange = async (e) => {
-                      const file = (e.target as HTMLInputElement).files?.[0]
-                      if (!file) return
-
-                      try {
-                        const text = await file.text()
-                        const data = JSON.parse(text)
-                        
-                        if (!data.characters || !Array.isArray(data.characters)) {
-                          throw new Error(t("settings.import.invalidFormat"))
-                        }
-
-                        setImportData(data)
-                        setShowLevelDialog(true)
-                      } catch (error) {
-                        console.error(error)
-                        toast.error(t("settings.import.error"))
-                      }
-                    }
-                    fileInput.click()
-                  }}
+                  onClick={() => setShowLevelDialog(true)}
                 >
                   <Upload className="h-4 w-4 mr-2" />
                   {t("settings.import.title")}
@@ -388,20 +396,49 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                 {t("settings.import.description")}
               </p>
             </DialogHeader>
-            <div className="flex items-center justify-between py-4">
-              <Label htmlFor="level-select">{t("settings.import.minLevel")}:</Label>
-              <Select value={selectedLevel} onValueChange={setSelectedLevel}>
-                <SelectTrigger id="level-select" className="w-[180px]">
-                  <SelectValue placeholder="Select level" />
-                </SelectTrigger>
-                <SelectContent>
-                  {[20, 30, 40, 50, 60, 70, 80, 90].map((level) => (
-                    <SelectItem key={level} value={level.toString()}>
-                      {t("settings.import.level")} {level}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            
+            <div className="space-y-4 py-4">
+              <div className="flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-6">
+                <input
+                  type="file"
+                  accept=".json"
+                  className="hidden"
+                  id="file-upload"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) handleFileUpload(file)
+                  }}
+                />
+                <label
+                  htmlFor="file-upload"
+                  className="flex flex-col items-center justify-center cursor-pointer"
+                >
+                  <Upload className="h-8 w-8 mb-2 text-muted-foreground" />
+                  <span className="text-sm text-muted-foreground">
+                    {importData ? t("settings.import.jsonLoaded") : t("settings.import.clickToUpload")}
+                  </span>
+                </label>
+              </div>
+              <div className="flex items-center justify-between">
+                <Label htmlFor="level-select">{t("settings.import.minLevel")}:</Label>
+                <Select value={selectedLevel} onValueChange={setSelectedLevel}>
+                  <SelectTrigger id="level-select" className="w-[180px]">
+                    <SelectValue placeholder="Select level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[1, 20, 30, 40, 50, 60, 70, 80, 90].map((level) => (
+                      <SelectItem key={level} value={level.toString()}>
+                        {t("settings.import.level")} {level}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              {importData && (
+                <div className="text-sm text-muted-foreground text-center">
+                  {t("settings.import.preview").replace("{x}", getFilteredCharacterCount().toString())}
+                </div>
+              )}
             </div>
             <DialogFooter>
               <Button
@@ -416,7 +453,10 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
               <Button
                 onClick={() => {
                   const importProcess = async () => {
-                    if (!importData) return
+                    if (!importData) {
+                      toast.error(t("settings.import.error"))
+                      return
+                    }
 
                     // Disable all characters first
                     const updatedEnabled = { ...enabledMap }
@@ -430,12 +470,26 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                       (char: any) => char.level >= minLevel
                     )
 
+                    // Check if any Traveler is in the filtered characters
+                    const hasTraveler = filteredCharacters.some((char: any) => 
+                      char.key === "Traveler"
+                    )
+
                     filteredCharacters.forEach((char: any) => {
                       const charName = char.key.replace(/([A-Z])/g, ' $1').trim()
                       if (Object.prototype.hasOwnProperty.call(updatedEnabled, charName)) {
                         updatedEnabled[charName] = true
                       }
                     })
+
+                    // If Traveler is found, enable all Traveler elements
+                    if (hasTraveler) {
+                      items.forEach((item: any) => {
+                        if (item.name.startsWith("Traveler (")) {
+                          updatedEnabled[item.name] = true
+                        }
+                      })
+                    }
 
                     updateSettings({
                       characters: {
@@ -462,6 +516,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                   setShowLevelDialog(false)
                   setImportData(null)
                 }}
+                disabled={!importData}
               >
                 {t("common.import")}
               </Button>

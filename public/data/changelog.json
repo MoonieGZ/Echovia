@@ -1,0 +1,14 @@
+{
+    "1.0.0": {
+        "title": "Initial Release",
+        "description": "This is the initial release of the app.",
+        "timestamp": "2025-05-10T10:11:30+00:00",
+        "changes": [
+            "Added a new feature to import characters from a JSON file."
+        ],
+        "fixes": [
+            "Fixed a bug where only the last character was being selected after randomizing."
+        ],
+        "knownIssues": []
+    }
+}

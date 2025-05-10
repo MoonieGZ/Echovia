@@ -15,9 +15,10 @@ import { toast } from "sonner"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip, TooltipProvider } from "@/components/ui/tooltip"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Switch } from "@/components/ui/switch"
 
 type RandomResult = {
     characters: Array<{
@@ -247,10 +248,8 @@ export default function GenshinPage() {
       return
     }
 
-    // Exclude selected characters
-    selectedCharacters.forEach((char) => {
-      excludeCharacter(char.name)
-    })
+    // Exclude all selected characters at once
+    excludeCharacter(selectedCharacters.map(char => char.name))
 
     toast.success(t("results.charactersAccepted"), {
       description: `${selectedCharacters.length} ${t("results.charactersExcluded")}`,
@@ -392,6 +391,26 @@ export default function GenshinPage() {
                     />
                   </div>
 
+                  {/* Randomize Buttons */}
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>{t("genshin.randomizer")}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <Button className="flex-1" onClick={() => handleRandomize("characters")}>
+                          {t("main.roll.characters")}
+                        </Button>
+                        <Button className="flex-1" onClick={() => handleRandomize("bosses")}>
+                          {t("main.roll.bosses")}
+                        </Button>
+                        <Button className="flex-1" onClick={() => handleRandomize("combined")}>
+                          {t("main.roll.both")}
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+
                   {/* Rules Summary */}
                   <Collapsible open={isRulesOpen} onOpenChange={setIsRulesOpen} className="w-full">
                     <div className="flex items-center justify-between">
@@ -406,7 +425,7 @@ export default function GenshinPage() {
                     <div className="flex flex-wrap gap-2 mt-2">
                       {settings.rules.coopMode && (
                         <Badge variant="secondary" className="flex items-center gap-1">
-                          <span className="h-2 w-2 rounded-full bg-green-500" />
+                          <span className="h-2 w-2 rounded-full bg-purple-500" />
                           {t("rules.coopMode.enabled")}
                         </Badge>
                       )}
@@ -417,7 +436,10 @@ export default function GenshinPage() {
                         </Badge>
                       )}
                       {!settings.rules.coopMode && !settings.rules.limitFiveStars && (
-                        <span className="text-sm text-muted-foreground">{t("rules.noActiveRules")}</span>
+                        <Badge variant="secondary" className="flex items-center gap-1">
+                          <span className="h-2 w-2 rounded-full bg-green-500" />
+                          {t("rules.noActiveRules")}
+                        </Badge>
                       )}
                     </div>
 
@@ -430,21 +452,18 @@ export default function GenshinPage() {
                                 <p className="font-medium">{t("rules.coopMode.title")}</p>
                                 <p className="text-sm text-muted-foreground">{t("rules.coopMode.description")}</p>
                               </div>
-                              <Button
-                                variant={settings.rules.coopMode ? "default" : "outline"}
-                                size="sm"
-                                onClick={() =>
+                              <Switch
+                                checked={settings.rules.coopMode}
+                                onCheckedChange={(checked) =>
                                   updateSettings({
                                     ...settings,
                                     rules: {
                                       ...settings.rules,
-                                      coopMode: !settings.rules.coopMode,
+                                      coopMode: checked,
                                     },
                                   })
                                 }
-                              >
-                                {settings.rules.coopMode ? t("rules.enabled") : t("rules.disabled")}
-                              </Button>
+                              />
                             </div>
 
                             <div className="flex items-center justify-between rounded-lg border p-3">
@@ -490,21 +509,18 @@ export default function GenshinPage() {
                                     </Button>
                                   </div>
                                 )}
-                                <Button
-                                  variant={settings.rules.limitFiveStars ? "default" : "outline"}
-                                  size="sm"
-                                  onClick={() =>
+                                <Switch
+                                  checked={settings.rules.limitFiveStars}
+                                  onCheckedChange={(checked) =>
                                     updateSettings({
                                       ...settings,
                                       rules: {
                                         ...settings.rules,
-                                        limitFiveStars: !settings.rules.limitFiveStars,
+                                        limitFiveStars: checked,
                                       },
                                     })
                                   }
-                                >
-                                  {settings.rules.limitFiveStars ? t("rules.enabled") : t("rules.disabled")}
-                                </Button>
+                                />
                               </div>
                             </div>
                           </div>
@@ -530,57 +546,57 @@ export default function GenshinPage() {
                       <CollapsibleContent className="mt-4">
                         <Card>
                           <CardContent className="pt-4">
-                            <ScrollArea className="h-[100px] pr-4">
-                              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
-                                {excludedCharacters.map((character) => (
-                                  <TooltipProvider key={character.name}>
-                                    <Tooltip>
-                                      <TooltipTrigger asChild>
-                                        <div
-                                          className={cn(
-                                            "relative group cursor-pointer rounded-md overflow-hidden",
-                                            "border border-border hover:border-primary transition-colors",
-                                            "h-12 flex items-center gap-2 px-2",
-                                          )}
-                                          onClick={() => includeCharacter(character.name)}
-                                        >
-                                          <div className="relative h-8 w-8 rounded-full overflow-hidden flex-shrink-0">
-                                            <div
-                                              className={cn(
-                                                "absolute inset-0",
-                                                character.rarity === 5 ? "rarity-5-gradient" : "rarity-4-gradient",
-                                              )}
-                                            ></div>
-                                            <Image
-                                              src={`/characters/${character.element}/${character.icon}?height=32&width=32&text=${encodeURIComponent(character.name)}`}
-                                              alt={character.name}
-                                              width={32}
-                                              height={32}
-                                              className="object-cover relative z-10"
-                                            />
-                                          </div>
-                                          <span className="truncate text-sm">{character.name}</span>
-                                          <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 absolute right-1 transition-opacity"
-                                            onClick={(e) => {
-                                              e.stopPropagation()
-                                              includeCharacter(character.name)
-                                            }}
-                                          >
-                                            <X className="h-3 w-3" />
-                                          </Button>
+                            <TooltipProvider>
+                              <ScrollArea className="h-[100px] pr-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                                  {excludedCharacters.map((character) => (
+                                    <Tooltip
+                                      key={character.name}
+                                      content={<p>{t("excluded.clickToReEnable")}</p>}
+                                      side="top"
+                                      align="center"
+                                    >
+                                      <div
+                                        className={cn(
+                                          "relative group cursor-pointer rounded-md overflow-hidden",
+                                          "border border-border hover:border-primary transition-colors",
+                                          "h-12 flex items-center gap-2 px-3",
+                                        )}
+                                        onClick={() => includeCharacter(character.name)}
+                                      >
+                                        <div className="relative h-8 w-8 rounded-full overflow-hidden flex-shrink-0">
+                                          <div
+                                            className={cn(
+                                              "absolute inset-0",
+                                              character.rarity === 5 ? "rarity-5-gradient" : "rarity-4-gradient",
+                                            )}
+                                          ></div>
+                                          <Image
+                                            src={`/characters/${character.element}/${character.icon}?height=32&width=32&text=${encodeURIComponent(character.name)}`}
+                                            alt={character.name}
+                                            width={32}
+                                            height={32}
+                                            className="object-cover relative z-10"
+                                          />
                                         </div>
-                                      </TooltipTrigger>
-                                      <TooltipContent>
-                                        <p>{t("excluded.clickToReEnable")}</p>
-                                      </TooltipContent>
+                                        <span className="truncate text-sm flex-1 select-none">{character.name}</span>
+                                        <Button
+                                          variant="ghost"
+                                          size="icon"
+                                          className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                                          onClick={(e) => {
+                                            e.stopPropagation()
+                                            includeCharacter(character.name)
+                                          }}
+                                        >
+                                          <X className="h-3 w-3" />
+                                        </Button>
+                                      </div>
                                     </Tooltip>
-                                  </TooltipProvider>
-                                ))}
-                              </div>
-                            </ScrollArea>
+                                  ))}
+                                </div>
+                              </ScrollArea>
+                            </TooltipProvider>
 
                             <div className="flex justify-end mt-4">
                               <Button
@@ -601,37 +617,24 @@ export default function GenshinPage() {
                     </Collapsible>
                   )}
 
-                  {/* Randomize Buttons */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>{t("genshin.randomizer")}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <Button className="flex-1" onClick={() => handleRandomize("characters")}>
-                          {t("main.roll.characters")}
-                        </Button>
-                        <Button className="flex-1" onClick={() => handleRandomize("bosses")}>
-                          {t("main.roll.bosses")}
-                        </Button>
-                        <Button className="flex-1" onClick={() => handleRandomize("combined")}>
-                          {t("main.roll.both")}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                  <Dialog open={open} onOpenChange={setOpen}>
+                  <Dialog open={open} onOpenChange={(newOpen) => {
+                    if (!newOpen) {
+                      setTimeout(() => setOpen(false), 10)
+                    } else {
+                      setOpen(true)
+                    }
+                  }}>
                     <DialogContent className="max-w-3xl dialog-content">
                       <DialogHeader>
                         <DialogTitle>{t("results.title")}</DialogTitle>
                       </DialogHeader>
-                      {open && result && (
+                      {result && (
                         <ScrollArea className="max-h-[70vh]">
                           <div className="space-y-6 p-1">
                             {result?.bosses.length > 0 && (
                               <div className="space-y-4">
                                 <h3 className="text-lg font-medium">
-                                  {t("main.bosses")} ({result.bosses.length})
+                                  {t("common.bosses")} ({result.bosses.length})
                                 </h3>
                                 <div className="results-grid">
                                   {result.bosses.map((boss) => (
@@ -685,7 +688,7 @@ export default function GenshinPage() {
                             {result.characters.length > 0 && (
                               <div className="space-y-4">
                                 <h3 className="text-lg font-medium">
-                                  {t("main.characters")} ({result.characters.length})
+                                  {t("common.characters")} ({result.characters.length})
                                 </h3>
                                 <div className="results-grid">
                                   {result.characters.map((character, index) => (

@@ -67,7 +67,7 @@ type GenshinDataContextType = {
   updateBossEnabled: (name: string, enabled: boolean) => void
   updateCharacterCount: (count: number) => void
   updateBossCount: (count: number) => void
-  excludeCharacter: (name: string) => void
+  excludeCharacter: (name: string | string[]) => void
   includeCharacter: (name: string) => void
   toggleExclusion: (enabled: boolean) => void
   toggleCoopMode: (enabled: boolean) => void
@@ -230,12 +230,13 @@ export function GenshinDataProvider({ children }: { children: React.ReactNode })
   }
 
   // Exclude character
-  const excludeCharacter = (name: string) => {
+  const excludeCharacter = (name: string | string[]) => {
+    const namesToExclude = Array.isArray(name) ? name : [name]
     const updatedSettings = {
       ...settings,
       characters: {
         ...settings.characters,
-        excluded: [...settings.characters.excluded, name],
+        excluded: [...settings.characters.excluded, ...namesToExclude],
       },
     }
     setSettings(updatedSettings)

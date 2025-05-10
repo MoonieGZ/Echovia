@@ -76,8 +76,7 @@ export function NavMain({
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton 
-                    tooltip={item.title}
+                  <SidebarMenuButton
                     asChild={isCollapsed}
                   >
                     {isCollapsed ? (

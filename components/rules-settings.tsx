@@ -3,7 +3,7 @@
 import { useGenshinData } from "@/lib/genshin-data-provider"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import {
   AlertDialog,
@@ -18,6 +18,7 @@ import {
 import { useLanguage } from "@/lib/language-provider"
 import React from "react"
 import { Badge } from "@/components/ui/badge"
+import { Minus, Plus } from "lucide-react"
 
 export default function RulesSettings() {
   const { settings, toggleCoopMode, toggleLimitFiveStars, updateMaxFiveStars, getNonCoopBosses } = useGenshinData()
@@ -79,16 +80,27 @@ export default function RulesSettings() {
           <div className="flex items-center gap-4">
             {settings.rules.limitFiveStars && (
               <div className="flex items-center gap-2">
-                <Label htmlFor="max-five-stars" className="text-sm">{t("rules.fiveStarLimit.maximum")}</Label>
-                <Input
-                  id="max-five-stars"
-                  type="number"
-                  min="0"
-                  max="10"
-                  value={settings.rules.maxFiveStars}
-                  onChange={(e) => updateMaxFiveStars(Number.parseInt(e.target.value) || 0)}
-                  className="w-16 h-8"
-                />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() =>
+                    updateMaxFiveStars(Math.max(0, settings.rules.maxFiveStars - 1))
+                  }
+                >
+                  <Minus className="h-3 w-3" />
+                </Button>
+                <span className="w-6 text-center">{settings.rules.maxFiveStars}</span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="h-8 w-8"
+                  onClick={() =>
+                    updateMaxFiveStars(settings.rules.maxFiveStars + 1)
+                  }
+                >
+                  <Plus className="h-3 w-3" />
+                </Button>
               </div>
             )}
             <Switch
@@ -99,7 +111,6 @@ export default function RulesSettings() {
           </div>
         </div>
       </div>
-
 
       <AlertDialog open={showCoopConfirmation} onOpenChange={setShowCoopConfirmation}>
         <AlertDialogContent>

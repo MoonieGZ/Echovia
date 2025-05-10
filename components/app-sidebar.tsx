@@ -7,7 +7,6 @@ import {
   Settings2,
   SquareTerminal,
 } from "lucide-react"
-import { usePathname } from "next/navigation"
 import Link from "next/link"
 
 import { NavMain } from "@/components/nav-main"
@@ -25,32 +24,22 @@ import {
 import { GiCardRandom } from "react-icons/gi"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const pathname = usePathname()
-
   const data = {
     user: {
       name: "Moons",
       email: "me@mnsy.dev",
-      avatar: "/globe.svg",
+      avatar: "/mc-gaming.png",
     },
     navMain: [
       {
         title: "Playground",
-        url: "#",
+        url: "/genshin",
         icon: SquareTerminal,
         isActive: true,
         items: [
           {
             title: "Genshin Impact",
             url: "/genshin",
-          },
-          {
-            title: "Honkai: Star Rail",
-            url: "/wip",
-          },
-          {
-            title: "Wuthering Waves",
-            url: "/wip",
           },
         ],
       },
@@ -75,10 +64,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: BookOpen,
         items: [
           {
-            title: "Introduction",
-            url: "/wip",
-          },
-          {
             title: "Get Started",
             url: "/wip",
           },
@@ -96,11 +81,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         title: "Settings",
         url: "/settings",
         icon: Settings2,
-        isActive: pathname?.startsWith("/settings"),
+        isActive: true,
         items: [
           {
             title: "Characters",
             url: "/settings#characters-section",
+          },
+          {
+            title: "Excluded Characters",
+            url: "/settings#excluded-characters-section",
           },
           {
             title: "Bosses",
