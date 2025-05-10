@@ -90,6 +90,7 @@
     "noActiveRules": "No active rules",
     "coopMode": {
       "title": "Co-op Mode",
+      "modeEnabled": "Co-op Mode: Enabled",
       "description": "Controls whether multiple Travelers with different elements can be selected in a single roll",
       "enabled": "Enabled: Multiple Travelers with different elements can be selected",
       "disabled": "Disabled: Only one Traveler can be selected per roll"
