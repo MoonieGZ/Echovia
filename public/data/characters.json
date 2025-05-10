@@ -12,6 +12,12 @@
     "icon": "Faruzan_Icon.webp"
   },
   {
+    "name": "Ifa",
+    "rarity": 4,
+    "element": "Anemo",
+    "icon": "Ifa_Icon.webp"
+  },
+  {
     "name": "Jean",
     "rarity": 5,
     "element": "Anemo",
@@ -118,6 +124,12 @@
     "rarity": 4,
     "element": "Cryo",
     "icon": "Diona_Icon.webp"
+  },
+  {
+    "name": "Escoffier",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Escoffier_Icon.webp"
   },
   {
     "name": "Eula",

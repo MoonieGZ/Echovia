@@ -448,6 +448,13 @@
     "coop": true
   },
   {
+    "name": "Secret Source Automaton Overseer Device",
+    "icon": "Secret_Source_Automaton_Overseer_Device_Icon.webp",
+    "location": "Natlan",
+    "link": "https://genshin-impact.fandom.com/wiki/Secret_Source_Automaton:_Overseer_Device",
+    "coop": true
+  },
+  {
     "name": "Tenebrous Papilla",
     "icon": "Tenebrous_Papilla_Icon.webp",
     "location": "Natlan",
