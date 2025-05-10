@@ -95,14 +95,14 @@
       "title": "Co-op Mode",
       "modeEnabled": "Co-op Mode: Enabled",
       "description": "Controls whether multiple Travelers with different elements can be selected in a single roll",
-      "enabled": "Enabled: Multiple Travelers with different elements can be selected",
-      "disabled": "Disabled: Only one Traveler can be selected per roll"
+      "enabled": "Rule enabled: Multiple Travelers with different elements can be selected",
+      "disabled": "Rule disabled: Only one Traveler can be selected per roll"
     },
     "fiveStarLimit": {
       "title": "5-Star Character Limit",
       "description": "Controls the maximum number of 5-star characters that can be selected in a single roll",
-      "enabled": "Enabled: Limit the number of 5-star characters per roll",
-      "disabled": "Disabled: No limit on 5-star characters",
+      "enabled": "Rule enabled: Limit the number of 5-star characters per roll",
+      "disabled": "Rule disabled: No limit on 5-star characters",
       "maximum": "Maximum 5-star characters:"
     },
     "notEnoughBosses": {

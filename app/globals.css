@@ -490,22 +490,6 @@
   border: 1px solid rgba(50, 50, 60, 0.3);
 }
 
-/* Override Radix UI's default animation for smoother transitions */
-[data-radix-popper-content-wrapper] {
-  position: fixed !important;
-  transform: none !important;
-  z-index: 9999 !important;
-}
-
-[data-radix-popper-content-wrapper] > div {
-  position: relative !important;
-  transform: none !important;
-}
-
-[data-radix-popper-content-wrapper][data-state="open"] {
-  animation: tooltipFadeIn 0.2s ease-out;
-}
-
 @keyframes tooltipFadeIn {
   from {
     opacity: 0;

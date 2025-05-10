@@ -7,36 +7,38 @@ import { useLanguage } from "@/lib/language-provider"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
-import { Minus, Plus, ChevronDown, ChevronUp, X } from "lucide-react"
-import React, { useEffect, useState } from "react"
+import { Minus, Plus, X, Settings2, Users, Filter, RefreshCw, Dices, Dice5 } from "lucide-react"
+import type React from "react"
+import { useEffect, useState } from "react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { cn, fisherYatesShuffle } from "@/lib/utils"
 import { toast } from "sonner"
 import Image from "next/image"
 import { Badge } from "@/components/ui/badge"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Tooltip, TooltipProvider } from "@/components/ui/tooltip"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Switch } from "@/components/ui/switch"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Separator } from "@/components/ui/separator"
 
 type RandomResult = {
-    characters: Array<{
-        name: string
-        rarity: number
-        element: string
-        icon: string
-        selected?: boolean
-        visible?: boolean
-    }>
-    bosses: Array<{
-        name: string
-        icon: string
-        location: string
-        link: string
-        coop: boolean
-        visible?: boolean
-    }>
+  characters: Array<{
+    name: string
+    rarity: number
+    element: string
+    icon: string
+    selected?: boolean
+    visible?: boolean
+  }>
+  bosses: Array<{
+    name: string
+    icon: string
+    location: string
+    link: string
+    coop: boolean
+    visible?: boolean
+  }>
 }
 
 export default function GenshinPage() {
@@ -46,22 +48,17 @@ export default function GenshinPage() {
   const [randomizeType, setRandomizeType] = useState<"characters" | "bosses" | "combined">("characters")
   const { t } = useLanguage()
   const [isAnimating, setIsAnimating] = useState(false)
-  const [isRulesOpen, setIsRulesOpen] = useState(false)
-  const [isExcludedOpen, setIsExcludedOpen] = useState(false)
 
   const availableBosses = bosses.filter((boss) => settings.bosses.enabled[boss.name]).length
-  const availableCharacters = characters.filter((char) => settings.characters.enabled[char.name] && (!settings.enableExclusion || !settings.characters.excluded.includes(char.name))).length
+  const availableCharacters = characters.filter(
+    (char) =>
+      settings.characters.enabled[char.name] &&
+      (!settings.enableExclusion || !settings.characters.excluded.includes(char.name)),
+  ).length
   const excludedCharacters = characters.filter((char) => settings.characters.excluded.includes(char.name))
 
   // Check if all characters are currently selected
   const areAllCharactersSelected = result?.characters.every((char) => char.selected) || false
-
-  // Auto-collapse excluded characters section when empty
-  useEffect(() => {
-    if (excludedCharacters.length === 0) {
-      setIsExcludedOpen(false)
-    }
-  }, [excludedCharacters.length])
 
   // Function to animate items appearing one by one
   const animateResults = (newResult: RandomResult) => {
@@ -249,7 +246,7 @@ export default function GenshinPage() {
     }
 
     // Exclude all selected characters at once
-    excludeCharacter(selectedCharacters.map(char => char.name))
+    excludeCharacter(selectedCharacters.map((char) => char.name))
 
     toast.success(t("results.charactersAccepted"), {
       description: `${selectedCharacters.length} ${t("results.charactersExcluded")}`,
@@ -304,16 +301,14 @@ export default function GenshinPage() {
               <p className="text-2xl font-semibold">{value}</p>
               <p className="text-xs text-muted-foreground">{title}</p>
             </div>
-            {!readOnly && (
-              <div className="flex flex-col gap-1">
-                <Button variant="outline" size="icon" className="h-6 w-6" onClick={onIncrease}>
-                  <Plus className="h-3 w-3" />
-                </Button>
-                <Button variant="outline" size="icon" className="h-6 w-6" onClick={onDecrease}>
-                  <Minus className="h-3 w-3" />
-                </Button>
-              </div>
-            )}
+            <div className={cn("flex flex-col gap-1", readOnly && "opacity-0")}>
+              <Button variant="outline" size="icon" className="h-6 w-6" onClick={onIncrease}>
+                <Plus className="h-3 w-3" />
+              </Button>
+              <Button variant="outline" size="icon" className="h-6 w-6" onClick={onDecrease}>
+                <Minus className="h-3 w-3" />
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -336,120 +331,157 @@ export default function GenshinPage() {
           <div className="@container/main flex flex-1 flex-col gap-2">
             <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
               <div className="px-4 lg:px-6">
-                <div className="flex flex-col gap-4">
-                  {/* Stats Cards */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <StatsCard title={t("genshin.availableCharacters")} value={availableCharacters} readOnly />
-                    <StatsCard title={t("genshin.availableBosses")} value={availableBosses} readOnly />
-                    <StatsCard
-                      title={t("genshin.characterCount")}
-                      value={settings.characters.count ?? 1}
-                      onIncrease={() => {
-                        const value = Math.min(availableCharacters, (settings.characters.count ?? 1) + 1)
-                        updateSettings({
-                          ...settings,
-                          characters: {
-                            ...settings.characters,
-                            count: value,
-                          },
-                        })
-                      }}
-                      onDecrease={() => {
-                        const value = Math.max(1, (settings.characters.count ?? 1) - 1)
-                        updateSettings({
-                          ...settings,
-                          characters: {
-                            ...settings.characters,
-                            count: value,
-                          },
-                        })
-                      }}
-                    />
-                    <StatsCard
-                      title={t("genshin.bossCount")}
-                      value={settings.bosses.count ?? 1}
-                      onIncrease={() => {
-                        const value = Math.min(availableBosses, (settings.bosses.count ?? 1) + 1)
-                        updateSettings({
-                          ...settings,
-                          bosses: {
-                            ...settings.bosses,
-                            count: value,
-                          },
-                        })
-                      }}
-                      onDecrease={() => {
-                        const value = Math.max(1, (settings.bosses.count ?? 1) - 1)
-                        updateSettings({
-                          ...settings,
-                          bosses: {
-                            ...settings.bosses,
-                            count: value,
-                          },
-                        })
-                      }}
-                    />
-                  </div>
+                <Tabs defaultValue="randomizer" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3 mb-4">
+                    <TabsTrigger value="randomizer" className="flex items-center gap-2">
+                      <Filter className="h-4 w-4" />
+                      <span>{t("genshin.randomizer")}</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="rules" className="flex items-center gap-2">
+                      <Settings2 className="h-4 w-4" />
+                      <span>{t("rules.title")}</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="excluded" className="flex items-center gap-2">
+                      <Users className="h-4 w-4" />
+                      <span>
+                        {t("excluded.title")}{" "}
+                        {settings.enableExclusion && excludedCharacters.length > 0 && (
+                          <Badge variant="secondary" className="ml-1">
+                            {excludedCharacters.length}
+                          </Badge>
+                        )}
+                      </span>
+                    </TabsTrigger>
+                  </TabsList>
 
-                  {/* Randomize Buttons */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>{t("genshin.randomizer")}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <Button className="flex-1" onClick={() => handleRandomize("characters")}>
-                          {t("main.roll.characters")}
-                        </Button>
-                        <Button className="flex-1" onClick={() => handleRandomize("bosses")}>
-                          {t("main.roll.bosses")}
-                        </Button>
-                        <Button className="flex-1" onClick={() => handleRandomize("combined")}>
-                          {t("main.roll.both")}
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  {/* Rules Summary */}
-                  <Collapsible open={isRulesOpen} onOpenChange={setIsRulesOpen} className="w-full">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-medium">{t("rules.activeRules")}</h3>
-                      <CollapsibleTrigger asChild>
-                        <Button variant="ghost" size="sm" className="p-0 h-8 w-8">
-                          {isRulesOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                        </Button>
-                      </CollapsibleTrigger>
+                  <TabsContent value="randomizer" className="space-y-4">
+                    {/* Stats Cards */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      <StatsCard title={t("genshin.availableCharacters")} value={availableCharacters} readOnly />
+                      <StatsCard title={t("genshin.availableBosses")} value={availableBosses} readOnly />
+                      <StatsCard
+                        title={t("genshin.characterCount")}
+                        value={settings.characters.count ?? 1}
+                        onIncrease={() => {
+                          const value = Math.min(availableCharacters, (settings.characters.count ?? 1) + 1)
+                          updateSettings({
+                            ...settings,
+                            characters: {
+                              ...settings.characters,
+                              count: value,
+                            },
+                          })
+                        }}
+                        onDecrease={() => {
+                          const value = Math.max(1, (settings.characters.count ?? 1) - 1)
+                          updateSettings({
+                            ...settings,
+                            characters: {
+                              ...settings.characters,
+                              count: value,
+                            },
+                          })
+                        }}
+                      />
+                      <StatsCard
+                        title={t("genshin.bossCount")}
+                        value={settings.bosses.count ?? 1}
+                        onIncrease={() => {
+                          const value = Math.min(availableBosses, (settings.bosses.count ?? 1) + 1)
+                          updateSettings({
+                            ...settings,
+                            bosses: {
+                              ...settings.bosses,
+                              count: value,
+                            },
+                          })
+                        }}
+                        onDecrease={() => {
+                          const value = Math.max(1, (settings.bosses.count ?? 1) - 1)
+                          updateSettings({
+                            ...settings,
+                            bosses: {
+                              ...settings.bosses,
+                              count: value,
+                            },
+                          })
+                        }}
+                      />
                     </div>
 
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {settings.rules.coopMode && (
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <span className="h-2 w-2 rounded-full bg-purple-500" />
-                          {t("rules.coopMode.enabled")}
-                        </Badge>
-                      )}
-                      {settings.rules.limitFiveStars && (
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <span className="h-2 w-2 rounded-full bg-blue-500" />
-                          {t("rules.fiveStarLimit.enabled")} ({settings.rules.maxFiveStars})
-                        </Badge>
-                      )}
-                      {!settings.rules.coopMode && !settings.rules.limitFiveStars && (
-                        <Badge variant="secondary" className="flex items-center gap-1">
-                          <span className="h-2 w-2 rounded-full bg-green-500" />
-                          {t("rules.noActiveRules")}
-                        </Badge>
-                      )}
-                    </div>
+                    {/* Randomize Buttons */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>{t("genshin.randomizer")}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-wrap gap-2">
+                          {settings.rules.coopMode && (
+                            <Badge variant="secondary" className="flex items-center gap-1">
+                              <span className="h-2 w-2 rounded-full bg-green-500" />
+                              {t("rules.coopMode.enabled")}
+                            </Badge>
+                          )}
+                          {settings.rules.limitFiveStars && (
+                            <Badge variant="secondary" className="flex items-center gap-1">
+                              <span className="h-2 w-2 rounded-full bg-blue-500" />
+                              {t("rules.fiveStarLimit.enabled")} ({settings.rules.maxFiveStars})
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="flex flex-col sm:flex-row gap-4 mt-4">
+                          <Button className="flex-1" onClick={() => handleRandomize("characters")}>
+                            <Dice5 className="h-4 w-4 mr-2" />
+                            {t("main.roll.characters")}
+                          </Button>
+                          <Button className="flex-1" onClick={() => handleRandomize("bosses")}>
+                            <Dice5 className="h-4 w-4 mr-2" />
+                            {t("main.roll.bosses")}
+                          </Button>
+                          <Button className="flex-1" onClick={() => handleRandomize("combined")}>
+                            <Dices className="h-4 w-4 mr-2" />
+                            {t("main.roll.both")}
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
 
-                    <CollapsibleContent className="mt-4">
-                      <Card>
-                        <CardContent className="pt-4">
+                  <TabsContent value="rules">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>{t("rules.title")}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="space-y-6">
+                          <div className="space-y-2">
+                            <h3 className="text-sm font-medium">{t("rules.activeRules")}</h3>
+                            <div className="flex flex-wrap gap-2">
+                              {settings.rules.coopMode && (
+                                <Badge variant="secondary" className="flex items-center gap-1">
+                                  <span className="h-2 w-2 rounded-full bg-green-500" />
+                                  {t("rules.coopMode.enabled")}
+                                </Badge>
+                              )}
+                              {settings.rules.limitFiveStars && (
+                                <Badge variant="secondary" className="flex items-center gap-1">
+                                  <span className="h-2 w-2 rounded-full bg-blue-500" />
+                                  {t("rules.fiveStarLimit.enabled")} ({settings.rules.maxFiveStars})
+                                </Badge>
+                              )}
+                              {!settings.rules.coopMode && !settings.rules.limitFiveStars && (
+                                <span className="text-sm text-muted-foreground">{t("rules.noActiveRules")}</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <Separator />
+
+                          {/* Rules Settings */}
                           <div className="space-y-4">
-                            <div className="flex items-center justify-between rounded-lg border p-3">
-                              <div>
-                                <p className="font-medium">{t("rules.coopMode.title")}</p>
+                            <div className="flex items-center justify-between rounded-lg border p-4">
+                              <div className="space-y-0.5">
+                                <h4 className="text-base font-medium">{t("rules.coopMode.title")}</h4>
                                 <p className="text-sm text-muted-foreground">{t("rules.coopMode.description")}</p>
                               </div>
                               <Switch
@@ -466,12 +498,12 @@ export default function GenshinPage() {
                               />
                             </div>
 
-                            <div className="flex items-center justify-between rounded-lg border p-3">
-                              <div>
-                                <p className="font-medium">{t("rules.fiveStarLimit.title")}</p>
+                            <div className="flex items-center justify-between rounded-lg border p-4">
+                              <div className="space-y-0.5">
+                                <h4 className="text-base font-medium">{t("rules.fiveStarLimit.title")}</h4>
                                 <p className="text-sm text-muted-foreground">{t("rules.fiveStarLimit.description")}</p>
                               </div>
-                              <div className="flex items-center gap-2">
+                              <div className="flex items-center gap-4">
                                 {settings.rules.limitFiveStars && (
                                   <div className="flex items-center gap-2">
                                     <Button
@@ -524,81 +556,20 @@ export default function GenshinPage() {
                               </div>
                             </div>
                           </div>
-                        </CardContent>
-                      </Card>
-                    </CollapsibleContent>
-                  </Collapsible>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
 
-                  {/* Excluded Characters */}
-                  {settings.enableExclusion && (
-                    <Collapsible open={isExcludedOpen} onOpenChange={setIsExcludedOpen} className="w-full">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-medium">
-                          {t("excluded.title")} ({excludedCharacters.length})
-                        </h3>
-                        <CollapsibleTrigger asChild>
-                          <Button variant="ghost" size="sm" className="p-0 h-8 w-8">
-                            {isExcludedOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-                          </Button>
-                        </CollapsibleTrigger>
-                      </div>
-
-                      <CollapsibleContent className="mt-4">
-                        <Card>
-                          <CardContent className="pt-4">
-                            <TooltipProvider>
-                              <ScrollArea className="h-[100px] pr-4">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-                                  {excludedCharacters.map((character) => (
-                                    <Tooltip
-                                      key={character.name}
-                                      content={<p>{t("excluded.clickToReEnable")}</p>}
-                                      side="top"
-                                      align="center"
-                                    >
-                                      <div
-                                        className={cn(
-                                          "relative group cursor-pointer rounded-md overflow-hidden",
-                                          "border border-border hover:border-primary transition-colors",
-                                          "h-12 flex items-center gap-2 px-3",
-                                        )}
-                                        onClick={() => includeCharacter(character.name)}
-                                      >
-                                        <div className="relative h-8 w-8 rounded-full overflow-hidden flex-shrink-0">
-                                          <div
-                                            className={cn(
-                                              "absolute inset-0",
-                                              character.rarity === 5 ? "rarity-5-gradient" : "rarity-4-gradient",
-                                            )}
-                                          ></div>
-                                          <Image
-                                            src={`/characters/${character.element}/${character.icon}?height=32&width=32&text=${encodeURIComponent(character.name)}`}
-                                            alt={character.name}
-                                            width={32}
-                                            height={32}
-                                            className="object-cover relative z-10"
-                                          />
-                                        </div>
-                                        <span className="truncate text-sm flex-1 select-none">{character.name}</span>
-                                        <Button
-                                          variant="ghost"
-                                          size="icon"
-                                          className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                                          onClick={(e) => {
-                                            e.stopPropagation()
-                                            includeCharacter(character.name)
-                                          }}
-                                        >
-                                          <X className="h-3 w-3" />
-                                        </Button>
-                                      </div>
-                                    </Tooltip>
-                                  ))}
-                                </div>
-                              </ScrollArea>
-                            </TooltipProvider>
-
-                            <div className="flex justify-end mt-4">
+                  <TabsContent value="excluded">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                          <span>
+                            {t("excluded.title")} ({excludedCharacters.length})
+                          </span>
+                          <div className="flex items-center space-x-2">
+                            {settings.enableExclusion && excludedCharacters.length > 0 && (
                               <Button
                                 variant="outline"
                                 size="sm"
@@ -608,194 +579,282 @@ export default function GenshinPage() {
                                   })
                                 }}
                               >
+                                <RefreshCw className="h-4 w-4 mr-2" />
                                 {t("excluded.resetAll")}
                               </Button>
+                            )}
+                            <div className="flex items-center space-x-2">
+                              <Switch
+                                id="enable-exclusion"
+                                checked={settings.enableExclusion}
+                                onCheckedChange={(checked) => {
+                                  updateSettings({
+                                    ...settings,
+                                    enableExclusion: checked,
+                                  })
+                                }}
+                              />
+                              <label htmlFor="enable-exclusion" className="text-sm cursor-pointer">
+                                {t("excluded.enableExclusion")}
+                              </label>
                             </div>
-                          </CardContent>
-                        </Card>
-                      </CollapsibleContent>
-                    </Collapsible>
-                  )}
+                          </div>
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        {!settings.enableExclusion ? (
+                          <div className="flex flex-col items-center justify-center py-8 text-center">
+                            <Users className="h-12 w-12 text-muted-foreground mb-4" />
+                            <p className="text-muted-foreground">{t("excluded.disabled")}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{t("excluded.enableToUse")}</p>
+                          </div>
+                        ) : excludedCharacters.length === 0 ? (
+                          <div className="flex flex-col items-center justify-center py-8 text-center">
+                            <Users className="h-12 w-12 text-muted-foreground mb-4" />
+                            <p className="text-muted-foreground">{t("excluded.noCharacters")}</p>
+                          </div>
+                        ) : (
+                          <TooltipProvider>
+                            <ScrollArea className="h-[300px] pr-4">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                                {excludedCharacters.map((character) => (
+                                  <Tooltip key={character.name} content={t("excluded.clickToReEnable")}>
+                                    <div
+                                      className={cn(
+                                        "relative group cursor-pointer rounded-md overflow-hidden",
+                                        "border border-border hover:border-primary transition-colors",
+                                        "h-12 flex items-center gap-2 px-3",
+                                      )}
+                                      onClick={() => includeCharacter(character.name)}
+                                    >
+                                      <div className="relative h-8 w-8 rounded-full overflow-hidden flex-shrink-0">
+                                        <div
+                                          className={cn(
+                                            "absolute inset-0",
+                                            character.rarity === 5 ? "rarity-5-gradient" : "rarity-4-gradient",
+                                          )}
+                                        ></div>
+                                        <Image
+                                          src={`/characters/${character.element}/${character.icon}?height=32&width=32&text=${encodeURIComponent(character.name)}`}
+                                          alt={character.name}
+                                          width={32}
+                                          height={32}
+                                          className="object-cover relative z-10"
+                                        />
+                                      </div>
+                                      <span className="truncate text-sm flex-1 select-none">{character.name}</span>
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-6 w-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                                        onClick={(e) => {
+                                          e.stopPropagation()
+                                          includeCharacter(character.name)
+                                        }}
+                                      >
+                                        <X className="h-3 w-3" />
+                                      </Button>
+                                    </div>
+                                  </Tooltip>
+                                ))}
+                              </div>
+                            </ScrollArea>
+                          </TooltipProvider>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
 
-                  <Dialog open={open} onOpenChange={(newOpen) => {
+                <Dialog
+                  open={open}
+                  onOpenChange={(newOpen) => {
                     if (!newOpen) {
                       setTimeout(() => setOpen(false), 10)
                     } else {
                       setOpen(true)
                     }
-                  }}>
-                    <DialogContent className="max-w-3xl dialog-content">
-                      <DialogHeader>
-                        <DialogTitle>{t("results.title")}</DialogTitle>
-                      </DialogHeader>
-                      {result && (
-                        <ScrollArea className="max-h-[70vh]">
-                          <div className="space-y-6 p-1">
-                            {result?.bosses.length > 0 && (
-                              <div className="space-y-4">
-                                <h3 className="text-lg font-medium">
-                                  {t("common.bosses")} ({result.bosses.length})
-                                </h3>
-                                <div className="results-grid">
-                                  {result.bosses.map((boss) => (
-                                    <div
-                                      key={boss.name}
-                                      className={cn("transition-opacity duration-300", boss.visible ? "opacity-100" : "opacity-0")}
+                  }}
+                >
+                  <DialogContent className="max-w-3xl dialog-content">
+                    <DialogHeader>
+                      <DialogTitle>{t("results.title")}</DialogTitle>
+                    </DialogHeader>
+                    {result && (
+                      <ScrollArea className="max-h-[70vh]">
+                        <div className="space-y-6 p-1">
+                          {result?.bosses.length > 0 && (
+                            <div className="space-y-4">
+                              <h3 className="text-lg font-medium">
+                                {t("common.bosses")} ({result.bosses.length})
+                              </h3>
+                              <div className="results-grid">
+                                {result.bosses.map((boss) => (
+                                  <div
+                                    key={boss.name}
+                                    className={cn(
+                                      "transition-opacity duration-300",
+                                      boss.visible ? "opacity-100" : "opacity-0",
+                                    )}
+                                  >
+                                    <Card
+                                      className={cn(
+                                        "overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all boss-card",
+                                        boss.visible && "animate-appear",
+                                      )}
+                                      onClick={() => handleBossClick(boss.link)}
                                     >
-                                      <Card
-                                        className={cn(
-                                          "overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all boss-card",
-                                          boss.visible && "animate-appear",
-                                        )}
-                                        onClick={() => handleBossClick(boss.link)}
-                                      >
-                                        <CardContent className="p-0 relative">
-                                          <div className="aspect-square relative overflow-hidden">
-                                            <div
-                                              className={cn("absolute inset-0 z-0", isLegendBoss(boss.name) && "rarity-5-gradient")}
-                                            ></div>
-                                            <div className="boss-image-container">
-                                              <Image
-                                                src={`/bosses/${boss.location}/${boss.icon}?text=${encodeURIComponent(boss.name)}`}
-                                                alt={processBossName(boss.name)}
-                                                width={256}
-                                                height={256}
-                                                className="object-cover"
-                                              />
-                                            </div>
-                                            {isLegendBoss(boss.name) && (
-                                              <div className="card-corner-element right">
-                                                <Badge className="legend-badge">{t("main.legend")}</Badge>
-                                              </div>
+                                      <CardContent className="p-0 relative">
+                                        <div className="aspect-square relative overflow-hidden">
+                                          <div
+                                            className={cn(
+                                              "absolute inset-0 z-0",
+                                              isLegendBoss(boss.name) && "rarity-5-gradient",
                                             )}
-                                            <div className="boss-info-overlay">
-                                              <p
-                                                className="text-sm font-medium truncate text-shadow"
-                                                title={processBossName(boss.name)}
-                                              >
-                                                {processBossName(boss.name)}
-                                              </p>
-                                              <p className="text-xs text-white/80 text-shadow">{boss.location}</p>
+                                          ></div>
+                                          <div className="boss-image-container">
+                                            <Image
+                                              src={`/bosses/${boss.location}/${boss.icon}?text=${encodeURIComponent(boss.name)}`}
+                                              alt={processBossName(boss.name)}
+                                              width={256}
+                                              height={256}
+                                              className="object-cover"
+                                            />
+                                          </div>
+                                          {isLegendBoss(boss.name) && (
+                                            <div className="card-corner-element right">
+                                              <Badge className="legend-badge">{t("main.legend")}</Badge>
+                                            </div>
+                                          )}
+                                          <div className="boss-info-overlay">
+                                            <p
+                                              className="text-sm font-medium truncate text-shadow"
+                                              title={processBossName(boss.name)}
+                                            >
+                                              {processBossName(boss.name)}
+                                            </p>
+                                            <p className="text-xs text-white/80 text-shadow">{boss.location}</p>
+                                          </div>
+                                        </div>
+                                      </CardContent>
+                                    </Card>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                          {result.characters.length > 0 && (
+                            <div className="space-y-4">
+                              <h3 className="text-lg font-medium">
+                                {t("common.characters")} ({result.characters.length})
+                              </h3>
+                              <div className="results-grid">
+                                {result.characters.map((character, index) => (
+                                  <div
+                                    key={character.name}
+                                    className={cn(
+                                      "transition-opacity duration-300",
+                                      character.visible ? "opacity-100" : "opacity-0",
+                                    )}
+                                  >
+                                    <Card
+                                      className={cn(
+                                        "overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all character-card",
+                                        character.selected ? "ring-2 ring-primary" : "",
+                                        character.visible && "animate-appear",
+                                        character.rarity === 5 ? "border-accent-5" : "border-accent-4",
+                                      )}
+                                      onClick={() => settings.enableExclusion && toggleCharacterSelection(index)}
+                                    >
+                                      <CardContent className="p-0 relative">
+                                        <div className="aspect-square relative overflow-hidden">
+                                          <div
+                                            className={cn(
+                                              "absolute inset-0 z-0",
+                                              character.rarity === 5 ? "rarity-5-gradient" : "rarity-4-gradient",
+                                            )}
+                                          ></div>
+                                          <div className="character-image-container">
+                                            <Image
+                                              src={`/characters/${character.element}/${character.icon}?text=${encodeURIComponent(character.name)}`}
+                                              alt={character.name}
+                                              width={256}
+                                              height={256}
+                                              className="object-cover"
+                                            />
+                                          </div>
+                                          <div className="card-corner-element left">
+                                            <div className="element-icon-container">
+                                              <Image
+                                                src={`/elements/${character.element}.webp?height=32&width=32`}
+                                                alt={character.element}
+                                                width={32}
+                                                height={32}
+                                                className="element-icon"
+                                              />
                                             </div>
                                           </div>
-                                        </CardContent>
-                                      </Card>
-                                    </div>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-                            {result.characters.length > 0 && (
-                              <div className="space-y-4">
-                                <h3 className="text-lg font-medium">
-                                  {t("common.characters")} ({result.characters.length})
-                                </h3>
-                                <div className="results-grid">
-                                  {result.characters.map((character, index) => (
-                                    <div
-                                      key={character.name}
-                                      className={cn(
-                                        "transition-opacity duration-300",
-                                        character.visible ? "opacity-100" : "opacity-0",
-                                      )}
-                                    >
-                                      <Card
-                                        className={cn(
-                                          "overflow-hidden cursor-pointer hover:ring-2 hover:ring-primary transition-all character-card",
-                                          character.selected ? "ring-2 ring-primary" : "",
-                                          character.visible && "animate-appear",
-                                          character.rarity === 5 ? "border-accent-5" : "border-accent-4",
-                                        )}
-                                        onClick={() => settings.enableExclusion && toggleCharacterSelection(index)}
-                                      >
-                                        <CardContent className="p-0 relative">
-                                          <div className="aspect-square relative overflow-hidden">
-                                            <div
-                                              className={cn(
-                                                "absolute inset-0 z-0",
-                                                character.rarity === 5 ? "rarity-5-gradient" : "rarity-4-gradient",
-                                              )}
-                                            ></div>
-                                            <div className="character-image-container">
-                                              <Image
-                                                src={`/characters/${character.element}/${character.icon}?text=${encodeURIComponent(character.name)}`}
-                                                alt={character.name}
-                                                width={256}
-                                                height={256}
-                                                className="object-cover"
-                                              />
-                                            </div>
-                                            <div className="card-corner-element left">
-                                              <div className="element-icon-container">
-                                                <Image
-                                                  src={`/elements/${character.element}.webp?height=32&width=32`}
-                                                  alt={character.element}
-                                                  width={32}
-                                                  height={32}
-                                                  className="element-icon"
+                                          {settings.enableExclusion && (
+                                            <div className="card-corner-element right">
+                                              <div className="checkbox-container">
+                                                <Checkbox
+                                                  checked={character.selected}
+                                                  onCheckedChange={() => toggleCharacterSelection(index)}
+                                                  id={`select-${character.name}`}
+                                                  onClick={(e) => e.stopPropagation()}
+                                                  className="checkbox-select"
                                                 />
                                               </div>
                                             </div>
-                                            {settings.enableExclusion && (
-                                              <div className="card-corner-element right">
-                                                <div className="checkbox-container">
-                                                  <Checkbox
-                                                    checked={character.selected}
-                                                    onCheckedChange={() => toggleCharacterSelection(index)}
-                                                    id={`select-${character.name}`}
-                                                    onClick={(e) => e.stopPropagation()}
-                                                    className="checkbox-select"
-                                                  />
-                                                </div>
-                                              </div>
-                                            )}
-                                            <div className="character-info-overlay">
-                                              <p className="text-sm font-medium truncate text-shadow">{character.name}</p>
-                                              <p className="text-xs text-white/80 text-shadow">
-                                                {character.rarity === 5 ? "⭐⭐⭐⭐⭐" : "⭐⭐⭐⭐"}
-                                              </p>
-                                            </div>
+                                          )}
+                                          <div className="character-info-overlay">
+                                            <p className="text-sm font-medium truncate text-shadow">{character.name}</p>
+                                            <p className="text-xs text-white/80 text-shadow">
+                                              {character.rarity === 5 ? "⭐⭐⭐⭐⭐" : "⭐⭐⭐⭐"}
+                                            </p>
                                           </div>
-                                        </CardContent>
-                                      </Card>
-                                    </div>
-                                  ))}
-                                </div>
+                                        </div>
+                                      </CardContent>
+                                    </Card>
+                                  </div>
+                                ))}
                               </div>
-                            )}
-                            <div className="flex justify-end space-x-2">
-                              {(randomizeType === "characters" || randomizeType === "combined") &&
-                                result.characters.length > 0 &&
-                                settings.enableExclusion && (
-                                <Button
-                                  variant="outline"
-                                  onClick={toggleAllCharacters}
-                                  disabled={isAnimating}
-                                  className="button-enhanced"
-                                >
-                                  {areAllCharactersSelected ? t("results.unselectAll") : t("results.selectAll")}
-                                </Button>
-                              )}
+                            </div>
+                          )}
+                          <div className="flex justify-end space-x-2">
+                            {(randomizeType === "characters" || randomizeType === "combined") &&
+                              result.characters.length > 0 &&
+                              settings.enableExclusion && (
                               <Button
-                                onClick={
-                                  randomizeType === "bosses" || !settings.enableExclusion || result.characters.length === 0
-                                    ? () => setOpen(false)
-                                    : handleAcceptSelected
-                                }
+                                variant="outline"
+                                onClick={toggleAllCharacters}
                                 disabled={isAnimating}
                                 className="button-enhanced"
                               >
-                                {randomizeType === "bosses" || !settings.enableExclusion || result.characters.length === 0
-                                  ? t("results.close")
-                                  : t("results.accept")}
+                                {areAllCharactersSelected ? t("results.unselectAll") : t("results.selectAll")}
                               </Button>
-                            </div>
+                            )}
+                            <Button
+                              onClick={
+                                randomizeType === "bosses" ||
+                                !settings.enableExclusion ||
+                                result.characters.length === 0
+                                  ? () => setOpen(false)
+                                  : handleAcceptSelected
+                              }
+                              disabled={isAnimating}
+                              className="button-enhanced"
+                            >
+                              {randomizeType === "bosses" || !settings.enableExclusion || result.characters.length === 0
+                                ? t("results.close")
+                                : t("results.accept")}
+                            </Button>
                           </div>
-                        </ScrollArea>
-                      )}
-                    </DialogContent>
-                  </Dialog>
-                </div>
+                        </div>
+                      </ScrollArea>
+                    )}
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </div>
@@ -803,4 +862,4 @@ export default function GenshinPage() {
       </SidebarInset>
     </SidebarProvider>
   )
-} 
+}
