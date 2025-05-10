@@ -73,7 +73,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           },
           {
             title: "Changelog",
-            url: "/wip",
+            url: "/changelog",
           },
         ],
       },
