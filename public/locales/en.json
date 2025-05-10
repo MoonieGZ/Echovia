@@ -164,5 +164,21 @@
     "changes": "Changes",
     "fixes": "Bug Fixes",
     "knownIssues": "Known Issues"
+  },
+  "sidebar": {
+    "playground": "Playground",
+    "genshinImpact": "Genshin Impact",
+    "friends": "Friends",
+    "friendsList": "List",
+    "friendsRequests": "Requests",
+    "guides": "Guides",
+    "getStarted": "Get Started",
+    "tutorials": "Tutorials",
+    "changelog": "Changelog",
+    "settings": "Settings",
+    "characters": "Characters",
+    "excludedCharacters": "Excluded Characters",
+    "bosses": "Bosses",
+    "rules": "Rules"
   }
 }

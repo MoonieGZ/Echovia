@@ -1,6 +1,6 @@
 {
   "app": {
-    "title": "Randomiseur Genshin Impact",
+    "title": "Echovia",
     "loading": "Chargement des données..."
   },
   "header": {
@@ -10,20 +10,31 @@
     "reset": "Réinitialiser"
   },
   "footer": {
-    "version": "Ver:",
+    "version": "Ver :",
     "copyright": "Moons © 2025"
   },
-  "main": {
-    "roll": {
-      "characters": "Tirer les personnages",
-      "bosses": "Tirer les boss",
-      "both": "Tirer les deux"
-    },
+  "common": {
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
     "characters": "Personnages",
     "bosses": "Boss",
     "legend": "Légende",
-    "noRules": "Aucune règle active",
-    "activeRules": "Règles actives:"
+    "import": "Importer"
+  },
+  "main": {
+    "roll": {
+      "characters": "Tirer des personnages",
+      "bosses": "Tirer des boss",
+      "both": "Tirer les deux"
+    }
+  },
+  "genshin": {
+    "title": "Randomiseur Genshin Impact",
+    "availableCharacters": "Personnages disponibles",
+    "availableBosses": "Boss disponibles",
+    "characterCount": "Nombre de personnages",
+    "bossCount": "Nombre de boss",
+    "randomizer": "Randomiseur"
   },
   "results": {
     "title": "Résultats de la randomisation",
@@ -32,34 +43,43 @@
     "close": "Fermer",
     "accept": "Accepter",
     "noCharactersSelected": "Aucun personnage sélectionné",
-    "selectAtLeastOne": "Veuillez sélectionner au moins un personnage pour accepter.",
+    "selectAtLeastOne": "Veuillez sélectionner au moins un personnage pour continuer.",
     "charactersAccepted": "Personnages acceptés",
-    "charactersExcluded": "personnage(s) ont été exclus des prochains tirages."
+    "charactersExcluded": "{x} personnage(s) ont été exclus des futurs tirages."
   },
   "settings": {
     "title": "Paramètres",
-    "subtitle": "Personnalisez quels personnages et boss peuvent être sélectionnés dans le randomiseur",
-    "tabs": {
-      "characters": "Personnages",
-      "bosses": "Boss",
-      "excluded": "Exclus",
-      "rules": "Règles"
-    },
+    "subtitle": "Personnalisez les personnages et boss sélectionnables dans le randomiseur",
+    "excluded": "Exclus",
+    "rules": "Règles",
+    "openWiki": "Ouvrir le wiki pour ce boss",
     "filter": {
       "filter": "Filtrer",
       "bosses": "Filtrer les boss",
       "characters": "Filtrer les personnages"
     },
     "search": {
-      "search": "Rechercher",
-      "bosses": "Rechercher des boss",
-      "characters": "Rechercher des personnages"
+      "search": "Chercher",
+      "bosses": "Chercher des boss",
+      "characters": "Chercher des personnages"
+    },
+    "import": {
+      "title": "Importer des personnages",
+      "success": "{x} personnages importés avec succès",
+      "error": "Erreur lors de l'importation des personnages",
+      "invalidFormat": "Format de fichier invalide",
+      "minLevel": "Niveau minimum",
+      "level": "Niveau",
+      "description": "Vous pouvez utiliser Genshin Kamera pour exporter vos personnages.\nIci, vous pouvez sélectionner le niveau minimum des personnages que vous souhaitez importer.",
+      "preview": "{x} personnages seront importés avec les paramètres actuels.",
+      "jsonLoaded": "Fichier JSON chargé",
+      "clickToUpload": "Cliquez pour téléverser un fichier JSON"
     },
     "enableAll": "Tout activer",
     "disableAll": "Tout désactiver",
     "disableLegends": "Désactiver les légendes",
-    "coopModeWarning": "Mode coop activé : Les boss non-coop sont automatiquement désactivés.",
-    "coopDisabled": "Coop N/D",
+    "coopModeWarning": "Mode coopération activé: les boss non compatibles seront automatiquement désactivés.",
+    "coopDisabled": "Coop N/A",
     "resetConfirm": {
       "title": "Réinitialiser tous les paramètres?",
       "description": "Cela réinitialisera tous les paramètres à leurs valeurs par défaut. Cette action est irréversible.",
@@ -68,32 +88,36 @@
     }
   },
   "rules": {
+    "title": "Règles",
+    "activeRules": "Règles actives",
+    "noActiveRules": "Aucune règle active",
     "coopMode": {
       "title": "Mode coop",
-      "description": "Contrôle si plusieurs Voyageurs avec des éléments différents peuvent être sélectionnés lors d'un même tirage",
-      "enabled": "Activé: Plusieurs Voyageurs avec des éléments différents peuvent être sélectionnés",
-      "disabled": "Désactivé: Un seul Voyageur peut être sélectionné par tirage"
+      "modeEnabled": "Mode coop: Activé",
+      "description": "Détermine si plusieurs voyageurs avec des éléments différents peuvent être sélectionnés lors d'un tirage",
+      "enabled": "Règle activée: Plusieurs voyageurs avec des éléments différents peuvent être sélectionnés",
+      "disabled": "Règle désactivée: Un seul voyageur peut être sélectionné par tirage"
     },
     "fiveStarLimit": {
       "title": "Limite de personnages 5 étoiles",
-      "description": "Contrôle le nombre maximum de personnages 5 étoiles pouvant être sélectionnés lors d'un tirage",
-      "enabled": "Activé: Limite le nombre de personnages 5 étoiles par tirage",
-      "disabled": "Désactivé: Pas de limite pour les personnages 5 étoiles",
-      "maximum": "Nombre maximum de personnages 5 étoiles:"
+      "description": "Détermine le nombre maximal de personnages 5 étoiles pouvant être sélectionnés lors d'un tirage",
+      "enabled": "Règle activée: Limite du nombre de personnages 5 étoiles par tirage",
+      "disabled": "Règle désactivée: Aucune limite de personnages 5 étoiles",
+      "maximum": "Personnages 5 étoiles maximum:"
     },
     "notEnoughBosses": {
       "title": "Pas assez de boss disponibles",
-      "description": "Veuillez activer au moins {count} boss dans les paramètres."
+      "description": "Veuillez activer au moins {x} boss dans les paramètres."
     },
     "notEnoughCharacters": {
-      "title": "Pas assez de personnages",
-      "description": "N'a pu sélectionner assez de personnages après avoir appliqué toutes les règles. Veuillez ajuster vos paramètres."
+      "title": "Pas assez de personnages disponibles",
+      "description": "Impossible de sélectionner assez de personnages après application des règles. Veuillez ajuster vos paramètres."
     },
     "coopConfirm": {
-      "title": "Désactiver les boss non-coop?",
-      "description": "L'activation du mode coop désactivera les boss suivants:",
+      "title": "Désactiver les boss non coopératifs ?",
+      "description": "L'activation du mode coopération désactivera les boss suivants :",
       "note": "Ces boss seront automatiquement désactivés dans vos paramètres.",
-      "question": "Voulez-vous continuer?",
+      "question": "Voulez-vous continuer ?",
       "cancel": "Annuler",
       "confirm": "Continuer"
     }
@@ -102,11 +126,11 @@
     "title": "Personnages exclus",
     "enableExclusion": "Activer l'exclusion des personnages",
     "resetAll": "Tout réinitialiser",
-    "noCharacters": "Aucun personnage n'a encore été exclu. Lorsque vous acceptez des personnages depuis le randomiseur, ils apparaîtront ici.",
-    "clickToReEnable": "Cliquez pour réactiver"
+    "noCharacters": "Aucun personnage n'a encore été exclu. Lorsqu'un personnage est accepté via le randomiseur, il apparaîtra ici.",
+    "clickToReEnable": "Cliquer pour réactiver"
   },
   "accepted": {
-    "title": "Personnages sélectionnés",
+    "title": "Personnages choisis",
     "manage": "Gérer"
   },
   "pool": {
@@ -114,11 +138,47 @@
     "availableBosses": "Boss disponibles"
   },
   "language": {
+    "title": "Langue",
     "en": "Anglais",
     "es": "Espagnol",
     "fr": "Français",
     "de": "Allemand",
     "ja": "Japonais",
     "zh": "Chinois"
+  },
+  "wip": {
+    "title": "En construction",
+    "description": "Cette page est actuellement en construction. Revenez bientôt pour les mises à jour."
+  },
+  "theme": {
+    "title": "Thème",
+    "system": "Système",
+    "light": "Clair",
+    "dark": "Sombre"
+  },
+  "auth": {
+    "logout": "Se déconnecter"
+  },
+  "changelog": {
+    "title": "Journal des modifications",
+    "changes": "Changements",
+    "fixes": "Corrections de bugs",
+    "knownIssues": "Problèmes connus"
+  },
+  "sidebar": {
+    "playground": "Terrain de jeu",
+    "genshinImpact": "Genshin Impact",
+    "friends": "Amis",
+    "friendsList": "Liste",
+    "friendsRequests": "Demandes",
+    "guides": "Guides",
+    "getStarted": "Commencer",
+    "tutorials": "Tutoriels",
+    "changelog": "Journal des modifications",
+    "settings": "Paramètres",
+    "characters": "Personnages",
+    "excludedCharacters": "Personnages exclus",
+    "bosses": "Boss",
+    "rules": "Règles"
   }
 }

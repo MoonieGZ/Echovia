@@ -22,8 +22,10 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { GiCardRandom } from "react-icons/gi"
+import { useLanguage } from "@/lib/language-provider"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { t } = useLanguage()
   const data = {
     user: {
       name: "Moons",
@@ -32,71 +34,71 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     },
     navMain: [
       {
-        title: "Playground",
+        title: t("sidebar.playground"),
         url: "/genshin",
         icon: SquareTerminal,
         isActive: true,
         items: [
           {
-            title: "Genshin Impact",
+            title: t("sidebar.genshinImpact"),
             url: "/genshin",
           },
         ],
       },
       {
-        title: "Friends",
+        title: t("sidebar.friends"),
         url: "/wip",
         icon: ContactRound,
         items: [
           {
-            title: "List",
+            title: t("sidebar.friendsList"),
             url: "/wip",
           },
           {
-            title: "Requests",
+            title: t("sidebar.friendsRequests"),
             url: "/wip",
           },
         ],
       },
       {
-        title: "Guides",
+        title: t("sidebar.guides"),
         url: "/wip",
         icon: BookOpen,
         items: [
           {
-            title: "Get Started",
+            title: t("sidebar.getStarted"),
             url: "/wip",
           },
           {
-            title: "Tutorials",
+            title: t("sidebar.tutorials"),
             url: "/wip",
           },
           {
-            title: "Changelog",
+            title: t("sidebar.changelog"),
             url: "/changelog",
           },
         ],
       },
       {
-        title: "Settings",
+        title: t("sidebar.settings"),
         url: "/settings",
         icon: Settings2,
         isActive: true,
         items: [
           {
-            title: "Characters",
+            title: t("sidebar.characters"),
             url: "/settings#characters-section",
           },
           {
-            title: "Excluded Characters",
+            title: t("sidebar.excludedCharacters"),
             url: "/settings#excluded-characters-section",
           },
           {
-            title: "Bosses",
+            title: t("sidebar.bosses"),
             url: "/settings#bosses-section",
           },
           {
-            title: "Rules",
+            title: t("sidebar.rules"),
             url: "/settings#rules-section",
           },
         ],
