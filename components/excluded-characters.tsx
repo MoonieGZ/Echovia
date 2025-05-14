@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils"
 import { Tooltip } from "@/components/ui/tooltip"
 
 export default function ExcludedCharacters() {
-  const { characters, settings, includeCharacter, toggleExclusion } = useGenshinData()
+  const { characters, settings, includeCharacter, toggleExclusion, updateSettings } = useGenshinData()
   const { t } = useLanguage()
 
   // Get excluded characters with their full data
@@ -31,8 +31,13 @@ export default function ExcludedCharacters() {
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  settings.characters.excluded.forEach((name) => {
-                    includeCharacter(name)
+                  // Directly clear all excluded characters
+                  updateSettings({
+                    ...settings,
+                    characters: {
+                      ...settings.characters,
+                      excluded: [],
+                    },
                   })
                 }}
               >
