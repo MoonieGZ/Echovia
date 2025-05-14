@@ -498,6 +498,12 @@
     "icon": "Sigewinne_Icon.webp"
   },
   {
+    "name": "Tartaglia",
+    "rarity": 5,
+    "element": "Hydro",
+    "icon": "Tartaglia_Icon.webp"
+  },
+  {
     "name": "Traveler (Hydro)",
     "rarity": 5,
     "element": "Hydro",
