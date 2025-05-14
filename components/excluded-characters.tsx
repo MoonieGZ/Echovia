@@ -31,7 +31,6 @@ export default function ExcludedCharacters() {
                 variant="outline"
                 size="sm"
                 onClick={() => {
-                  // Directly clear all excluded characters
                   updateSettings({
                     ...settings,
                     characters: {

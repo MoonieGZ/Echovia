@@ -574,8 +574,12 @@ export default function GenshinPage() {
                                 variant="outline"
                                 size="sm"
                                 onClick={() => {
-                                  settings.characters.excluded.forEach((name) => {
-                                    includeCharacter(name)
+                                  updateSettings({
+                                    ...settings,
+                                    characters: {
+                                      ...settings.characters,
+                                      excluded: [],
+                                    },
                                   })
                                 }}
                               >
