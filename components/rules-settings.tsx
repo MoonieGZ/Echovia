@@ -15,7 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import { useLanguage } from "@/lib/language-provider"
+import { useTranslations } from "next-intl"
 import React from "react"
 import { Badge } from "@/components/ui/badge"
 import { Minus, Plus } from "lucide-react"
@@ -24,7 +24,7 @@ export default function RulesSettings() {
   const { settings, toggleCoopMode, toggleLimitFiveStars, updateMaxFiveStars, getNonCoopBosses } = useGenshinData()
   const [showCoopConfirmation, setShowCoopConfirmation] = useState(false)
   const nonCoopBosses = getNonCoopBosses()
-  const { t } = useLanguage()
+  const t = useTranslations()
 
   const handleCoopToggle = (enabled: boolean) => {
     if (enabled && nonCoopBosses.length > 0) {

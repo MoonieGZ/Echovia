@@ -7,12 +7,12 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar"
 import React from "react"
-import { useLanguage } from "@/lib/language-provider"
+import { useTranslations } from "next-intl"
 import { AlertTriangle } from "lucide-react"
 
 export default function WipPage() {
-  const { t } = useLanguage()
-  
+  const t = useTranslations()
+
   return (
     <SidebarProvider
       style={

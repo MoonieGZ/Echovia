@@ -4,10 +4,10 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useLanguage } from "@/lib/language-provider"
 import { Badge } from "@/components/ui/badge"
 import { Bug, BugOff, Calendar, GitCommit } from "lucide-react"
 import React, { useEffect, useState } from "react"
+import { useTranslations } from "next-intl"
 
 type ChangelogEntry = {
   title: string
@@ -23,7 +23,7 @@ type ChangelogData = {
 }
 
 export default function ChangelogPage() {
-  const { t } = useLanguage()
+  const t = useTranslations()
   const [changelog, setChangelog] = useState<ChangelogData>({})
   const [isLoading, setIsLoading] = useState(true)
 

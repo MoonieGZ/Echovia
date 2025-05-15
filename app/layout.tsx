@@ -6,8 +6,9 @@ import type React from "react"
 import { Suspense } from "react"
 import { Analytics } from "@vercel/analytics/react"
 import { GenshinDataProvider } from "@/lib/genshin-data-provider"
-import { LanguageProvider } from "@/lib/language-provider"
 import { Toaster } from "@/components/ui/sonner"
+import { getLocale } from "next-intl/server"
+import { NextIntlClientProvider } from "next-intl"
 
 export const metadata: Metadata = {
   title: "Echovia",
@@ -19,17 +20,19 @@ const geist = Geist({
   display: "swap",
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const locale = await getLocale()
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={`${geist.className} antialiased`}>
         <Analytics />
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <LanguageProvider>
+          <NextIntlClientProvider locale={locale}>
             <GenshinDataProvider>
               {/* TODO: add language provider via next-i18next */}
               <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
@@ -37,7 +40,7 @@ export default function RootLayout({
               </Suspense>
               <Toaster />
             </GenshinDataProvider>
-          </LanguageProvider>
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

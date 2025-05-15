@@ -8,13 +8,13 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar"
 import React from "react"
-import { useLanguage } from "@/lib/language-provider"
 import RulesSection from "@/components/rules-section"
 import ExcludedCharacters from "@/components/excluded-characters"
+import { useTranslations } from "next-intl"
 
 export default function SettingsPage() {
-  const { t } = useLanguage()
-  
+  const t = useTranslations()
+
   return (
     <SidebarProvider
       style={

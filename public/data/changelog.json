@@ -1,4 +1,16 @@
 {
+    "1.1.0": {
+        "title": "Language System Update",
+        "description": "Improved language system integration and character list updates.",
+        "timestamp": "2025-05-17T15:30:00+00:00",
+        "changes": [
+            "Enhanced language system to prevent untranslated text from flashing during page load."
+        ],
+        "fixes": [
+            "Added missing character 'Tartaglia' to the character list."
+        ],
+        "knownIssues": []
+    },
     "1.0.0": {
         "title": "Initial Release",
         "description": "This is the initial release of the app.",

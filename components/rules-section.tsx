@@ -1,12 +1,12 @@
 "use client"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useLanguage } from "@/lib/language-provider"
+import { useTranslations } from "next-intl"
 import RulesSettings from "./rules-settings"
 import React from "react"
 
 export default function RulesSection() {
-  const { t } = useLanguage()
+  const t = useTranslations()
 
   return (
     <Card id="rules-section">

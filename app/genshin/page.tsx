@@ -3,7 +3,6 @@
 import { useGenshinData } from "@/lib/genshin-data-provider"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useLanguage } from "@/lib/language-provider"
 import { AppSidebar } from "@/components/app-sidebar"
 import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
@@ -21,6 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
+import { useTranslations } from "next-intl"
 
 type RandomResult = {
   characters: Array<{
@@ -46,7 +46,7 @@ export default function GenshinPage() {
   const [result, setResult] = useState<RandomResult | null>(null)
   const [open, setOpen] = useState(false)
   const [randomizeType, setRandomizeType] = useState<"characters" | "bosses" | "combined">("characters")
-  const { t } = useLanguage()
+  const t = useTranslations()
   const [isAnimating, setIsAnimating] = useState(false)
 
   const availableBosses = bosses.filter((boss) => settings.bosses.enabled[boss.name]).length
