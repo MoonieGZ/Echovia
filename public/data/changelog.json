@@ -1,8 +1,21 @@
 {
+    "1.2.0": {
+        "title": "Character Management Enhancements",
+        "description": "Added character export functionality and improved character filtering options.",
+        "timestamp": "2025-05-15T17:15:00+00:00",
+        "changes": [
+            "Added ability to export character settings to JSON file.",
+            "Added new toggle controls to enable/disable all characters.",
+            "Added separate toggles for 4-star and 5-star characters.",
+            "Improved character filtering UI with dropdown menu."
+        ],
+        "fixes": [],
+        "knownIssues": []
+    },
     "1.1.0": {
         "title": "Language System Update",
         "description": "Improved language system integration and character list updates.",
-        "timestamp": "2025-05-17T15:30:00+00:00",
+        "timestamp": "2025-05-14T15:30:00+00:00",
         "changes": [
             "Enhanced language system to prevent untranslated text from flashing during page load."
         ],
