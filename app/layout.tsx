@@ -34,7 +34,6 @@ export default async function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <NextIntlClientProvider locale={locale}>
             <GenshinDataProvider>
-              {/* TODO: add language provider via next-i18next */}
               <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
                 {children}
               </Suspense>
