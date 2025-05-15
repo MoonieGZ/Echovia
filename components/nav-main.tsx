@@ -18,7 +18,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar"
 
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 export function NavMain({
   items,
@@ -36,6 +36,13 @@ export function NavMain({
 }) {
   const { state } = useSidebar()
   const isCollapsed = state === "collapsed"
+
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
     // Check if the URL contains a hash
