@@ -9,7 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { useState } from "react"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Search, ExternalLink, Upload } from "lucide-react"
+import { Search, ExternalLink, Upload, ArrowUpDown } from "lucide-react"
 import { toast } from "sonner"
 import React from "react"
 import {
@@ -190,7 +190,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm">
-                      <Upload className="h-4 w-4 mr-2" />
+                      <ArrowUpDown className="h-4 w-4 mr-2" />
                       {t("settings.importExport.title", { defaultValue: "Import/Export" })}
                     </Button>
                   </DropdownMenuTrigger>
