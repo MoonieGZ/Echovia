@@ -9,7 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { useState } from "react"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Search, ExternalLink, Upload, ArrowUpDown } from "lucide-react"
+import { Search, ExternalLink, Upload, ArrowUpDown, ToggleRight } from "lucide-react"
 import { toast } from "sonner"
 import React from "react"
 import {
@@ -32,6 +32,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 
 export default function SettingsForm({ type }: { type: "characters" | "bosses" }) {
@@ -136,9 +137,12 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
   }
 
   // Check if all items in a group are enabled/disabled
-  const isGroupEnabled = (group: string) => {
-    const items = filteredGroups[group]
-    return items.every((item: any) => enabledMap[item.name])
+  const isGroupEnabled = (group: string, rarity?: number) => {
+    let items = filteredGroups[group]
+    if (typeof rarity === 'number') {
+      items = items.filter((item: any) => item.rarity === rarity)
+    }
+    return items.length > 0 && items.every((item: any) => enabledMap[item.name])
   }
 
   const isGroupPartiallyEnabled = (group: string) => {
@@ -179,6 +183,43 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
     return filteredCharacters.length + (hasTraveler ? travelerCount - 1 : 0) // Subtract 1 to account for the base Traveler
   }
 
+  const toggleGroupByRarity = (group: string, rarity: number, enabled: boolean) => {
+    const items = filteredGroups[group].filter((item: any) => item.rarity === rarity)
+    const updatedEnabled = { ...enabledMap }
+    items.forEach((item: any) => {
+      updatedEnabled[item.name] = enabled
+    })
+    updateSettings({
+      characters: {
+        ...settings.characters,
+        enabled: updatedEnabled,
+      },
+    })
+  }
+
+  const toggleAllByRarity = (rarity: number, enabled: boolean) => {
+    const filtered = items.filter((item: any) => item.rarity === rarity)
+    const updatedEnabled = { ...enabledMap }
+    filtered.forEach((item: any) => {
+      updatedEnabled[item.name] = enabled
+    })
+    updateSettings({
+      characters: {
+        ...settings.characters,
+        enabled: updatedEnabled,
+      },
+    })
+  }
+
+  // Add a helper for top-level enable/disable logic
+  const isAllEnabled = (rarity?: number) => {
+    let filtered = items
+    if (type === 'characters' && typeof rarity === 'number') {
+      filtered = (items as any[]).filter((item: any) => item.rarity === rarity)
+    }
+    return filtered.length > 0 && filtered.every((item: any) => enabledMap[item.name])
+  }
+
   return (
     <Card id={type === "characters" ? "characters-section" : "bosses-section"} className="scroll-mt-14">
       <CardHeader>
@@ -190,7 +231,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm">
-                      <ArrowUpDown className="h-4 w-4 mr-2" />
+                      <ArrowUpDown className="h-4 w-4" />
                       {t("settings.importExport.title", { defaultValue: "Import/Export" })}
                     </Button>
                   </DropdownMenuTrigger>
@@ -202,7 +243,6 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       onSelect={() => {
-                        // Export logic
                         const exportData = {
                           format: "GOOD",
                           version: 2,
@@ -232,66 +272,54 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                   </DropdownMenuContent>
                 </DropdownMenu>
               )}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  const updatedEnabled = { ...enabledMap }
-                  items.forEach((item: any) => {
-                    if (type === "bosses" && settings.rules.coopMode && !(item as any).coop) {
-                      return
-                    }
-                    updatedEnabled[item.name] = true
-                  })
-                  if (type === "characters") {
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <ToggleRight className="h-4 w-4" />
+                    {t("settings.toggle.all")}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onSelect={() => {
+                    const updatedEnabled = { ...enabledMap }
+                    items.forEach((item: any) => { updatedEnabled[item.name] = true })
                     updateSettings({
                       characters: {
                         ...settings.characters,
                         enabled: updatedEnabled,
                       },
                     })
-                  } else {
-                    updateSettings({
-                      bosses: {
-                        ...settings.bosses,
-                        enabled: updatedEnabled,
-                      },
-                    })
-                  }
-                }}
-              >
-                {t("settings.enableAll")}
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  const updatedEnabled = { ...enabledMap }
-                  items.forEach((item: any) => {
-                    if (type === "bosses" && settings.rules.coopMode && !(item as any).coop) {
-                      return
-                    }
-                    updatedEnabled[item.name] = false
-                  })
-                  if (type === "characters") {
+                  }} disabled={isAllEnabled()}>
+                    {t("settings.toggle.enableAll")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => {
+                    const updatedEnabled = { ...enabledMap }
+                    items.forEach((item: any) => { updatedEnabled[item.name] = false })
                     updateSettings({
                       characters: {
                         ...settings.characters,
                         enabled: updatedEnabled,
                       },
                     })
-                  } else {
-                    updateSettings({
-                      bosses: {
-                        ...settings.bosses,
-                        enabled: updatedEnabled,
-                      },
-                    })
-                  }
-                }}
-              >
-                {t("settings.disableAll")}
-              </Button>
+                  }} disabled={!isAllEnabled()}>
+                    {t("settings.toggle.disableAll")}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={() => toggleAllByRarity(4, true)} disabled={isAllEnabled(4)}>
+                    {t("settings.toggle.enable4Star")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => toggleAllByRarity(4, false)} disabled={!isAllEnabled(4)}>
+                    {t("settings.toggle.disable4Star")}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={() => toggleAllByRarity(5, true)} disabled={isAllEnabled(5)}>
+                    {t("settings.toggle.enable5Star")}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => toggleAllByRarity(5, false)} disabled={!isAllEnabled(5)}>
+                    {t("settings.toggle.disable5Star")}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             {type === "bosses" && (
               <Button
@@ -299,7 +327,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                 size="sm"
                 onClick={disableLegendBosses}
               >
-                {t("settings.disableLegends")}
+                {t("settings.toggle.disableLegends")}
               </Button>
             )}
             <div className="relative">
@@ -336,24 +364,57 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                       group
                     )}
                   </Label>
-                  <div className="flex items-center space-x-2">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => toggleGroup(group, true)}
-                      disabled={isGroupEnabled(group)}
-                    >
-                      {t("settings.enableAll")}
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => toggleGroup(group, false)}
-                      disabled={!isGroupEnabled(group) && !isGroupPartiallyEnabled(group)}
-                    >
-                      {t("settings.disableAll")}
-                    </Button>
-                  </div>
+                  {type === "characters" ? (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm">
+                          <ToggleRight className="h-4 w-4" />
+                          {t("settings.toggle.group")} {group}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuItem onSelect={() => toggleGroup(group, true)} disabled={isGroupEnabled(group)}>
+                          {t("settings.toggle.enableAll")}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => toggleGroup(group, false)} disabled={!isGroupEnabled(group) && !isGroupPartiallyEnabled(group)}>
+                          {t("settings.toggle.disableAll")}
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onSelect={() => toggleGroupByRarity(group, 4, true)} disabled={isGroupEnabled(group, 4)}>
+                          {t("settings.toggle.enable4Star")}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => toggleGroupByRarity(group, 4, false)} disabled={!isGroupEnabled(group, 4)}>
+                          {t("settings.toggle.disable4Star")}
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onSelect={() => toggleGroupByRarity(group, 5, true)} disabled={isGroupEnabled(group, 5)}>
+                          {t("settings.toggle.enable5Star")}
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => toggleGroupByRarity(group, 5, false)} disabled={!isGroupEnabled(group, 5)}>
+                          {t("settings.toggle.disable5Star")}
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  ) : (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => toggleGroup(group, true)}
+                        disabled={isGroupEnabled(group)}
+                      >
+                        {t("settings.toggle.enableAll")}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => toggleGroup(group, false)}
+                        disabled={!isGroupEnabled(group) && !isGroupPartiallyEnabled(group)}
+                      >
+                        {t("settings.toggle.disableAll")}
+                      </Button>
+                    </>
+                  )}
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-2">
                   {filteredGroups[group].map((item: any) => (
