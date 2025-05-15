@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useState } from "react"
 import Image from "next/image"
-import { useLanguage } from "@/lib/language-provider"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Search, ExternalLink, Upload } from "lucide-react"
 import { toast } from "sonner"
@@ -27,6 +26,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useTranslations } from "next-intl"
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu"
 
 export default function SettingsForm({ type }: { type: "characters" | "bosses" }) {
   const {
@@ -40,7 +46,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
     updateSettings,
   } = useGenshinData()
   const [filter, setFilter] = useState("")
-  const { t } = useLanguage()
+  const t = useTranslations()
   const [showLevelDialog, setShowLevelDialog] = useState(false)
   const [selectedLevel, setSelectedLevel] = useState("20")
   const [importData, setImportData] = useState<any>(null)
@@ -181,14 +187,50 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
           <div className="flex flex-wrap items-center gap-2">
             <div className="flex items-center space-x-2">
               {type === "characters" && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowLevelDialog(true)}
-                >
-                  <Upload className="h-4 w-4 mr-2" />
-                  {t("settings.import.title")}
-                </Button>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm">
+                      <Upload className="h-4 w-4 mr-2" />
+                      {t("settings.importExport.title", { defaultValue: "Import/Export" })}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem
+                      onSelect={() => setShowLevelDialog(true)}
+                    >
+                      {t("settings.import.title")}
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onSelect={() => {
+                        // Export logic
+                        const exportData = {
+                          format: "GOOD",
+                          version: 2,
+                          echovia_version: "1.1.0",
+                          source: "Echovia",
+                          characters: items
+                            .filter((item: any) => enabledMap[item.name])
+                            .map((item: any) => ({
+                              key: item.name.replace(/\s+/g, ""),
+                              level: 90,
+                            })),
+                        }
+                        const json = JSON.stringify(exportData, null, 2)
+                        const blob = new Blob([json], { type: "application/json" })
+                        const url = URL.createObjectURL(blob)
+                        const a = document.createElement("a")
+                        a.href = url
+                        a.download = "echovia-characters-export.json"
+                        document.body.appendChild(a)
+                        a.click()
+                        document.body.removeChild(a)
+                        URL.revokeObjectURL(url)
+                      }}
+                    >
+                      {t("settings.export.title", { defaultValue: "Export" })}
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               )}
               <Button
                 variant="outline"

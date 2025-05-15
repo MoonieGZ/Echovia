@@ -6,7 +6,7 @@ import {
 } from "@tabler/icons-react"
 import { Moon, Sun, Globe, Monitor } from "lucide-react"
 import { useTheme } from "next-themes"
-import { useLanguage } from "@/lib/language-provider"
+import { useLocale, useTranslations } from "next-intl"
 
 import {
   Avatar,
@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/sidebar"
 
 import React from "react"
+import { setUserLocale } from "@/i18n/locale"
 
 const THEMES = [
   { value: "light", label: "theme.light", icon: Sun },
@@ -54,7 +55,8 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar()
   const { theme, setTheme } = useTheme()
-  const { language, setLanguage, t } = useLanguage()
+  const t = useTranslations()
+  const locale = useLocale()
 
   return (
     <SidebarMenu>
@@ -112,8 +114,8 @@ export function NavUser({
                 {LANGUAGES.map(({ value, label }) => (
                   <DropdownMenuItem
                     key={value}
-                    onClick={() => setLanguage(value)}
-                    className={language === value ? "bg-muted" : ""}
+                    onClick={() => setUserLocale(value)}
+                    className={locale === value ? "bg-muted" : ""}
                   >
                     {t(label)}
                   </DropdownMenuItem>

@@ -22,10 +22,10 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 import { GiCardRandom } from "react-icons/gi"
-import { useLanguage } from "@/lib/language-provider"
+import { useTranslations } from "next-intl"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { t } = useLanguage()
+  const t = useTranslations()
   const data = {
     user: {
       name: "Moons",

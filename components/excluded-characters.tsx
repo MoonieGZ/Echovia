@@ -9,13 +9,13 @@ import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import Image from "next/image"
 import { RefreshCw, X } from "lucide-react"
-import { useLanguage } from "@/lib/language-provider"
+import { useTranslations } from "next-intl"
 import { cn } from "@/lib/utils"
 import { Tooltip } from "@/components/ui/tooltip"
 
 export default function ExcludedCharacters() {
   const { characters, settings, includeCharacter, toggleExclusion, updateSettings } = useGenshinData()
-  const { t } = useLanguage()
+  const t = useTranslations()
 
   // Get excluded characters with their full data
   const excludedCharacters = characters.filter((char) => settings.characters.excluded.includes(char.name))

@@ -1,0 +1,16 @@
+{
+    "format": "GOOD",
+    "version": 2,
+    "echovia_version": "1.1.0",
+    "source": "Echovia",
+    "characters": [
+        {
+            "key": "Aloy",
+            "level": 90
+        },
+        {
+            "key": "KaedeharaKazuha",
+            "level": 90
+        }
+    ]
+}
