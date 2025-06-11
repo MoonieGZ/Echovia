@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Search, ExternalLink, Upload, ArrowUpDown, ToggleRight } from "lucide-react"
@@ -51,6 +51,8 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
   const [showLevelDialog, setShowLevelDialog] = useState(false)
   const [selectedLevel, setSelectedLevel] = useState("20")
   const [importData, setImportData] = useState<any>(null)
+  const [showImportModeDialog, setShowImportModeDialog] = useState(false)
+  const [importMode, setImportMode] = useState<"combine" | "reset" | null>(null)
 
   const items = type === "characters" ? characters : bosses
   const updateEnabled = type === "characters" ? updateCharacterEnabled : updateBossEnabled
@@ -219,6 +221,67 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
     }
     return filtered.length > 0 && filtered.every((item: any) => enabledMap[item.name])
   }
+
+  useEffect(() => {
+    if (!importMode) return
+    const importProcess = async () => {
+      if (!importData) {
+        toast.error(t("settings.import.error"))
+        setImportMode(null)
+        return
+      }
+      // Prepare enabled map
+      const updatedEnabled = { ...enabledMap }
+      if (importMode === "reset") {
+        items.forEach((item: any) => {
+          updatedEnabled[item.name] = false
+        })
+      }
+      // Enable only characters from the import file that meet the level requirement
+      const minLevel = parseInt(selectedLevel)
+      const filteredCharacters = importData.characters.filter(
+        (char: any) => char.level >= minLevel
+      )
+      // Check if any Traveler is in the filtered characters
+      const hasTraveler = filteredCharacters.some((char: any) => 
+        char.key === "Traveler"
+      )
+      filteredCharacters.forEach((char: any) => {
+        const charName = char.key.replace(/([A-Z])/g, ' $1').trim()
+        if (Object.prototype.hasOwnProperty.call(updatedEnabled, charName)) {
+          updatedEnabled[charName] = true
+        }
+      })
+      // If Traveler is found, enable all Traveler elements
+      if (hasTraveler) {
+        items.forEach((item: any) => {
+          if (item.name.startsWith("Traveler (")) {
+            updatedEnabled[item.name] = true
+          }
+        })
+      }
+      updateSettings({
+        characters: {
+          ...settings.characters,
+          enabled: updatedEnabled,
+        },
+      })
+      // Add a fake delay
+      await new Promise(resolve => setTimeout(resolve, 500))
+      return { characters: filteredCharacters }
+    }
+    toast.promise(importProcess, {
+      loading: t("app.loading"),
+      success: (data) => {
+        if (!data?.characters) return t("settings.import.error")
+        return t("settings.import.success", { x: data.characters.length.toString() })
+      },
+      error: (err) => err.message || t("settings.import.error"),
+    })
+    setShowLevelDialog(false)
+    setImportData(null)
+    setImportMode(null)
+  }, [importMode])
 
   return (
     <Card id={type === "characters" ? "characters-section" : "bosses-section"} className="scroll-mt-14">
@@ -539,7 +602,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
               </div>
               {importData && (
                 <div className="text-sm text-muted-foreground text-center">
-                  {t("settings.import.preview").replace("{x}", getFilteredCharacterCount().toString())}
+                  {t("settings.import.preview", { x: getFilteredCharacterCount().toString() })}
                 </div>
               )}
             </div>
@@ -554,74 +617,52 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                 {t("common.cancel")}
               </Button>
               <Button
-                onClick={() => {
-                  const importProcess = async () => {
-                    if (!importData) {
-                      toast.error(t("settings.import.error"))
-                      return
-                    }
-
-                    // Disable all characters first
-                    const updatedEnabled = { ...enabledMap }
-                    items.forEach((item: any) => {
-                      updatedEnabled[item.name] = false
-                    })
-
-                    // Enable only characters from the import file that meet the level requirement
-                    const minLevel = parseInt(selectedLevel)
-                    const filteredCharacters = importData.characters.filter(
-                      (char: any) => char.level >= minLevel
-                    )
-
-                    // Check if any Traveler is in the filtered characters
-                    const hasTraveler = filteredCharacters.some((char: any) => 
-                      char.key === "Traveler"
-                    )
-
-                    filteredCharacters.forEach((char: any) => {
-                      const charName = char.key.replace(/([A-Z])/g, ' $1').trim()
-                      if (Object.prototype.hasOwnProperty.call(updatedEnabled, charName)) {
-                        updatedEnabled[charName] = true
-                      }
-                    })
-
-                    // If Traveler is found, enable all Traveler elements
-                    if (hasTraveler) {
-                      items.forEach((item: any) => {
-                        if (item.name.startsWith("Traveler (")) {
-                          updatedEnabled[item.name] = true
-                        }
-                      })
-                    }
-
-                    updateSettings({
-                      characters: {
-                        ...settings.characters,
-                        enabled: updatedEnabled,
-                      },
-                    })
-
-                    // Add a fake delay
-                    await new Promise(resolve => setTimeout(resolve, 500))
-                    
-                    return { characters: filteredCharacters }
+                onClick={async () => {
+                  if (!importData) {
+                    toast.error(t("settings.import.error"))
+                    return
                   }
-
-                  toast.promise(importProcess, {
-                    loading: t("settings.import.loading"),
-                    success: (data) => {
-                      if (!data?.characters) return t("settings.import.error")
-                      return t("settings.import.success").replace("{x}", data.characters.length.toString())
-                    },
-                    error: (err) => err.message || t("settings.import.error"),
-                  })
-
-                  setShowLevelDialog(false)
-                  setImportData(null)
+                  // Check if any characters are currently enabled
+                  const anyEnabled = Object.values(enabledMap).some(Boolean)
+                  if (anyEnabled) {
+                    setShowImportModeDialog(true)
+                    return
+                  }
+                  setImportMode("reset")
                 }}
                 disabled={!importData}
               >
                 {t("common.import")}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+        {/* Import Mode Dialog */}
+        <Dialog open={showImportModeDialog} onOpenChange={setShowImportModeDialog}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("settings.import.modeTitle", { defaultValue: "Import Mode" })}</DialogTitle>
+              <p className="text-sm text-muted-foreground whitespace-pre-line">
+                {t("settings.import.modeDescription", { defaultValue: "Do you want to combine the imported characters with your current enabled list, or reset and only enable imported characters?" })}
+              </p>
+            </DialogHeader>
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setImportMode("combine")
+                  setShowImportModeDialog(false)
+                }}
+              >
+                {t("settings.import.combine", { defaultValue: "Combine" })}
+              </Button>
+              <Button
+                onClick={() => {
+                  setImportMode("reset")
+                  setShowImportModeDialog(false)
+                }}
+              >
+                {t("settings.import.reset", { defaultValue: "Reset" })}
               </Button>
             </DialogFooter>
           </DialogContent>
