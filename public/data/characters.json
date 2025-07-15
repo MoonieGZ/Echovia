@@ -456,6 +456,12 @@
     "icon": "Candace_Icon.webp"
   },
   {
+    "name": "Dahlia",
+    "rarity": 4,
+    "element": "Hydro",
+    "icon": "Dahlia_Icon.webp"
+  },
+  {
     "name": "Furina",
     "rarity": 5,
     "element": "Hydro",
