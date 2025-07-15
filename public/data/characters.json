@@ -192,6 +192,12 @@
     "icon": "Shenhe_Icon.webp"
   },
   {
+    "name": "Skirk",
+    "rarity": 5,
+    "element": "Cryo",
+    "icon": "Skirk_Icon.webp"
+  },
+  {
     "name": "Wriothesley",
     "rarity": 5,
     "element": "Cryo",
