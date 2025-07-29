@@ -163,6 +163,14 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
       }
 
       setImportData(data)
+      
+      // If all levels are identical, automatically set the level to the common level
+      if (data.characters.length > 0) {
+        const levels = data.characters.map((char: any) => char.level)
+        if (levels.every((level: number) => level === levels[0])) {
+          setSelectedLevel(levels[0].toString())
+        }
+      }
     } catch (error) {
       console.error(error)
       toast.error(t("settings.import.error"))
@@ -175,14 +183,30 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
     const minLevel = parseInt(selectedLevel)
     const filteredCharacters = importData.characters.filter((char: any) => char.level >= minLevel)
     
-    // Check if any Traveler is in the filtered characters
-    const hasTraveler = filteredCharacters.some((char: any) => char.key === "Traveler")
-    
-    // Count all Traveler elements if Traveler is found
-    const travelerCount = hasTraveler ? items.filter((item: any) => item.name.startsWith("Traveler (")).length : 0
+    // Count Traveler elements that are actually in the import
+    let travelerCount = 0
+    const hasBaseTraveler = filteredCharacters.some((char: any) => char.key === "Traveler")
+    if (hasBaseTraveler) {
+      // If base Traveler is found, count all Traveler elements
+      travelerCount = items.filter((item: any) => item.name.startsWith("Traveler (")).length
+    } else {
+      // Count specific Traveler elements that are in the import
+      filteredCharacters.forEach((char: any) => {
+        if (char.key.startsWith("Traveler") && char.key !== "Traveler") {
+          travelerCount++
+        }
+      })
+    }
     
     // Return the count of filtered characters plus Traveler elements if applicable
-    return filteredCharacters.length + (hasTraveler ? travelerCount - 1 : 0) // Subtract 1 to account for the base Traveler
+    return filteredCharacters.length + (hasBaseTraveler ? travelerCount - 1 : 0) // Subtract 1 to account for the base Traveler
+  }
+
+  // Check if all character levels are identical
+  const areAllLevelsIdentical = () => {
+    if (!importData?.characters || importData.characters.length === 0) return false
+    const levels = importData.characters.map((char: any) => char.level)
+    return levels.every((level: number) => level === levels[0])
   }
 
   const toggleGroupByRarity = (group: string, rarity: number, enabled: boolean) => {
@@ -242,24 +266,19 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
       const filteredCharacters = importData.characters.filter(
         (char: any) => char.level >= minLevel
       )
-      // Check if any Traveler is in the filtered characters
-      const hasTraveler = filteredCharacters.some((char: any) => 
-        char.key === "Traveler"
-      )
       filteredCharacters.forEach((char: any) => {
-        const charName = char.key.replace(/([A-Z])/g, ' $1').trim()
+        let charName = char.key
+
+        if(charName.startsWith("Traveler")) {
+          charName = charName.replace("r(", "r (")
+        }else{
+          charName = charName.replace(/([A-Z])/g, ' $1').trim()
+        }
+        
         if (Object.prototype.hasOwnProperty.call(updatedEnabled, charName)) {
           updatedEnabled[charName] = true
         }
       })
-      // If Traveler is found, enable all Traveler elements
-      if (hasTraveler) {
-        items.forEach((item: any) => {
-          if (item.name.startsWith("Traveler (")) {
-            updatedEnabled[item.name] = true
-          }
-        })
-      }
       updateSettings({
         characters: {
           ...settings.characters,
@@ -314,7 +333,7 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                           characters: items
                             .filter((item: any) => enabledMap[item.name])
                             .map((item: any) => ({
-                              key: item.name.replace(/\s+/g, ""),
+                              key: item.name.startsWith("Traveler (") ? "Traveler" : item.name.replace(/\s+/g, ""),
                               level: 90,
                             })),
                         }
@@ -585,21 +604,23 @@ export default function SettingsForm({ type }: { type: "characters" | "bosses" }
                   </span>
                 </label>
               </div>
-              <div className="flex items-center justify-between">
-                <Label htmlFor="level-select">{t("settings.import.minLevel")}:</Label>
-                <Select value={selectedLevel} onValueChange={setSelectedLevel}>
-                  <SelectTrigger id="level-select" className="w-[180px]">
-                    <SelectValue placeholder="Select level" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {[1, 20, 30, 40, 50, 60, 70, 80, 90].map((level) => (
-                      <SelectItem key={level} value={level.toString()}>
-                        {t("settings.import.level")} {level}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              {importData && !areAllLevelsIdentical() && (
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="level-select">{t("settings.import.minLevel")}:</Label>
+                  <Select value={selectedLevel} onValueChange={setSelectedLevel}>
+                    <SelectTrigger id="level-select" className="w-[180px]">
+                      <SelectValue placeholder="Select level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {[1, 20, 30, 40, 50, 60, 70, 80, 90].map((level) => (
+                        <SelectItem key={level} value={level.toString()}>
+                          {t("settings.import.level")} {level}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
               {importData && (
                 <div className="text-sm text-muted-foreground text-center">
                   {t("settings.import.preview", { x: getFilteredCharacterCount().toString() })}
