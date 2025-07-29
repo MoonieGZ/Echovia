@@ -5,15 +5,19 @@
   "source": "Echovia",
   "characters": [
     {
+      "key": "Chasca",
+      "level": 90
+    },
+    {
       "key": "Faruzan",
       "level": 90
     },
     {
-      "key": "Ifa",
+      "key": "Jean",
       "level": 90
     },
     {
-      "key": "Jean",
+      "key": "KaedeharaKazuha",
       "level": 90
     },
     {
@@ -25,35 +29,15 @@
       "level": 90
     },
     {
-      "key": "Sayu",
-      "level": 90
-    },
-    {
       "key": "ShikanoinHeizou",
       "level": 90
     },
     {
-      "key": "Sucrose",
-      "level": 90
-    },
-    {
-      "key": "Traveler(Anemo)",
+      "key": "Wanderer",
       "level": 90
     },
     {
       "key": "Xianyun",
-      "level": 90
-    },
-    {
-      "key": "Charlotte",
-      "level": 90
-    },
-    {
-      "key": "Chongyun",
-      "level": 90
-    },
-    {
-      "key": "Citlali",
       "level": 90
     },
     {
@@ -65,11 +49,11 @@
       "level": 90
     },
     {
-      "key": "Freminet",
+      "key": "Ganyu",
       "level": 90
     },
     {
-      "key": "Kaeya",
+      "key": "KamisatoAyaka",
       "level": 90
     },
     {
@@ -77,11 +61,7 @@
       "level": 90
     },
     {
-      "key": "Qiqi",
-      "level": 90
-    },
-    {
-      "key": "Rosaria",
+      "key": "Shenhe",
       "level": 90
     },
     {
@@ -89,7 +69,11 @@
       "level": 90
     },
     {
-      "key": "Collei",
+      "key": "Alhaitham",
+      "level": 90
+    },
+    {
+      "key": "Baizhu",
       "level": 90
     },
     {
@@ -97,19 +81,11 @@
       "level": 90
     },
     {
-      "key": "Kaveh",
+      "key": "Kinich",
       "level": 90
     },
     {
-      "key": "Kirara",
-      "level": 90
-    },
-    {
-      "key": "Tighnari",
-      "level": 90
-    },
-    {
-      "key": "Traveler(Dendro)",
+      "key": "Nahida",
       "level": 90
     },
     {
@@ -117,11 +93,7 @@
       "level": 90
     },
     {
-      "key": "Beidou",
-      "level": 90
-    },
-    {
-      "key": "Dori",
+      "key": "Clorinde",
       "level": 90
     },
     {
@@ -133,6 +105,10 @@
       "level": 90
     },
     {
+      "key": "Keqing",
+      "level": 90
+    },
+    {
       "key": "KujouSara",
       "level": 90
     },
@@ -141,27 +117,7 @@
       "level": 90
     },
     {
-      "key": "Lisa",
-      "level": 90
-    },
-    {
-      "key": "Ororon",
-      "level": 90
-    },
-    {
       "key": "RaidenShogun",
-      "level": 90
-    },
-    {
-      "key": "Razor",
-      "level": 90
-    },
-    {
-      "key": "Sethos",
-      "level": 90
-    },
-    {
-      "key": "Traveler(Electro)",
       "level": 90
     },
     {
@@ -177,23 +133,11 @@
       "level": 90
     },
     {
-      "key": "Kachina",
-      "level": 90
-    },
-    {
       "key": "Navia",
       "level": 90
     },
     {
-      "key": "Ningguang",
-      "level": 90
-    },
-    {
-      "key": "Noelle",
-      "level": 90
-    },
-    {
-      "key": "Traveler(Geo)",
+      "key": "Xilonen",
       "level": 90
     },
     {
@@ -201,31 +145,19 @@
       "level": 90
     },
     {
-      "key": "Barbara",
-      "level": 90
-    },
-    {
-      "key": "Candace",
-      "level": 90
-    },
-    {
       "key": "Furina",
       "level": 90
     },
     {
-      "key": "Mona",
+      "key": "Mualani",
+      "level": 90
+    },
+    {
+      "key": "Neuvillette",
       "level": 90
     },
     {
       "key": "SangonomiyaKokomi",
-      "level": 90
-    },
-    {
-      "key": "Sigewinne",
-      "level": 90
-    },
-    {
-      "key": "Traveler(Hydro)",
       "level": 90
     },
     {
@@ -234,10 +166,6 @@
     },
     {
       "key": "Yelan",
-      "level": 90
-    },
-    {
-      "key": "Amber",
       "level": 90
     },
     {
@@ -253,19 +181,11 @@
       "level": 90
     },
     {
-      "key": "Dehya",
+      "key": "HuTao",
       "level": 90
     },
     {
-      "key": "Diluc",
-      "level": 90
-    },
-    {
-      "key": "Gaming",
-      "level": 90
-    },
-    {
-      "key": "Mavuika",
+      "key": "Lyney",
       "level": 90
     },
     {
@@ -273,23 +193,11 @@
       "level": 90
     },
     {
-      "key": "Traveler(Pyro)",
-      "level": 90
-    },
-    {
       "key": "Xiangling",
       "level": 90
     },
     {
-      "key": "Xinyan",
-      "level": 90
-    },
-    {
       "key": "Yanfei",
-      "level": 90
-    },
-    {
-      "key": "Yoimiya",
       "level": 90
     }
   ]
