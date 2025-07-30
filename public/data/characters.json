@@ -306,6 +306,12 @@
     "icon": "Iansan_Icon.webp"
   },
   {
+    "name": "Ineffa",
+    "rarity": 5,
+    "element": "Electro",
+    "icon": "Ineffa_Icon.webp"
+  },
+  {
     "name": "Keqing",
     "rarity": 5,
     "element": "Electro",

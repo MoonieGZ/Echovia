@@ -1,4 +1,14 @@
 {
+    "1.2.1": {
+        "title": "New Characters",
+        "description": "Added missing characters and new 5.8 character.",
+        "timestamp": "2025-07-30T17:30:00+00:00",
+        "changes": [
+            "Added Skirk, Dahlia and Ineffa."
+        ],
+        "fixes": [],
+        "knownIssues": []
+    },
     "1.2.0": {
         "title": "Character Management Enhancements",
         "description": "Added character export functionality and improved character filtering options.",
