@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { Github, HandCoins } from "lucide-react"
+import { Euro, Github } from "lucide-react"
 import Link from "next/link"
 
 import React from "react"
@@ -19,7 +19,7 @@ export function SiteHeader({ title }: { title?: string }) {
         <div className="ml-auto flex items-center gap-2">
           <Link href="https://mnsy.dev/pay" target="_blank" rel="noopener noreferrer">
             <Button variant="ghost" size="icon">
-              <HandCoins className="h-5 w-5" />
+              <Euro className="h-5 w-5" />
               <span className="sr-only">PayPal</span>
             </Button>
           </Link>
