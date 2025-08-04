@@ -470,7 +470,7 @@ export default function GenshinPage() {
                                 <h3 className="text-lg font-medium">Klys_A</h3>
                                 <div className="aspect-video bg-muted rounded-lg overflow-hidden">
                                   <iframe
-                                    src="https://player.twitch.tv/?channel=Klys_A&parent=localhost&muted=true"
+                                    src="https://player.twitch.tv/?channel=Klys_A&parent=echovia.mnsy.dev&muted=true"
                                     width="100%"
                                     height="100%"
                                     frameBorder="0"
@@ -483,7 +483,7 @@ export default function GenshinPage() {
                                 <h3 className="text-lg font-medium">SimaSimaa</h3>
                                 <div className="aspect-video bg-muted rounded-lg overflow-hidden">
                                   <iframe
-                                    src="https://player.twitch.tv/?channel=SimaSimaa&parent=localhost&muted=true"
+                                    src="https://player.twitch.tv/?channel=SimaSimaa&parent=echovia.mnsy.dev&muted=true"
                                     width="100%"
                                     height="100%"
                                     frameBorder="0"
@@ -744,7 +744,7 @@ export default function GenshinPage() {
                                 <h3 className="text-lg font-medium">Klys_A</h3>
                                 <div className="aspect-video bg-muted rounded-lg overflow-hidden">
                                   <iframe
-                                    src="https://player.twitch.tv/?channel=Klys_A&parent=localhost&muted=true"
+                                    src="https://player.twitch.tv/?channel=Klys_A&parent=127.0.0.1&muted=true"
                                     width="100%"
                                     height="100%"
                                     frameBorder="0"
@@ -757,7 +757,7 @@ export default function GenshinPage() {
                                 <h3 className="text-lg font-medium">SimaSimaa</h3>
                                 <div className="aspect-video bg-muted rounded-lg overflow-hidden">
                                   <iframe
-                                    src="https://player.twitch.tv/?channel=SimaSimaa&parent=localhost&muted=true"
+                                    src="https://player.twitch.tv/?channel=SimaSimaa&parent=127.0.0.1&muted=true"
                                     width="100%"
                                     height="100%"
                                     frameBorder="0"
