@@ -27,6 +27,9 @@ This file tracks all ShadCN components used in the project. Update this list whe
 - DropdownMenuTrigger
 - DropdownMenuContent
 - DropdownMenuItem
+- Collapsible
+- CollapsibleContent
+- CollapsibleTrigger
 
 ## To be added
-- DropdownMenu (for import/export in settings-form) 
+- DropdownMenu (for import/export in settings-form)

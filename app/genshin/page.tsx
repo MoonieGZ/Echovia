@@ -20,6 +20,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Separator } from "@/components/ui/separator"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { useTranslations } from "next-intl"
 
 type RandomResult = {
@@ -46,6 +47,7 @@ export default function GenshinPage() {
   const [result, setResult] = useState<RandomResult | null>(null)
   const [open, setOpen] = useState(false)
   const [randomizeType, setRandomizeType] = useState<"characters" | "bosses" | "combined">("characters")
+  const [streamsOpen, setStreamsOpen] = useState(false)
   const t = useTranslations()
   const [isAnimating, setIsAnimating] = useState(false)
 
@@ -445,6 +447,56 @@ export default function GenshinPage() {
                         </div>
                       </CardContent>
                     </Card>
+
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>{t("genshin.streams")}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <Collapsible open={streamsOpen} onOpenChange={setStreamsOpen}>
+                          <CollapsibleTrigger asChild>
+                            <Button variant="outline" className="w-full justify-between">
+                              <span>{t("settings.toggle.group")}</span>
+                              {streamsOpen ? (
+                                <Minus className="h-4 w-4" />
+                              ) : (
+                                <Plus className="h-4 w-4" />
+                              )}
+                            </Button>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent className="space-y-4 mt-4">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <h3 className="text-lg font-medium">Klys_A</h3>
+                                <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+                                  <iframe
+                                    src="https://player.twitch.tv/?channel=Klys_A&parent=localhost&muted=true"
+                                    width="100%"
+                                    height="100%"
+                                    frameBorder="0"
+                                    allowFullScreen
+                                    title="Klys_A Stream"
+                                  />
+                                </div>
+                              </div>
+                              <div className="space-y-2">
+                                <h3 className="text-lg font-medium">SimaSimaa</h3>
+                                <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+                                  <iframe
+                                    src="https://player.twitch.tv/?channel=SimaSimaa&parent=localhost&muted=true"
+                                    width="100%"
+                                    height="100%"
+                                    frameBorder="0"
+                                    allowFullScreen
+                                    title="SimaSimaa Stream"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </CollapsibleContent>
+                        </Collapsible>
+                      </CardContent>
+                    </Card>
                   </TabsContent>
 
                   <TabsContent value="rules">
@@ -665,6 +717,58 @@ export default function GenshinPage() {
                             </ScrollArea>
                           </TooltipProvider>
                         )}
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  <TabsContent value="streams">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Live Streams</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <Collapsible open={streamsOpen} onOpenChange={setStreamsOpen}>
+                          <CollapsibleTrigger asChild>
+                            <Button variant="outline" className="w-full justify-between">
+                              <span>Toggle Streams</span>
+                              {streamsOpen ? (
+                                <Minus className="h-4 w-4" />
+                              ) : (
+                                <Plus className="h-4 w-4" />
+                              )}
+                            </Button>
+                          </CollapsibleTrigger>
+                          <CollapsibleContent className="space-y-4 mt-4">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <h3 className="text-lg font-medium">Klys_A</h3>
+                                <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+                                  <iframe
+                                    src="https://player.twitch.tv/?channel=Klys_A&parent=localhost&muted=true"
+                                    width="100%"
+                                    height="100%"
+                                    frameBorder="0"
+                                    allowFullScreen
+                                    title="Klys_A Stream"
+                                  />
+                                </div>
+                              </div>
+                              <div className="space-y-2">
+                                <h3 className="text-lg font-medium">SimaSimaa</h3>
+                                <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+                                  <iframe
+                                    src="https://player.twitch.tv/?channel=SimaSimaa&parent=localhost&muted=true"
+                                    width="100%"
+                                    height="100%"
+                                    frameBorder="0"
+                                    allowFullScreen
+                                    title="SimaSimaa Stream"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </CollapsibleContent>
+                        </Collapsible>
                       </CardContent>
                     </Card>
                   </TabsContent>
